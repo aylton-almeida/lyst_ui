@@ -1,2 +1,2 @@
-# listy_ui
+# Listy
 Simple app to manage notes in categories
