@@ -9,7 +9,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentNavITem = 0;
+  int _currentNavItem = 0;
 
   final _itemList = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
@@ -24,12 +24,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _onFloatingActionButtonPress() {}
 
-  void _onNavItemTap(int currItem) {}
-
   @override
   Widget build(BuildContext context) {
-    return BackgroundImageWidget(
+    return BackgroundImage(
       child: Scaffold(
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: Text("Lyst"),
           backgroundColor: Colors.transparent,
@@ -40,15 +39,20 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: _onFloatingActionButtonPress,
           child: Icon(Icons.add),
+          backgroundColor: Theme.of(context).primaryColor,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Color(0xFF28262c),
           items: _itemList,
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.grey,
-          onTap: _onNavItemTap,
-          backgroundColor: Color(0xFF28262c),
-          type: BottomNavigationBarType.shifting,
+          currentIndex: _currentNavItem,
+          onTap: (item) {
+            setState(() {
+              _currentNavItem = item;
+            });
+          },
         ),
       ),
     );
