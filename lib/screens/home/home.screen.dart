@@ -33,9 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Text("Lyst"),
           backgroundColor: Colors.transparent,
         ),
-        body: Center(
-          child: Text("Hello World"),
-        ),
         floatingActionButton: FloatingActionButton(
           onPressed: _onFloatingActionButtonPress,
           child: Icon(Icons.add),
