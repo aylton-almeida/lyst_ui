@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.grey,
           currentIndex: _currentNavItem,
+          showUnselectedLabels: false,
           onTap: (item) {
             setState(() {
               _currentNavItem = item;
