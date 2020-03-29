@@ -12,10 +12,21 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentNavItem = 0;
 
-  void _onFloatingActionButtonPress() {}
+  void _onFloatingActionButtonPress() {
+    //Define here the FAB behavior
+  }
 
   @override
   Widget build(BuildContext context) {
+    //Define here the FAB appearance
+    IconData _fabIcon = Icons.view_list;
+    bool _isFabShown = true;
+    if (_currentNavItem == 0) {
+      _isFabShown = true;
+      _fabIcon = Icons.view_list;
+    } else
+      _isFabShown = false;
+
     return SafeArea(
       child: Scaffold(
         body: IndexedStack(
@@ -40,11 +51,13 @@ class _HomeScreenState extends State<HomeScreen> {
             });
           },
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _onFloatingActionButtonPress,
-          child: Icon(Icons.add),
-          backgroundColor: Theme.of(context).primaryColor,
-        ),
+        floatingActionButton: _isFabShown
+            ? FloatingActionButton(
+                onPressed: _onFloatingActionButtonPress,
+                child: Icon(_fabIcon),
+                backgroundColor: Theme.of(context).primaryColor,
+              )
+            : null,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );

@@ -1,14 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:lystui/models/user.model.dart';
 import 'package:lystui/services/auth.service.dart';
 
 class AuthProvider with ChangeNotifier {
   AuthService _service = AuthService();
-  FirebaseUser _user;
+  User _user;
 
   AuthProvider({user}) : this._user = user;
 
-  Future<FirebaseUser> doUpdateUser() async {
+  Future<User> doUpdateUser() async {
     _service.currentUser()
     .then((user) => this._user = user)
     .catchError((err) {

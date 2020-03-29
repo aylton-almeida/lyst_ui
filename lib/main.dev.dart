@@ -3,5 +3,5 @@ import 'package:lystui/routes.dart';
 
 Future main() async {
   await DotEnv().load('.env');
-  return Routes(isDev: false);
+  return Routes(isDev: true);
 }

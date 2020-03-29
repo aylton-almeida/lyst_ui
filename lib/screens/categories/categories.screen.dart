@@ -11,19 +11,19 @@ class CategoriesScreen extends ScreenRoute {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
-  final categoriesList = <Category>[
-    new Category('')
-  ];
+        final categoriesList = <Category>[
+        new Category()
+        ];
 
-  @override
-  Widget build(BuildContext context) {
-    return BackgroundImage(
-      child: Scaffold(
+        @override
+        Widget build(BuildContext context) {
+        return BackgroundImage(
+        child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: Image.asset(
-            'lib/assets/logo.png',
-            width: 100,
+        title: Image.asset(
+        'lib/assets/logo.png',
+        width: 100,
           ),
           centerTitle: true,
           backgroundColor: Color(0xFF848484).withOpacity(0.1),

@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:lystui/models/user.model.dart';
 import 'package:lystui/providers/auth.provider.dart';
 import 'package:lystui/screens/signin/signin.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
@@ -18,7 +18,7 @@ class PrivateRoute extends StatefulWidget {
 
 class _PrivateRouteState extends State<PrivateRoute> {
   void _validateUser(BuildContext context) async {
-    FirebaseUser user =
+    User user =
         await Provider.of<AuthProvider>(context, listen: false).doUpdateUser();
     if (user == null) {
       Alerts.showAlertDialog(
