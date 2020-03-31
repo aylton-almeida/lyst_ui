@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lystui/providers/auth.provider.dart';
-import 'package:lystui/providers/env.provider.dart';
 import 'package:lystui/screens/categories/categories.screen.dart';
 import 'package:lystui/screens/home/home.screen.dart';
 import 'package:provider/provider.dart';
@@ -40,9 +39,6 @@ class Routes {
   ];
 
   Routes({this.isDev}) {
-    providers.add(
-        ChangeNotifierProvider(create: (context) => EnvProvider(isDev: isDev)));
-
     runApp(MultiProvider(
       providers: providers,
       child: MaterialApp(
