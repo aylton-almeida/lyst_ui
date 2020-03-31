@@ -8,13 +8,8 @@ class AuthProvider with ChangeNotifier {
 
   AuthProvider({user}) : this._user = user;
 
-  Future<User> doUpdateUser() async {
-    _service.currentUser()
-    .then((user) => this._user = user)
-    .catchError((err) {
-      print(err);
-      return this._user = null;
-    });
+  Future<User> currentUser() async {
+    this._user = await _service.currentUser();
     notifyListeners();
     return this._user;
   }
@@ -25,7 +20,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> doSignUpUser(String email, String pass) async {
-    await _service.signUpUser(email, pass);
+    _user = await _service.signUpUser(email, pass);
     notifyListeners();
   }
 
@@ -35,5 +30,6 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> doResetUserPassword(String email)=> _service.resetUserPassword(email);
+  Future<void> doResetUserPassword(String email) =>
+      _service.resetUserPassword(email);
 }

@@ -15,6 +15,8 @@ abstract class ErrorTranslator {
         return "Este email já está em uso.";
       case "EMAIL_NOT_VERIFIED":
         return "Email não verificado, um novo email de verificação foi enviado.";
+      case "USER_NOT_CONNECTED":
+        return "Usuário não conectado.";
       default:
         return "Ocorreu um erro, tente novamente mais tarde.";
     }

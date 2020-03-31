@@ -19,7 +19,7 @@ class PrivateRoute extends StatefulWidget {
 class _PrivateRouteState extends State<PrivateRoute> {
   void _validateUser(BuildContext context) async {
     User user =
-        await Provider.of<AuthProvider>(context, listen: false).doUpdateUser();
+        await Provider.of<AuthProvider>(context, listen: false).currentUser();
     if (user == null) {
       Alerts.showAlertDialog(
           context: context,
