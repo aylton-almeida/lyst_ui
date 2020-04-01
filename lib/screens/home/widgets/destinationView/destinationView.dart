@@ -17,7 +17,6 @@ class _DestinationViewState extends State<DestinationView> {
     return widget.destination.hasRoutes
         ? Navigator(onGenerateRoute: (RouteSettings settings) {
       return MaterialPageRoute(
-          settings: settings,
           builder: (context) =>
               widget.destination.routes
                   .firstWhere((ScreenRoute route) =>

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lystui/models/category.model.dart';
 import 'package:lystui/models/screenRoute.model.dart';
+import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/category.provider.dart';
+import 'package:lystui/utils/alerts.utils.dart';
+import 'package:lystui/utils/errorTranslator.utils.dart';
+import 'package:lystui/widgets/privateRoute.dart';
 import 'file:///C:/Users/aylto/codigos/aulas/lab4/lyst_ui/lib/widgets/backgroundImage.dart';
 import 'package:provider/provider.dart';
 
@@ -30,8 +34,16 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Future<void> refreshCategories() async {
     refreshKey.currentState?.show(atTop: false);
 
-    await Provider.of<CategoryProvider>(context, listen: false)
-        .doUpdateCategories();
+    try {
+      await Provider.of<CategoryProvider>(context, listen: false)
+          .doUpdateCategories();
+    } catch (e) {
+      if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
+        Alerts.showSnackBar(
+            context: context,
+            text: ErrorTranslator.authError(e.code),
+            color: Colors.red);
+    }
   }
 
   Widget _buildCategories(List<Category> categories) {
@@ -80,18 +92,20 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Widget build(BuildContext context) {
     final categoriesProvider = Provider.of<CategoryProvider>(context);
 
-    return BackgroundImage(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          title: Image.asset(
-            'lib/assets/logo.png',
-            width: 100,
+    return PrivateRoute(
+      child: BackgroundImage(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            title: Image.asset(
+              'lib/assets/logo.png',
+              width: 100,
+            ),
+            centerTitle: true,
+            backgroundColor: Color(0xFF848484).withOpacity(0.1),
           ),
-          centerTitle: true,
-          backgroundColor: Color(0xFF848484).withOpacity(0.1),
+          body: _buildCategories(categoriesProvider.categories),
         ),
-        body: _buildCategories(categoriesProvider.categories),
       ),
     );
   }

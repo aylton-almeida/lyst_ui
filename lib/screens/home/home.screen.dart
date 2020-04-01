@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lystui/providers/auth.provider.dart';
 import 'package:lystui/routes.dart';
 import 'package:lystui/screens/home/widgets/destinationView/destinationView.dart';
-import 'package:provider/provider.dart';
+import 'package:lystui/screens/signin/signin.screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static final routeName = "/home";
@@ -15,9 +14,10 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentNavItem = 0;
 
   void _onFloatingActionButtonPress() async {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
-//    await authProvider.doSignUpUser('almeida@aylton.dev', 'password');
-    print(await authProvider.currentUser());
+//    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+////    await authProvider.doSignUpUser('almeida@aylton.dev', 'password');
+//    print(await authProvider.currentUser());
+    Navigator.of(context).pushReplacementNamed(SignInScreen.routeName);
   }
 
   @override
