@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lystui/app.dart';
 import 'package:lystui/providers/auth.provider.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/screens/categories/categories.screen.dart';
 import 'package:lystui/screens/home/home.screen.dart';
 import 'package:lystui/screens/settings/settings.screen.dart';
+import 'package:lystui/screens/signin/signin.screen.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -16,6 +18,7 @@ class Routes {
   //Declare main app routes
   final routes = <String, WidgetBuilder>{
     HomeScreen.routeName: (context) => HomeScreen(),
+    SignInScreen.routeName: (context) => SignInScreen(),
   };
 
   // Declare bottom navigation nested routes
@@ -54,6 +57,7 @@ class Routes {
     runApp(MultiProvider(
       providers: providers,
       child: MaterialApp(
+        navigatorKey: Application.globalNavigation,
         debugShowCheckedModeBanner: false,
         title: "Lyst",
         routes: routes,

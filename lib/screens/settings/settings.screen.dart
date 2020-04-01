@@ -1,9 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lystui/app.dart';
 import 'package:lystui/models/category.model.dart';
 import 'package:lystui/models/screenRoute.model.dart';
+import 'package:lystui/models/serviceException.model.dart';
+import 'package:lystui/providers/auth.provider.dart';
 import 'package:lystui/providers/category.provider.dart';
+import 'package:lystui/screens/signin/signin.screen.dart';
+import 'package:lystui/utils/alerts.utils.dart';
+import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
+import 'package:lystui/widgets/privateRoute.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends ScreenRoute {
@@ -31,15 +38,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<void> refreshCategories() async {
     refreshKey.currentState?.show(atTop: false);
 
-    await Provider.of<CategoryProvider>(context, listen: false)
-        .doUpdateCategories();
+    try {
+      await Provider.of<CategoryProvider>(context, listen: false)
+          .doUpdateCategories();
+    } catch (e) {
+      if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
+        Alerts.showSnackBar(
+            context: context,
+            text: ErrorTranslator.authError(e.code),
+            color: Colors.red);
+    }
   }
 
   void _onManagePress() {}
 
   void _onAboutUsTap() {}
 
-  Future<void> _onLogoutTap() {}
+  Future<void> _onLogoutTap() async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    await authProvider.doSignOutUser();
+    Application.globalNavigation.currentState.pushNamedAndRemoveUntil(SignInScreen.routeName, (route) => false);
+  }
 
   Widget _buildCategories(List<Category> categories) {
     return RefreshIndicator(
@@ -87,85 +106,87 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     final categoriesProvider = Provider.of<CategoryProvider>(context);
 
-    return BackgroundImage(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          title: Image.asset(
-            'lib/assets/logo.png',
-            width: 100,
+    return PrivateRoute(
+      child: BackgroundImage(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            title: Image.asset(
+              'lib/assets/logo.png',
+              width: 100,
+            ),
+            centerTitle: true,
+            backgroundColor: Color(0xFF848484).withOpacity(0.1),
           ),
-          centerTitle: true,
-          backgroundColor: Color(0xFF848484).withOpacity(0.1),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: 320,
-                child: _buildCategories(categoriesProvider.categories),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: 250,
-                child: RaisedButton(
-                  child: Text(
-                    'MANAGE CATEGORIES',
+          body: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 320,
+                  child: _buildCategories(categoriesProvider.categories),
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: 250,
+                  child: RaisedButton(
+                    child: Text(
+                      'MANAGE CATEGORIES',
+                    ),
+                    onPressed: _onManagePress,
                   ),
-                  onPressed: _onManagePress,
                 ),
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                width: 320,
-                child: Divider(color: Theme.of(context).primaryColor),
-              ),
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: Column(
-                  children: <Widget>[
-                    InkWell(
-                      splashColor: Theme.of(context).primaryColor,
-                      highlightColor: Theme.of(context).primaryColorLight,
-                      onTap: _onAboutUsTap,
-                      child: Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.info_outline,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            'About us',
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    InkWell(
-                      splashColor: Colors.red,
-                      highlightColor: Colors.redAccent,
-                      onTap: _onLogoutTap,
-                      child: Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.exit_to_app,
-                            color: Colors.red,
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            'Logout',
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                Divider(
+                  height: 20,
+                  indent: 30,
+                  endIndent: 30,
+                  color: Theme.of(context).primaryColor,
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: Column(
+                    children: <Widget>[
+                      InkWell(
+                        splashColor: Theme.of(context).primaryColor,
+                        highlightColor: Theme.of(context).primaryColorLight,
+                        onTap: _onAboutUsTap,
+                        child: Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.info_outline,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              'About us',
+                              style: TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      InkWell(
+                        splashColor: Colors.red,
+                        highlightColor: Colors.redAccent,
+                        onTap: _onLogoutTap,
+                        child: Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.exit_to_app,
+                              color: Colors.red,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              'Logout',
+                              style: TextStyle(color: Colors.white, fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

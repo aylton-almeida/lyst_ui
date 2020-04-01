@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:lystui/app.dart';
 import 'package:lystui/models/user.model.dart';
 import 'package:lystui/providers/auth.provider.dart';
 import 'package:lystui/screens/signin/signin.screen.dart';
@@ -23,15 +24,15 @@ class _PrivateRouteState extends State<PrivateRoute> {
     if (user == null) {
       Alerts.showAlertDialog(
           context: context,
-          title: "Você foi desconectado",
-          content: "Você será redirecionado para a página de login",
+          title: "You were disconnected",
+          content: "You will be redirected to the Sign In page",
           actions: [
             AlertAction(
                 content: "Ok",
                 action: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context)
-                      .pushReplacementNamed(SignInScreen.routeName);
+                  Application.globalNavigation.currentState.pop();
+                  Application.globalNavigation.currentState
+                      .pushNamedAndRemoveUntil(SignInScreen.routeName, (route) => false);
                 })
           ]);
     }
@@ -45,5 +46,8 @@ class _PrivateRouteState extends State<PrivateRoute> {
   }
 
   @override
-  Widget build(BuildContext context) => widget.child;
+  Widget build(BuildContext context) {
+    _validateUser(context);
+    return widget.child;
+  }
 }

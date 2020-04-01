@@ -11,8 +11,7 @@ class AuthService {
   Future<User> currentUser() async {
     final authToken = await _storage.read(key: 'authToken');
 
-    if (authToken == null)
-      throw new ServiceException(code: "USER_NOT_CONNECTED");
+    if (authToken == null) return null;
 
     String url = '${DotEnv().env['BACKEND_URL']}/validateToken';
     Map<String, String> headers = {"Content-type": "application/json"};
@@ -26,12 +25,9 @@ class AuthService {
         final user = User.fromJson(body['user']);
         await _storage.write(key: 'authToken', value: authToken);
         return user;
-      case 401:
-        print(response.body);
-        throw new ServiceException(code: 'USER_NOT_CONNECTED');
       default:
         print(response.body);
-        throw new ServiceException(code: 'USER_NOT_CONNECTED');
+        return null;
     }
   }
 
@@ -85,7 +81,7 @@ class AuthService {
   }
 
   Future<void> signOutUser() async {
-//    return await _auth.signOut();
+    return await _storage.delete(key: 'authToken');
   }
 
   Future<void> resetUserPassword(String email) async {
