@@ -7,30 +7,24 @@ import 'package:lystui/models/user.model.dart';
 
 class AuthService {
   final _storage = new FlutterSecureStorage();
-  String _authToken;
 
   Future<User> currentUser() async {
-    this._authToken = await _storage.read(key: 'authToken');
+    final authToken = await _storage.read(key: 'authToken');
 
-    print(this._authToken);
-
-    if (this._authToken == null)
+    if (authToken == null)
       throw new ServiceException(code: "USER_NOT_CONNECTED");
 
     String url = '${DotEnv().env['BACKEND_URL']}/validateToken';
-    print(url);
     Map<String, String> headers = {"Content-type": "application/json"};
-    String body = jsonEncode({"token": this._authToken});
+    String body = jsonEncode({"token": authToken});
 
     Response response = await post(url, headers: headers, body: body);
-
-    print(response.body);
 
     switch (response.statusCode) {
       case 200:
         Map<String, dynamic> body = jsonDecode(response.body);
         final user = User.fromJson(body['user']);
-        await _storage.write(key: 'authToken', value: _authToken);
+        await _storage.write(key: 'authToken', value: authToken);
         return user;
       case 401:
         print(response.body);
@@ -52,8 +46,8 @@ class AuthService {
       case 200:
         Map<String, dynamic> body = jsonDecode(response.body);
         final user = User.fromJson(body['user']);
-        this._authToken = body['token'];
-        await _storage.write(key: 'authToken', value: _authToken);
+        final authToken = body['token'];
+        await _storage.write(key: 'authToken', value: authToken);
         return user;
       case 400:
         print(response.body);
@@ -78,8 +72,8 @@ class AuthService {
       case 200:
         Map<String, dynamic> body = jsonDecode(response.body);
         final newUser = User.fromJson(body['user']);
-        this._authToken = body['token'];
-        await _storage.write(key: 'authToken', value: _authToken);
+        final authToken = body['token'];
+        await _storage.write(key: 'authToken', value: authToken);
         return newUser;
       case 422:
         print(response.body);
