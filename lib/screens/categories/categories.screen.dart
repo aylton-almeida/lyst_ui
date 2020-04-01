@@ -21,6 +21,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     refreshCategories();
   }
 
+  @override
+  void dispose() {
+    refreshKey.currentState?.dispose();
+    super.dispose();
+  }
+
   Future<void> refreshCategories() async {
     refreshKey.currentState?.show(atTop: false);
 

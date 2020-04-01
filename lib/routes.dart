@@ -4,6 +4,7 @@ import 'package:lystui/providers/auth.provider.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/screens/categories/categories.screen.dart';
 import 'package:lystui/screens/home/home.screen.dart';
+import 'package:lystui/screens/settings/settings.screen.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -27,20 +28,26 @@ class Routes {
     Destination(
       title: "Settings",
       icon: Icons.settings,
-      child: Center(child: Text('Settings')),
+      routes: [SettingsScreen()],
     )
   ];
 
   final appTheme = ThemeData(
     primaryColor: Color(0xFFba0dab),
+    primaryColorLight: Color(0xFFD134C4),
     accentColor: Color(0xFFba0dab),
+    buttonTheme: ButtonThemeData(
+      textTheme: ButtonTextTheme.primary,
+      buttonColor: Color(0xFFba0dab),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(50),
+      ),
+    ),
   );
 
   final providers = <SingleChildWidget>[
     ChangeNotifierProvider(create: (context) => AuthProvider()),
-    ChangeNotifierProvider(
-      create: (context) => CategoryProvider()
-    ),
+    ChangeNotifierProvider(create: (context) => CategoryProvider()),
   ];
 
   Routes({this.isDev}) {
