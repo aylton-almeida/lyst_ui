@@ -15,16 +15,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentNavItem = 0;
 
   void _onFloatingActionButtonPress() async {
-    //Define here the FAB behavior
-    //TODO: Put correct action
-    try {
-      final authProvider = Provider.of<AuthProvider>(context, listen: false);
-//      await authProvider.doSignUpUser('almeida@aylton.dev', 'password');
-//      await authProvider.doSignInUser('almeida@aylton.dev', 'password');
-      print(await authProvider.currentUser());
-    } catch (e) {
-      print(e);
-    }
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+//    await authProvider.doSignUpUser('almeida@aylton.dev', 'password');
+    print(await authProvider.currentUser());
   }
 
   @override
