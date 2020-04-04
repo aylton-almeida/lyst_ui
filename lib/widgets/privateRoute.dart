@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:lystui/app.dart';
 import 'package:lystui/models/user.model.dart';
 import 'package:lystui/providers/auth.provider.dart';
 import 'package:lystui/screens/signin/signin.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
+import 'package:lystui/utils/app.dart';
 import 'package:provider/provider.dart';
 
 

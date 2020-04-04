@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lystui/providers/auth.provider.dart';
-import 'package:lystui/screens/home/home.screen.dart';
+import 'package:lystui/screens/app/app.screen.dart';
 import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -20,9 +20,9 @@ class _SignInScreenState extends State<SignInScreen> {
             onPressed: () async {
               final authProvider =
                   Provider.of<AuthProvider>(context, listen: false);
-              await authProvider.doSignInUser('almeida@aylton.dev', 'password');
+              await authProvider.doSignInUser('almeida@aylton.dev', 'newPassword');
               print(await authProvider.currentUser());
-              Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+              Navigator.of(context).pushReplacementNamed(AppScreen.routeName);
             }),
       ),
     );

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lystui/models/category.model.dart';
 import 'package:lystui/services/category.service.dart';
 
-class CategoryProvider extends ChangeNotifier {
+class CategoryProvider with ChangeNotifier {
   CategoryService _service = CategoryService();
   List<Category> categories = [];
 

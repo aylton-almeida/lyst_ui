@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lystui/app.dart';
 import 'package:lystui/models/category.model.dart';
-import 'package:lystui/models/screenRoute.model.dart';
 import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/auth.provider.dart';
 import 'package:lystui/providers/category.provider.dart';
+import 'package:lystui/screens/manageCategories/manageCategories.dart';
 import 'package:lystui/screens/signin/signin.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
+import 'package:lystui/utils/app.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
 import 'package:lystui/widgets/privateRoute.dart';
 import 'package:provider/provider.dart';
 
-class SettingsScreen extends ScreenRoute {
-  SettingsScreen() : super('/');
+class SettingsScreen extends StatefulWidget {
+  static final String routeName = '/';
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -50,14 +50,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  void _onManagePress() {}
+  void _onManagePress() =>
+      Navigator.of(context).pushNamed(ManageCategories.routeName);
 
+  //TODO: Implement
   void _onAboutUsTap() {}
 
   Future<void> _onLogoutTap() async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     await authProvider.doSignOutUser();
-    Application.globalNavigation.currentState.pushNamedAndRemoveUntil(SignInScreen.routeName, (route) => false);
+    Application.globalNavigation.currentState
+        .pushNamedAndRemoveUntil(SignInScreen.routeName, (route) => false);
   }
 
   Widget _buildCategories(List<Category> categories) {
@@ -121,6 +124,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text('Categories',
+                          style: TextStyle(
+                              color: Colors.white.withOpacity(0.8),
+                              fontSize: 18))),
+                ),
                 SizedBox(
                   height: 320,
                   child: _buildCategories(categoriesProvider.categories),
@@ -158,7 +171,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             const SizedBox(width: 10),
                             Text(
                               'About us',
-                              style: TextStyle(color: Colors.white, fontSize: 20),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
                             ),
                           ],
                         ),
@@ -177,7 +191,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             const SizedBox(width: 10),
                             Text(
                               'Logout',
-                              style: TextStyle(color: Colors.white, fontSize: 20),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
                             ),
                           ],
                         ),
