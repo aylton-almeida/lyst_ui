@@ -112,14 +112,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return PrivateRoute(
       child: BackgroundImage(
         child: Scaffold(
-          backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: Image.asset(
               'lib/assets/logo.png',
               width: 100,
             ),
             centerTitle: true,
-            backgroundColor: Color(0xFF848484).withOpacity(0.1),
           ),
           body: SingleChildScrollView(
             child: Column(
@@ -128,15 +126,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text('Categories',
-                          style: TextStyle(
-                              color: Colors.white.withOpacity(0.8),
-                              fontSize: 18))),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Categories',
+                      style: TextStyle(
+                          color: Colors.white.withOpacity(0.8), fontSize: 18),
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 320,
-                  child: _buildCategories(categoriesProvider.categories),
+                  child: Hero(
+                    tag: 'categoriesList',
+                    child: _buildCategories(categoriesProvider.categories),
+                  ),
                 ),
                 const SizedBox(height: 20),
                 SizedBox(
