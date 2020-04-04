@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lystui/models/category.model.dart';
-import 'package:lystui/models/screenRoute.model.dart';
 import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/utils/alerts.utils.dart';
@@ -9,8 +8,11 @@ import 'package:lystui/widgets/privateRoute.dart';
 import 'file:///C:/Users/aylto/codigos/aulas/lab4/lyst_ui/lib/widgets/backgroundImage.dart';
 import 'package:provider/provider.dart';
 
-class CategoriesScreen extends ScreenRoute {
-  CategoriesScreen() : super('/');
+class CategoriesScreen extends StatefulWidget {
+  static final routeName = '/';
+  final Function setFabOptions;
+
+  const CategoriesScreen({Key key, this.setFabOptions}) : super(key: key);
 
   @override
   _CategoriesScreenState createState() => _CategoriesScreenState();
@@ -87,6 +89,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       ),
     );
   }
+
+//  if (ModalRoute.of(context).isCurrent) {
+//  SchedulerBinding.instance.addPostFrameCallback((_) =>
+//  widget.setFabOptions(Icons.view_list, true, () => print('Category')));
+//  }
 
   @override
   Widget build(BuildContext context) {
