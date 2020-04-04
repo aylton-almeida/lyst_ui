@@ -8,7 +8,7 @@ class FabProvider with ChangeNotifier {
       FabOptions(
         icon: Icons.view_list,
         isVisible: true,
-        onPress: () => print('categories'),
+        onPress: () => print('categories'), //TODO: Implement
       )
     ],
     TabItem.settings: [FabOptions(isVisible: false)],
@@ -20,7 +20,9 @@ class FabProvider with ChangeNotifier {
   }
 
   void removeFabOptions(TabItem tabItem) {
-    this.fabOptions[tabItem].removeLast();
-    notifyListeners();
+    if (this.fabOptions[tabItem].length > 1) {
+      this.fabOptions[tabItem].removeLast();
+      notifyListeners();
+    }
   }
 }

@@ -21,6 +21,10 @@ class Routes {
     primaryColor: Color(0xFFba0dab),
     primaryColorLight: Color(0xFFD134C4),
     accentColor: Color(0xFFba0dab),
+    scaffoldBackgroundColor: Colors.transparent,
+    appBarTheme: AppBarTheme(
+      color: Color(0xFF848484).withOpacity(0.1),
+    ),
     buttonTheme: ButtonThemeData(
       textTheme: ButtonTextTheme.primary,
       buttonColor: Color(0xFFba0dab),

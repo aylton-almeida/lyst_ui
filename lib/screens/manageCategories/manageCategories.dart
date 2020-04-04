@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:lystui/models/category.model.dart';
 import 'package:lystui/models/fabOptions.model.dart';
+import 'package:lystui/models/serviceException.model.dart';
+import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
+import 'package:lystui/screens/addCategory/addCategory.screen.dart';
 import 'package:lystui/screens/app/app.screen.dart';
+import 'package:lystui/utils/alerts.utils.dart';
+import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
 import 'package:lystui/widgets/privateRoute.dart';
 import 'package:provider/provider.dart';
 
 class ManageCategories extends StatefulWidget {
   static final String routeName = '/managecategories';
-  final Function setFabOptions;
-
-  const ManageCategories({Key key, this.setFabOptions}) : super(key: key);
 
   @override
   _ManageCategoriesState createState() => _ManageCategoriesState();
 }
 
 class _ManageCategoriesState extends State<ManageCategories> {
+  final refreshKey = GlobalKey<RefreshIndicatorState>();
+
   @override
   void initState() {
     super.initState();
+    refreshCategories();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       final provider = Provider.of<FabProvider>(context, listen: false);
       provider.addFabOptions(
@@ -28,9 +34,33 @@ class _ManageCategoriesState extends State<ManageCategories> {
           FabOptions(
             icon: Icons.add,
             isVisible: true,
-            onPress: () => print('manage'),
+            onPress: _onFabPress,
           ));
     });
+  }
+
+  @override
+  void dispose() {
+    refreshKey.currentState?.dispose();
+    super.dispose();
+  }
+
+  void _onFabPress() =>
+      Navigator.of(context).pushNamed(AddCategoryScreen.routeName);
+
+  Future<void> refreshCategories() async {
+    refreshKey.currentState?.show(atTop: false);
+
+    try {
+      await Provider.of<CategoryProvider>(context, listen: false)
+          .doUpdateCategories();
+    } catch (e) {
+      if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
+        Alerts.showSnackBar(
+            context: context,
+            text: ErrorTranslator.authError(e.code),
+            color: Colors.red);
+    }
   }
 
   void _onBackPressed() {
@@ -39,25 +69,65 @@ class _ManageCategoriesState extends State<ManageCategories> {
     Navigator.pop(context);
   }
 
+  Widget _buildCategories(List<Category> categories) {
+    return RefreshIndicator(
+      backgroundColor: Theme.of(context).primaryColor,
+      color: Colors.white,
+      key: refreshKey,
+      onRefresh: refreshCategories,
+      child: ListView.builder(
+        padding: EdgeInsets.symmetric(horizontal: 4, vertical: 16),
+        itemCount: categories.length,
+        itemBuilder: (context, i) {
+          if (i.isOdd) return Divider(color: Colors.transparent);
+
+          final index = i ~/ 2;
+          return _buildRow(categories[index]);
+        },
+      ),
+    );
+  }
+
+  Widget _buildRow(Category category) {
+    return ListTile(
+      leading: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height: 15,
+          width: 15,
+          decoration: BoxDecoration(
+            color: Color(category.color),
+            shape: BoxShape.circle,
+          ),
+        ),
+      ),
+      title: Text(
+        category.title,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final categoriesProvider = Provider.of<CategoryProvider>(context);
+
     return PrivateRoute(
       child: BackgroundImage(
         child: Scaffold(
-          backgroundColor: Colors.transparent,
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: _onBackPressed,
             ),
             title: Text('Manage Categories'),
           ),
-          body: Center(
-            child: Text(
-              'Hello World',
-              style: TextStyle(color: Colors.white),
-            ),
+          body: Hero(
+            tag: 'categoriesList',
+            child: _buildCategories(categoriesProvider.categories),
           ),
         ),
       ),

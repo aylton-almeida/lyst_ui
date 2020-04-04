@@ -10,9 +10,6 @@ import 'package:provider/provider.dart';
 
 class CategoriesScreen extends StatefulWidget {
   static final routeName = '/';
-  final Function setFabOptions;
-
-  const CategoriesScreen({Key key, this.setFabOptions}) : super(key: key);
 
   @override
   _CategoriesScreenState createState() => _CategoriesScreenState();
@@ -90,11 +87,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     );
   }
 
-//  if (ModalRoute.of(context).isCurrent) {
-//  SchedulerBinding.instance.addPostFrameCallback((_) =>
-//  widget.setFabOptions(Icons.view_list, true, () => print('Category')));
-//  }
-
   @override
   Widget build(BuildContext context) {
     final categoriesProvider = Provider.of<CategoryProvider>(context);
@@ -102,14 +94,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     return PrivateRoute(
       child: BackgroundImage(
         child: Scaffold(
-          backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: Image.asset(
               'lib/assets/logo.png',
               width: 100,
             ),
             centerTitle: true,
-            backgroundColor: Color(0xFF848484).withOpacity(0.1),
           ),
           body: _buildCategories(categoriesProvider.categories),
         ),
