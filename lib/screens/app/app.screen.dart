@@ -58,6 +58,7 @@ class _AppScreenState extends State<AppScreen> {
               .maybePop();
         },
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           body: Stack(
             children: <Widget>[
               _buildOffStateNavigator(TabItem.categories),

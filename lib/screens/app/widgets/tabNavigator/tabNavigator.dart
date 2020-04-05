@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lystui/screens/addCategory/addCategory.screen.dart';
 import 'package:lystui/screens/app/app.screen.dart';
 import 'package:lystui/screens/categories/categories.screen.dart';
-import 'package:lystui/screens/manageCategories/manageCategories.dart';
+import 'package:lystui/screens/editCategory/editCategory.screen.dart';
+import 'package:lystui/screens/manageCategories/manageCategories.screen.dart';
 import 'package:lystui/screens/settings/settings.screen.dart';
 
 class TabNavigator extends StatefulWidget {
@@ -36,8 +36,8 @@ class _TabNavigatorState extends State<TabNavigator> {
     else
       return {
         SettingsScreen.routeName: (context) => SettingsScreen(),
-        ManageCategories.routeName: (context) => ManageCategories(),
-        AddCategoryScreen.routeName: (context) => AddCategoryScreen(),
+        ManageCategoriesScreen.routeName: (context) => ManageCategoriesScreen(),
+        EditCategoryScreen.routeName: (context) => EditCategoryScreen(),
       };
   }
 

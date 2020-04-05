@@ -5,22 +5,22 @@ import 'package:lystui/models/fabOptions.model.dart';
 import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
-import 'package:lystui/screens/addCategory/addCategory.screen.dart';
 import 'package:lystui/screens/app/app.screen.dart';
+import 'package:lystui/screens/editCategory/editCategory.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
 import 'package:lystui/widgets/privateRoute.dart';
 import 'package:provider/provider.dart';
 
-class ManageCategories extends StatefulWidget {
+class ManageCategoriesScreen extends StatefulWidget {
   static final String routeName = '/managecategories';
 
   @override
-  _ManageCategoriesState createState() => _ManageCategoriesState();
+  _ManageCategoriesScreenState createState() => _ManageCategoriesScreenState();
 }
 
-class _ManageCategoriesState extends State<ManageCategories> {
+class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
   final refreshKey = GlobalKey<RefreshIndicatorState>();
 
   @override
@@ -46,7 +46,7 @@ class _ManageCategoriesState extends State<ManageCategories> {
   }
 
   void _onFabPress() =>
-      Navigator.of(context).pushNamed(AddCategoryScreen.routeName);
+      Navigator.of(context).pushNamed(EditCategoryScreen.routeName);
 
   Future<void> refreshCategories() async {
     refreshKey.currentState?.show(atTop: false);
