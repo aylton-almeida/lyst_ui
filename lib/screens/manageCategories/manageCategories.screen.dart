@@ -12,6 +12,7 @@ import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
 import 'package:lystui/widgets/privateRoute.dart';
 import 'package:provider/provider.dart';
+import 'package:lystui/utils/string.extension.dart';
 
 class ManageCategoriesScreen extends StatefulWidget {
   static final String routeName = '/managecategories';
@@ -58,7 +59,7 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
       if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
         Alerts.showSnackBar(
             context: context,
-            text: ErrorTranslator.authError(e.code),
+            text: ErrorTranslator.authError(e),
             color: Colors.red);
     }
   }
@@ -78,12 +79,7 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
       child: ListView.builder(
         padding: EdgeInsets.symmetric(horizontal: 4, vertical: 16),
         itemCount: categories.length,
-        itemBuilder: (context, i) {
-          if (i.isOdd) return Divider(color: Colors.transparent);
-
-          final index = i ~/ 2;
-          return _buildRow(categories[index]);
-        },
+        itemBuilder: (context, i) => _buildRow(categories[i]),
       ),
     );
   }
@@ -102,7 +98,7 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
         ),
       ),
       title: Text(
-        category.title,
+        category.title.capitalize(),
         style: TextStyle(
           color: Colors.white,
           fontSize: 20,

@@ -12,6 +12,8 @@ class CategoryService {
   Future<List<Category>> getCategories() async {
     final authToken = await _storage.read(key: 'authToken');
 
+    if (authToken == null) return null;
+
     String url = '${DotEnv().env['BACKEND_URL']}/category';
     Map<String, String> headers = {"Authorization": 'Bearer $authToken'};
 
@@ -24,6 +26,33 @@ class CategoryService {
         for (Map<String, dynamic> category in body)
           categories.add(Category.fromJson(category));
         return categories;
+      case 401:
+        print(response.body);
+        throw new ServiceException(code: 'USER_NOT_CONNECTED');
+      default:
+        print(response.body);
+        throw new ServiceException(code: 'INTERNAL_SERVER_ERROR');
+    }
+  }
+
+  Future<Category> createCategory(String title, int color) async {
+    final authToken = await _storage.read(key: 'authToken');
+
+    if (authToken == null) return null;
+
+    String url = '${DotEnv().env['BACKEND_URL']}/category';
+    Map<String, String> headers = {
+      "Authorization": 'Bearer $authToken',
+      "Content-type": "application/json"
+    };
+    String body = jsonEncode(Category(title: title, color: color));
+
+    final response = await post(url, headers: headers, body: body);
+
+    switch (response.statusCode) {
+      case 200:
+        Map body = jsonDecode(response.body);
+        return Category.fromJson(body);
       case 401:
         print(response.body);
         throw new ServiceException(code: 'USER_NOT_CONNECTED');

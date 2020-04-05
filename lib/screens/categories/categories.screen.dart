@@ -4,9 +4,10 @@ import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
+import 'package:lystui/widgets/backgroundImage.dart';
 import 'package:lystui/widgets/privateRoute.dart';
-import 'file:///C:/Users/aylto/codigos/aulas/lab4/lyst_ui/lib/widgets/backgroundImage.dart';
 import 'package:provider/provider.dart';
+import 'package:lystui/utils/string.extension.dart';
 
 class CategoriesScreen extends StatefulWidget {
   static final routeName = '/';
@@ -40,7 +41,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
         Alerts.showSnackBar(
             context: context,
-            text: ErrorTranslator.authError(e.code),
+            text: ErrorTranslator.authError(e),
+            color: Colors.red);
+      else
+        Alerts.showSnackBar(
+            context: context,
+            text: 'Ocorreu um erro, tente novamente mais tarde',
             color: Colors.red);
     }
   }
@@ -54,12 +60,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       child: ListView.builder(
         padding: EdgeInsets.symmetric(horizontal: 4, vertical: 16),
         itemCount: categories.length,
-        itemBuilder: (context, i) {
-          if (i.isOdd) return Divider(color: Colors.transparent);
-
-          final index = i ~/ 2;
-          return _buildRow(categories[index]);
-        },
+        itemBuilder: (context, i) => _buildRow(categories[i]),
       ),
     );
   }
@@ -68,17 +69,20 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     return ListTile(
       leading: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
-          height: 15,
-          width: 15,
-          decoration: BoxDecoration(
-            color: Color(category.color),
-            shape: BoxShape.circle,
+        child: Hero(
+          tag: 'colorCircle:${category.color}',
+          child: Container(
+            height: 15,
+            width: 15,
+            decoration: BoxDecoration(
+              color: Color(category.color),
+              shape: BoxShape.circle,
+            ),
           ),
         ),
       ),
       title: Text(
-        category.title,
+        category.title.capitalize(),
         style: TextStyle(
           color: Colors.white,
           fontSize: 20,

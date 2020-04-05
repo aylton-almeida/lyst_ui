@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lystui/models/fabOptions.model.dart';
+import 'package:lystui/models/serviceException.model.dart';
+import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
+import 'package:lystui/utils/alerts.utils.dart';
+import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/utils/validators.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
 import 'package:lystui/widgets/keyboardDismissContainer.dart';
@@ -77,9 +81,33 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
     });
   }
 
-  //TODO: Implement
-  void _onFabPress() {
-    print('add');
+  void _onFabPress() async {
+    final categoryProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
+
+    if (_formKey.currentState.validate()) {
+      try{
+        await categoryProvider.doCreateCategory(_controllerName.text, _selectedColor.value);
+        _onBackPressed();
+      }catch (e) {
+        print(e);
+        if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
+          Alerts.showSnackBar(
+              context: context,
+              text: ErrorTranslator.authError(e),
+              color: Colors.red);
+        else
+          Alerts.showSnackBar(
+              context: context,
+              text: 'Ocorreu um erro, tente novamente mais tarde',
+              color: Colors.red);
+      }
+    } else
+      Alerts.showSnackBar(
+        context: context,
+        text: 'Type a title for the category',
+        color: Colors.red,
+      );
   }
 
   @override
@@ -103,8 +131,9 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
                   validator: Validators.require,
                   textCapitalization: TextCapitalization.words,
                   focusNode: _nameFocusNode,
-                  hintText: 'Category name...',
+                  hintText: 'Category title...',
                   cursorColor: Theme.of(context).primaryColor,
+                  showError: false,
                 ),
               ),
             ),
@@ -146,7 +175,9 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
                                     shape: BoxShape.circle,
                                     border: _selectedColor == color
                                         ? Border.all(
-                                            color: Colors.white, width: 3)
+                                            color: Colors.white,
+                                            width: 3,
+                                          )
                                         : null,
                                   ),
                                 ),
