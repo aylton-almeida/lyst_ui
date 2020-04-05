@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FabOptions {
   IconData icon = Icons.add;
   bool isVisible = true;
-  VoidCallback onPress = () {};
+  Function onPress = () {};
 
   FabOptions({this.icon, this.isVisible, this.onPress});
 

@@ -10,4 +10,9 @@ class CategoryProvider with ChangeNotifier {
     this.categories = await _service.getCategories();
     notifyListeners();
   }
+
+  Future<void> doCreateCategory(String title, int color) async {
+    this.categories.add(await _service.createCategory(title, color));
+    notifyListeners();
+  }
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Category {
   int id;
   String title;
@@ -21,4 +23,18 @@ class Category {
         userId = json['userId'],
         createdDate = json['createdDate'],
         updateOn = json['updateOn'];
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'color': color,
+        'userId': userId,
+        'createdDate': createdDate,
+        'updateOn': updateOn,
+      };
+
+  @override
+  String toString() {
+    return jsonEncode(this.toJson());
+  }
 }

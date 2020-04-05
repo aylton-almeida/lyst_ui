@@ -22,31 +22,34 @@ class PersonalizedTextField extends StatefulWidget {
   final Color enabledColor;
   final Color disabledColor;
   final Color cursorColor;
+  final bool showError;
 
-  PersonalizedTextField({
-    Key key,
-    this.errorColor,
-    this.borderColor,
-    this.enabledColor,
-    this.disabledColor,
-    this.hintText,
-    this.labelText,
-    this.validator,
-    @required this.controller,
-    this.autocorrect,
-    this.keyboardType,
-    this.suffixIcon,
-    this.obscureText,
-    this.textCapitalization,
-    this.onChanged,
-    this.textInputAction,
-    this.focusNode,
-    this.onEditingComplete,
-    this.enabled,
-    this.fontSize,
-    this.focusedColor,
-    this.cursorColor
-  }) : super(key: key);
+  PersonalizedTextField(
+      {Key key,
+      this.errorColor,
+      this.borderColor,
+      this.enabledColor,
+      this.disabledColor,
+      this.hintText,
+      this.labelText,
+      this.validator,
+      @required this.controller,
+      this.autocorrect,
+      this.keyboardType,
+      this.suffixIcon,
+      this.obscureText,
+      this.textCapitalization,
+      this.onChanged,
+      this.textInputAction,
+      this.focusNode,
+      this.onEditingComplete,
+      this.enabled,
+      this.fontSize,
+      this.focusedColor,
+      this.cursorColor,
+      bool showError})
+      : this.showError = showError ?? true,
+        super(key: key);
 
   _PersonalizedTextFieldState createState() => _PersonalizedTextFieldState();
 }
@@ -84,6 +87,7 @@ class _PersonalizedTextFieldState extends State<PersonalizedTextField> {
               style: BorderStyle.solid,
             ),
           ),
+          errorStyle: widget.showError ? null : TextStyle(fontSize: 0),
           hintText: widget.hintText,
           hintStyle: TextStyle(
             color: Colors.white.withOpacity(0.8),
