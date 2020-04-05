@@ -4,7 +4,7 @@ import 'package:lystui/models/category.model.dart';
 import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/auth.provider.dart';
 import 'package:lystui/providers/category.provider.dart';
-import 'package:lystui/screens/manageCategories/manageCategories.dart';
+import 'package:lystui/screens/manageCategories/manageCategories.screen.dart';
 import 'package:lystui/screens/signin/signin.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/app.dart';
@@ -51,7 +51,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _onManagePress() =>
-      Navigator.of(context).pushNamed(ManageCategories.routeName);
+      Navigator.of(context).pushNamed(ManageCategoriesScreen.routeName);
 
   //TODO: Implement
   void _onAboutUsTap() {}

@@ -20,6 +20,8 @@ class Routes {
   final appTheme = ThemeData(
     primaryColor: Color(0xFFba0dab),
     primaryColorLight: Color(0xFFD134C4),
+    primaryColorDark: Color(0xFF940A88),
+    hintColor: Color(0xFFba0dab),
     accentColor: Color(0xFFba0dab),
     scaffoldBackgroundColor: Colors.transparent,
     appBarTheme: AppBarTheme(

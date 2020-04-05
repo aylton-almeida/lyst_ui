@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class OutlinedTextField extends StatefulWidget {
+class PersonalizedTextField extends StatefulWidget {
   final String hintText;
   final String labelText;
   final Function validator;
@@ -15,17 +15,16 @@ class OutlinedTextField extends StatefulWidget {
   final FocusNode focusNode;
   final Function onEditingComplete;
   final bool enabled;
-  final double borderRadius;
   final double fontSize;
   final Color focusedColor;
   final Color errorColor;
   final Color borderColor;
   final Color enabledColor;
   final Color disabledColor;
+  final Color cursorColor;
 
-  OutlinedTextField({
+  PersonalizedTextField({
     Key key,
-    @required this.focusedColor,
     this.errorColor,
     this.borderColor,
     this.enabledColor,
@@ -44,14 +43,15 @@ class OutlinedTextField extends StatefulWidget {
     this.focusNode,
     this.onEditingComplete,
     this.enabled,
-    @required this.borderRadius,
     this.fontSize,
+    this.focusedColor,
+    this.cursorColor
   }) : super(key: key);
 
-  _OutlinedTextFieldState createState() => _OutlinedTextFieldState();
+  _PersonalizedTextFieldState createState() => _PersonalizedTextFieldState();
 }
 
-class _OutlinedTextFieldState extends State<OutlinedTextField> {
+class _PersonalizedTextFieldState extends State<PersonalizedTextField> {
   FocusNode focusNode = FocusNode();
 
   @override
@@ -78,28 +78,11 @@ class _OutlinedTextFieldState extends State<OutlinedTextField> {
         autocorrect: widget.autocorrect ?? true,
         validator: widget.validator,
         decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(widget.borderRadius),
-            borderSide: BorderSide(color: widget.focusedColor, width: 1.0),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(widget.borderRadius),
+          enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-                color: widget.enabledColor ?? Colors.white, width: 1.0),
-          ),
-          disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(widget.borderRadius),
-              borderSide: BorderSide(
-                  color: widget.disabledColor ?? Colors.grey, width: 1.0)),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(widget.borderRadius),
-            borderSide:
-                BorderSide(color: widget.errorColor ?? Colors.red, width: 1.0),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(widget.borderRadius),
-            borderSide:
-                BorderSide(color: widget.errorColor ?? Colors.red, width: 1.0),
+              color: Colors.white,
+              style: BorderStyle.solid,
+            ),
           ),
           hintText: widget.hintText,
           hintStyle: TextStyle(
@@ -117,6 +100,7 @@ class _OutlinedTextFieldState extends State<OutlinedTextField> {
         textCapitalization:
             widget.textCapitalization ?? TextCapitalization.sentences,
         onChanged: widget.onChanged,
+        cursorColor: widget.cursorColor,
       ),
     );
   }
