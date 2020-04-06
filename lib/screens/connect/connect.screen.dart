@@ -11,144 +11,105 @@ class ConnectScreen extends StatefulWidget {
 
 class _ConnectScreenState extends State<ConnectScreen> {
   void _onConnectPress() {}
+
   void _onConnectEmailPress() {}
-  
+
   @override
   Widget build(BuildContext context) {
     return BackgroundImage(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            SizedBox(
-              height: 100,
+            new Text(
+              "Make lists\n"
+              "Organize your ideas\n"
+              "Accomplish your tasks\n"
+              "Boost your productivity",
+              style: TextStyle(color: Colors.white60, fontSize: 22.0),
+              textAlign: TextAlign.center,
             ),
-            SizedBox(
-              //height: 50,
-              width: 320,
-              child: Center(
-                child: Column(
-                  children: <Widget>[
-                    new Text(
-                      "make lists",
-                      style: TextStyle(color: Colors.white60, fontSize: 22.0),
-                    ),
-                    new Text(
-                      "organize your ideas",
-                      style: TextStyle(color: Colors.white60, fontSize: 22.0),
-                    ),
-                    new Text(
-                      "accomplish your tasks",
-                      style: TextStyle(color: Colors.white60, fontSize: 22.0),
-                    ),
-                    new Text(
-                      "boost your productivity",
-                      style: TextStyle(color: Colors.white60, fontSize: 22.9),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              margin: new EdgeInsets.only(left: 40.0, top: 100),
-              width: 320,
-              height: 160.0,
-              decoration: BoxDecoration(
-                image: new DecorationImage(
-                  image: new AssetImage("lib/assets/logo.png"),
-                  fit: BoxFit.cover,
-                ),
-              ),
+            Image.asset(
+              'lib/assets/logo.png',
+              width: 250,
             ),
             Column(
               children: <Widget>[
-                SizedBox(
-                  height: 150,
-                ),
                 SizedBox(
                   height: 40,
                   width: 320,
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(200.0)),
+                        borderRadius: new BorderRadius.circular(25.0)),
                     color: Colors.white70,
-                    splashColor: Colors.pinkAccent,
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Container(
-                          margin: new EdgeInsets.only(left:5, right: 12),
-                          padding: const EdgeInsets.only(left: 50),
-                          width: 32,
-                          height: 27.0,
-                          decoration: BoxDecoration(
-                            image: new DecorationImage(
-                              image: new AssetImage ("lib/assets/icon_google.png"),
-
-                              fit: BoxFit.cover,
-                            ),
+                        Image.asset(
+                          'lib/assets/icon_google.png',
+                          width: 25,
+                        ),
+                        const SizedBox(width: 20),
+                        Text(
+                          "SIGN IN WITH GOOGLE",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.0,
+                            fontFamily: 'Roboto',
                           ),
                         ),
-                      Text(
-                      "CONNECT WITH GOOGLE   ",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18.0,
-                      ),
-
-                    ),
                       ],
                     ),
                     onPressed: _onConnectPress,
                   ),
                 ),
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                SizedBox(
-                  height: 30,
-                  width: 390,
-                  child: Center(
-                    child: Text(
-                      '───────────── OR ─────────────',
-                      style: TextStyle(color: Colors.white60),
+                const SizedBox(height: 20),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Divider(
+                          color: Colors.white, indent: 40, endIndent: 20),
                     ),
-                  ),
+                    Text(
+                      'OR',
+                      style: TextStyle(
+                        color: Colors.white60,
+                      ),
+                    ),
+                    Expanded(
+                        child: Divider(
+                            color: Colors.white, indent: 20, endIndent: 40)),
+                  ],
                 ),
-              ],
-            ),
-            Column(
-              children: <Widget>[
+                const SizedBox(height: 20),
                 SizedBox(
                   height: 40,
-                  width: 322,
-                  child: RaisedButton(
+                  width: 320,
+                  child: OutlineButton(
+                    textColor: Colors.white,
+                    borderSide: BorderSide(color: Colors.white60, width: 2),
+                    highlightedBorderColor: Colors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(100.0),
-                      side: BorderSide(color: Colors.grey),
-                    ),
-                    color: Colors.transparent,
-                    splashColor: Colors.pinkAccent,
+                        borderRadius: new BorderRadius.circular(25.0)),
+                    color: Colors.white70,
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Divider(
-                          indent: 10,
-                        ),
-                        Icon(Icons.local_post_office,
-                            size: 30, color: Colors.white60),
+                        Icon(Icons.mail),
+                        const SizedBox(width: 20),
                         Text(
                           "CONNECT WITH EMAIL",
                           style: TextStyle(
-                            color: Colors.white60,
-                            fontSize: 18.0,
+                            fontSize: 16.0,
+                            fontFamily: 'Roboto',
                           ),
                         ),
-                        Icon(Icons.arrow_forward,
-                            size: 21, color: Colors.white60),
+                        const SizedBox(width: 20),
+                        Icon(Icons.arrow_forward)
                       ],
                     ),
-                    onPressed: _onConnectPress,
+                    onPressed: _onConnectEmailPress,
                   ),
                 ),
               ],
