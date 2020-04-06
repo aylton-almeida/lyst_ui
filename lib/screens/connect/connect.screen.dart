@@ -9,13 +9,12 @@ class ConnectScreen extends StatefulWidget {
   _ConnectScreenState createState() => _ConnectScreenState();
 }
 
-void _onConnectPress() {}
-//void _onConnectEmailPress() {}
-
 class _ConnectScreenState extends State<ConnectScreen> {
+  void _onConnectPress() {}
+  void _onConnectEmailPress() {}
+  
   @override
   Widget build(BuildContext context) {
-    //// ODO: implement build
     return BackgroundImage(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -80,12 +79,6 @@ class _ConnectScreenState extends State<ConnectScreen> {
                     splashColor: Colors.pinkAccent,
                     child: Row(
                       children: <Widget>[
-                   //container imagem
-//                        Divider(
-//                          thickness: ,
-//                        ),
-
-
                         Container(
                           margin: new EdgeInsets.only(left:5, right: 12),
                           padding: const EdgeInsets.only(left: 50),
@@ -98,7 +91,6 @@ class _ConnectScreenState extends State<ConnectScreen> {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          //    size: 25, color: Colors.white60),
                         ),
                       Text(
                       "CONNECT WITH GOOGLE   ",
@@ -108,8 +100,6 @@ class _ConnectScreenState extends State<ConnectScreen> {
                       ),
 
                     ),
-                    //  Icon(Icons.arrow_forward,
-
                       ],
                     ),
                     onPressed: _onConnectPress,
@@ -134,12 +124,8 @@ class _ConnectScreenState extends State<ConnectScreen> {
 
 
             Column(
-
-
               children: <Widget>[
-
                 //espaçamento botão
-
                 SizedBox(
                   height: 40,
                   width: 322,
