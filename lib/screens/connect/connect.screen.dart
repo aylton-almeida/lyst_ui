@@ -50,8 +50,6 @@ class _ConnectScreenState extends State<ConnectScreen> {
                 ),
               ),
             ),
-
-            //logo
             Container(
               margin: new EdgeInsets.only(left: 40.0, top: 100),
               width: 320,
@@ -63,7 +61,6 @@ class _ConnectScreenState extends State<ConnectScreen> {
                 ),
               ),
             ),
-
             Column(
               children: <Widget>[
                 SizedBox(
@@ -121,39 +118,27 @@ class _ConnectScreenState extends State<ConnectScreen> {
                 ),
               ],
             ),
-
-
             Column(
               children: <Widget>[
-                //espaçamento botão
                 SizedBox(
                   height: 40,
                   width: 322,
-               //botão connect e-mail
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(100.0),
                       side: BorderSide(color: Colors.grey),
                     ),
-
-              //desgin botão
                     color: Colors.transparent,
                     splashColor: Colors.pinkAccent,
-                    //row do icone + texto+ icone
                     child: Row(
-
-
                       children: <Widget>[
-
                         Divider(
-                        //  thickness: 20 ,
                           indent: 10,
                         ),
-
                         Icon(Icons.local_post_office,
                             size: 30, color: Colors.white60),
                         Text(
-                          "    CONNECT WITH EMAIL    ",
+                          "CONNECT WITH EMAIL",
                           style: TextStyle(
                             color: Colors.white60,
                             fontSize: 18.0,
@@ -163,7 +148,6 @@ class _ConnectScreenState extends State<ConnectScreen> {
                             size: 21, color: Colors.white60),
                       ],
                     ),
-                    //
                     onPressed: _onConnectPress,
                   ),
                 ),
