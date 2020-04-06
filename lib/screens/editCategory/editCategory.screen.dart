@@ -114,7 +114,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
       else
         Alerts.showSnackBar(
             context: context,
-            text: 'Ocorreu um erro, tente novamente mais tarde',
+            text: 'An error happened, please try again later',
             color: Colors.red);
     }
   }
@@ -153,7 +153,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
         else
           Alerts.showSnackBar(
               context: context,
-              text: 'Ocorreu um erro, tente novamente mais tarde',
+              text: 'An error happened, please try again later',
               color: Colors.red);
       }
     } else
