@@ -46,7 +46,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       else
         Alerts.showSnackBar(
             context: context,
-            text: 'Ocorreu um erro, tente novamente mais tarde',
+            text: 'An error happened, please try again later',
             color: Colors.red);
     }
   }
