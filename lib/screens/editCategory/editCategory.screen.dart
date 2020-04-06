@@ -128,10 +128,13 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
   void _onFabPress() async {
     final categoryProvider =
         Provider.of<CategoryProvider>(context, listen: false);
+//    final loadingProvider =
+//        Provider.of<LoadingProvider>(context, listen: false);
 
     if (_formKey.currentState.validate()) {
       String msg;
       try {
+//        loadingProvider.showLoader(); //TODO: Add loader if needed
         if (_categoryId == null) {
           await categoryProvider.doCreateCategory(
               _controllerName.text, _selectedColor.value);
@@ -155,6 +158,8 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
               context: context,
               text: 'An error happened, please try again later',
               color: Colors.red);
+      } finally {
+//        loadingProvider.hideLoader(); //TODO: Add loader if needed
       }
     } else
       Alerts.showSnackBar(

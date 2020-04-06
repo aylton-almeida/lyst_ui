@@ -69,15 +69,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     return ListTile(
       leading: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Hero(
-          tag: 'colorCircle:${category.color}',
-          child: Container(
-            height: 15,
-            width: 15,
-            decoration: BoxDecoration(
-              color: Color(category.color),
-              shape: BoxShape.circle,
-            ),
+        child: Container(
+          height: 15,
+          width: 15,
+          decoration: BoxDecoration(
+            color: Color(category.color),
+            shape: BoxShape.circle,
           ),
         ),
       ),
