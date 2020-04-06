@@ -50,6 +50,7 @@ class _TabNavigatorState extends State<TabNavigator> {
         observers: [_heroController],
         onGenerateRoute: (settings) {
           return MaterialPageRoute(
+              settings: settings,
               builder: (context) => routeBuilders[settings.name](context));
         });
   }

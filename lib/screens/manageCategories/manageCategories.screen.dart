@@ -70,6 +70,17 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
     Navigator.pop(context);
   }
 
+  void _onRowTap(Category category) {
+    if (category.title == 'Not Categorized')
+      Alerts.showSnackBar(
+          context: context,
+          text: 'You can only edit non default categories',
+          color: Colors.yellow.shade700);
+    else
+      Navigator.of(context)
+          .pushNamed(EditCategoryScreen.routeName, arguments: category);
+  }
+
   Widget _buildCategories(List<Category> categories) {
     return RefreshIndicator(
       backgroundColor: Theme.of(context).primaryColor,
@@ -86,6 +97,7 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
 
   Widget _buildRow(Category category) {
     return ListTile(
+      onTap: () => _onRowTap(category),
       leading: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
