@@ -24,12 +24,6 @@ class Routes {
       icon: Icons.shopping_cart,
       child: Center(child: Text('Settings')),
     ),
-    Destination(
-      title: "Connect",
-      //icon: Icons.home,
-      routes: [CategoriesScreen()],
-    ),
-
   ];
 
   final appTheme = ThemeData(
