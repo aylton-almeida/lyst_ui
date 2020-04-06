@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lystui/models/screenRoute.model.dart';
-import 'file:///C:/Users/aylto/codigos/aulas/lab4/lyst_ui/lib/widgets/backgroundImage.dart';
+import 'package:lystui/widgets/backgroundImage.dart';
 
 class CategoriesScreen extends ScreenRoute {
   CategoriesScreen() : super('/');
