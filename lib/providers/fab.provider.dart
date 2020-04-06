@@ -3,6 +3,7 @@ import 'package:lystui/models/fabOptions.model.dart';
 import 'package:lystui/screens/app/app.screen.dart';
 
 class FabProvider with ChangeNotifier {
+  //Add here initial BottomNavigationRoutes
   Map<TabItem, List<FabOptions>> fabOptions = {
     TabItem.categories: [
       FabOptions(

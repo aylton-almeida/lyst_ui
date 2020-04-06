@@ -9,8 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 class Routes {
-  final isDev;
-
   //Declare main app routes
   final routes = <String, WidgetBuilder>{
     AppScreen.routeName: (context) => AppScreen(),
@@ -43,7 +41,7 @@ class Routes {
     ChangeNotifierProvider(create: (context) => FabProvider(),)
   ];
 
-  Routes({this.isDev}) {
+  Routes() {
     runApp(MultiProvider(
       providers: providers,
       child: MaterialApp(

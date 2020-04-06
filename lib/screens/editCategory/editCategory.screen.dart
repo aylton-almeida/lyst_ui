@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:lystui/models/category.model.dart';
 import 'package:lystui/models/fabOptions.model.dart';
 import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/category.provider.dart';
@@ -46,6 +47,8 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
 
   Color _selectedColor = categoryColors.first;
 
+  int _categoryId;
+
   @override
   void initState() {
     super.initState();
@@ -64,8 +67,23 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    final Category categoryArgs = ModalRoute.of(context).settings.arguments;
+    if (categoryArgs != null) {
+      _controllerName.text = categoryArgs.title;
+      setState(() {
+        _selectedColor = categoryColors
+            .firstWhere((color) => color.value == categoryArgs.color);
+        _categoryId = categoryArgs.id;
+      });
+    }
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
     _nameFocusNode.dispose();
+    _controllerName.dispose();
     super.dispose();
   }
 
@@ -73,6 +91,32 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
     final fabProvider = Provider.of<FabProvider>(context, listen: false);
     fabProvider.removeFabOptions(TabItem.settings);
     Navigator.pop(context);
+  }
+
+  void _onClearPress(int id) {
+    //TODO: implement
+  }
+
+  void _onDeletePress(int id) async {
+    final categoryProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
+
+    try {
+      await categoryProvider.doDeleteCategory(id);
+      _onBackPressed();
+    } catch (e) {
+      print(e);
+      if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
+        Alerts.showSnackBar(
+            context: context,
+            text: ErrorTranslator.categoryError(e),
+            color: Colors.red);
+      else
+        Alerts.showSnackBar(
+            context: context,
+            text: 'Ocorreu um erro, tente novamente mais tarde',
+            color: Colors.red);
+    }
   }
 
   void _onColorPressed(Color color) {
@@ -86,15 +130,25 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
         Provider.of<CategoryProvider>(context, listen: false);
 
     if (_formKey.currentState.validate()) {
-      try{
-        await categoryProvider.doCreateCategory(_controllerName.text, _selectedColor.value);
+      String msg;
+      try {
+        if (_categoryId == null) {
+          await categoryProvider.doCreateCategory(
+              _controllerName.text, _selectedColor.value);
+          msg = 'Category created with success!';
+        } else {
+          await categoryProvider.doUpdateCategory(
+              _categoryId, _controllerName.text, _selectedColor.value);
+          msg = 'Category updated with success!';
+        }
+        Alerts.showSnackBar(context: context, text: msg, color: Colors.green);
         _onBackPressed();
-      }catch (e) {
+      } catch (e) {
         print(e);
         if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
           Alerts.showSnackBar(
               context: context,
-              text: ErrorTranslator.authError(e),
+              text: ErrorTranslator.categoryError(e),
               color: Colors.red);
         else
           Alerts.showSnackBar(
@@ -112,6 +166,8 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Category categoryArgs = ModalRoute.of(context).settings.arguments;
+
     return PrivateRoute(
       child: KeyboardDismissContainer(
         child: BackgroundImage(
@@ -145,47 +201,99 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
                 padding: EdgeInsets.all(20),
                 width: double.infinity,
                 color: Color(0xFF28262C).withOpacity(0.5),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Colors',
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.8),
-                          fontSize: 18,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Colors',
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.8),
+                            fontSize: 18,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      direction: Axis.horizontal,
-                      spacing: 35,
-                      runSpacing: 15,
-                      children: categoryColors
-                          .map((color) => InkWell(
-                                customBorder: CircleBorder(),
-                                child: Container(
-                                  width: 25,
-                                  height: 25,
-                                  decoration: BoxDecoration(
-                                    color: color,
-                                    shape: BoxShape.circle,
-                                    border: _selectedColor == color
-                                        ? Border.all(
-                                            color: Colors.white,
-                                            width: 3,
-                                          )
-                                        : null,
+                      const SizedBox(height: 20),
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        direction: Axis.horizontal,
+                        spacing: 35,
+                        runSpacing: 15,
+                        children: categoryColors
+                            .map((color) => InkWell(
+                                  customBorder: CircleBorder(),
+                                  child: Container(
+                                    width: 25,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                      color: color,
+                                      shape: BoxShape.circle,
+                                      border: _selectedColor == color
+                                          ? Border.all(
+                                              color: Colors.white,
+                                              width: 3,
+                                            )
+                                          : null,
+                                    ),
                                   ),
+                                  onTap: () => _onColorPressed(color),
+                                ))
+                            .toList(),
+                      ),
+                      if (categoryArgs != null)
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            const SizedBox(height: 30),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Danger Zone',
+                                style: TextStyle(
+                                  color: Colors.white.withOpacity(0.8),
+                                  fontSize: 18,
                                 ),
-                                onTap: () => _onColorPressed(color),
-                              ))
-                          .toList(),
-                    ),
-                  ],
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            SizedBox(
+                              width: 250,
+                              child: OutlineButton(
+                                onPressed: () => _onClearPress(categoryArgs.id),
+                                textColor: Colors.white,
+                                highlightedBorderColor: Colors.red,
+                                splashColor: Colors.redAccent,
+                                child: Text('CLEAR CATEGORY'),
+                                borderSide: BorderSide(
+                                    color: Colors.redAccent, width: 2),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            SizedBox(
+                              width: 250,
+                              child: OutlineButton(
+                                onPressed: () =>
+                                    _onDeletePress(categoryArgs.id),
+                                textColor: Colors.white,
+                                highlightedBorderColor: Colors.red,
+                                splashColor: Colors.redAccent,
+                                child: Text('DELETE CATEGORY'),
+                                borderSide: BorderSide(
+                                    color: Colors.redAccent, width: 2),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              'Be carefull! Deleting a category will delete all its lysts',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 13),
+                            ),
+                          ],
+                        )
+                    ],
+                  ),
                 ),
               ),
             ),
