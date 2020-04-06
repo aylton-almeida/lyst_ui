@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:lystui/models/category.model.dart';
+import 'package:lystui/models/fabOptions.model.dart';
 import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/category.provider.dart';
+import 'package:lystui/providers/fab.provider.dart';
+import 'package:lystui/screens/app/app.screen.dart';
+import 'package:lystui/screens/editCategory/editCategory.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
@@ -9,20 +14,30 @@ import 'package:lystui/widgets/privateRoute.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
 
-class CategoriesScreen extends StatefulWidget {
-  static final routeName = '/';
+class ManageCategoriesScreen extends StatefulWidget {
+  static final String routeName = '/managecategories';
 
   @override
-  _CategoriesScreenState createState() => _CategoriesScreenState();
+  _ManageCategoriesScreenState createState() => _ManageCategoriesScreenState();
 }
 
-class _CategoriesScreenState extends State<CategoriesScreen> {
+class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
   final refreshKey = GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
     super.initState();
     refreshCategories();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      final provider = Provider.of<FabProvider>(context, listen: false);
+      provider.addFabOptions(
+          TabItem.settings,
+          FabOptions(
+            icon: Icons.add,
+            isVisible: true,
+            onPress: _onFabPress,
+          ));
+    });
   }
 
   @override
@@ -30,6 +45,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     refreshKey.currentState?.dispose();
     super.dispose();
   }
+
+  void _onFabPress() =>
+      Navigator.of(context).pushNamed(EditCategoryScreen.routeName);
 
   Future<void> refreshCategories() async {
     refreshKey.currentState?.show(atTop: false);
@@ -43,12 +61,24 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             context: context,
             text: ErrorTranslator.authError(e),
             color: Colors.red);
-      else
-        Alerts.showSnackBar(
-            context: context,
-            text: 'An error happened, please try again later',
-            color: Colors.red);
     }
+  }
+
+  void _onBackPressed() {
+    final fabProvider = Provider.of<FabProvider>(context, listen: false);
+    fabProvider.removeFabOptions(TabItem.settings);
+    Navigator.pop(context);
+  }
+
+  void _onRowTap(Category category) {
+    if (category.title == 'Not Categorized')
+      Alerts.showSnackBar(
+          context: context,
+          text: 'You can only edit non default categories',
+          color: Colors.yellow.shade700);
+    else
+      Navigator.of(context)
+          .pushNamed(EditCategoryScreen.routeName, arguments: category);
   }
 
   Widget _buildCategories(List<Category> categories) {
@@ -67,17 +97,15 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   Widget _buildRow(Category category) {
     return ListTile(
+      onTap: () => _onRowTap(category),
       leading: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Hero(
-          tag: 'colorCircle:${category.color}',
-          child: Container(
-            height: 15,
-            width: 15,
-            decoration: BoxDecoration(
-              color: Color(category.color),
-              shape: BoxShape.circle,
-            ),
+        child: Container(
+          height: 15,
+          width: 15,
+          decoration: BoxDecoration(
+            color: Color(category.color),
+            shape: BoxShape.circle,
           ),
         ),
       ),
@@ -99,13 +127,16 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       child: BackgroundImage(
         child: Scaffold(
           appBar: AppBar(
-            title: Image.asset(
-              'lib/assets/logo.png',
-              width: 100,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: _onBackPressed,
             ),
-            centerTitle: true,
+            title: Text('Manage Categories'),
           ),
-          body: _buildCategories(categoriesProvider.categories),
+          body: Hero(
+            tag: 'categoriesList',
+            child: _buildCategories(categoriesProvider.categories),
+          ),
         ),
       ),
     );
