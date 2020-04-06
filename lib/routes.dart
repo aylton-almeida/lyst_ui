@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lystui/screens/categories/categories.screen.dart';
 import 'package:lystui/screens/home/home.screen.dart';
-
+import 'package:lystui/screens/connect/connect.screen.dart';
 import 'models/destination.model.dart';
 
 class Routes {
   //Declare main app routes
   final routes = <String, WidgetBuilder>{
     HomeScreen.routeName: (context) => HomeScreen(),
+    ConnectScreen.routeName: (context) => ConnectScreen(),
   };
 
   // Declare bottom navigation nested routes
@@ -22,7 +23,13 @@ class Routes {
       title: "Settings",
       icon: Icons.shopping_cart,
       child: Center(child: Text('Settings')),
-    )
+    ),
+    Destination(
+      title: "Connect",
+      //icon: Icons.home,
+      routes: [CategoriesScreen()],
+    ),
+
   ];
 
   final appTheme = ThemeData(

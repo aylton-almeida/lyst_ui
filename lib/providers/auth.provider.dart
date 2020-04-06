@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lystui/services/auth.service.dart';
-
+/*
 class AuthProvider with ChangeNotifier {
   AuthService _service = AuthService();
   FirebaseUser _user;
@@ -37,3 +37,4 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> doResetUserPassword(String email)=> _service.resetUserPassword(email);
 }
+*/
