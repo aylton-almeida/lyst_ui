@@ -3,7 +3,7 @@ import 'package:lystui/providers/auth.provider.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
-import 'package:lystui/screens/signin/signin.screen.dart';
+import 'package:lystui/screens/auth/auth.screen.dart';
 import 'package:lystui/utils/app.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -13,7 +13,7 @@ class Routes {
   //Declare main app routes
   final routes = <String, WidgetBuilder>{
     AppScreen.routeName: (context) => AppScreen(),
-    SignInScreen.routeName: (context) => SignInScreen(),
+    AuthScreen.routeName: (context) => AuthScreen(),
     ConnectScreen.routeName: (context) => ConnectScreen(),
   };
 
@@ -51,7 +51,7 @@ class Routes {
         debugShowCheckedModeBanner: false,
         title: "Lyst",
         routes: routes,
-        initialRoute: AppScreen.routeName,
+        initialRoute: AuthScreen.routeName,
         theme: appTheme,
       ),
     ));

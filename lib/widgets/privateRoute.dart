@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lystui/models/user.model.dart';
 import 'package:lystui/providers/auth.provider.dart';
-import 'package:lystui/screens/signin/signin.screen.dart';
+import 'package:lystui/screens/auth/auth.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/app.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +32,7 @@ class _PrivateRouteState extends State<PrivateRoute> {
                 action: () {
                   Application.globalNavigation.currentState.pop();
                   Application.globalNavigation.currentState
-                      .pushNamedAndRemoveUntil(SignInScreen.routeName, (route) => false);
+                      .pushNamedAndRemoveUntil(AuthScreen.routeName, (route) => false);
                 })
           ]);
     }
