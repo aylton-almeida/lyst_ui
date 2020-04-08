@@ -30,4 +30,15 @@ abstract class ErrorTranslator {
         return "Ocorreu um erro, tente novamente mais tarde.";
     }
   }
+
+  static String noteError(error) {
+    switch (error.code) {
+      case "NOTE_NOT_FOUND":
+        return "Categoria não encontrada";
+      case "USER_NOT_CONNECTED":
+        return "Usuário não conectado.";
+      default:
+        return "Ocorreu um erro, tente novamente mais tarde.";
+    }
+  }
 }

@@ -4,29 +4,24 @@ class User {
   int id;
   String email;
   String password;
-  DateTime createdDate;
-  DateTime updateOn;
+  DateTime createdAt;
+  DateTime updatedAt;
 
-  User(
-      {this.id,
-      this.email,
-      this.password,
-      this.createdDate,
-      this.updateOn});
+  User({this.id, this.email, this.password, this.createdAt, this.updatedAt});
 
   User.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         email = json['email'],
         password = json['password'],
-        createdDate = json['createdDate'],
-        updateOn = json['updateOn'];
+        createdAt = DateTime.parse(json['createdAt']),
+        updatedAt = DateTime.parse(json['updatedAt']);
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'email': email,
         'password': password,
-        'createdDate': createdDate,
-        'updateOn': updateOn,
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
       };
 
   @override

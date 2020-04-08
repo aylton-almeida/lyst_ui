@@ -5,13 +5,7 @@ import 'package:lystui/screens/app/app.screen.dart';
 class FabProvider with ChangeNotifier {
   //Add here initial BottomNavigationRoutes
   Map<TabItem, List<FabOptions>> fabOptions = {
-    TabItem.categories: [
-      FabOptions(
-        icon: Icons.view_list,
-        isVisible: true,
-        onPress: () => print('categories'), //TODO: Implement
-      )
-    ],
+    TabItem.categories: [FabOptions(isVisible: false)],
     TabItem.settings: [FabOptions(isVisible: false)],
   };
 
@@ -21,7 +15,7 @@ class FabProvider with ChangeNotifier {
   }
 
   void removeFabOptions(TabItem tabItem) {
-    if (this.fabOptions[tabItem].length > 1) {
+    if (this.fabOptions[tabItem].length > 2) {
       this.fabOptions[tabItem].removeLast();
       notifyListeners();
     }

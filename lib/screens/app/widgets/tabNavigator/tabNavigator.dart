@@ -3,6 +3,7 @@ import 'package:lystui/screens/app/app.screen.dart';
 import 'package:lystui/screens/categories/categories.screen.dart';
 import 'package:lystui/screens/editCategory/editCategory.screen.dart';
 import 'package:lystui/screens/manageCategories/manageCategories.screen.dart';
+import 'package:lystui/screens/notes/notes.screen.dart';
 import 'package:lystui/screens/settings/settings.screen.dart';
 
 class TabNavigator extends StatefulWidget {
@@ -32,6 +33,7 @@ class _TabNavigatorState extends State<TabNavigator> {
     if (this.widget.tabItem == TabItem.categories)
       return {
         CategoriesScreen.routeName: (context) => CategoriesScreen(),
+        NotesScreen.routeName: (context) => NotesScreen(),
       };
     else
       return {

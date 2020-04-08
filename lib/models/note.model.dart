@@ -1,43 +1,43 @@
 import 'dart:convert';
 
-class Category {
+class Note {
   int id;
   String title;
-  int color;
+  String content;
+  int categoryId;
   int userId;
-  int notesCount;
   DateTime createdAt;
   DateTime updatedAt;
 
-  Category(
-      {this.id,
-      this.title,
-      this.color,
-      this.createdAt,
-      this.updatedAt,
-      this.userId});
+  Note({
+    this.id,
+    this.title,
+    this.content,
+    this.categoryId,
+    this.userId,
+    this.createdAt,
+    this.updatedAt,
+  });
 
-  Category.fromJson(Map<String, dynamic> json)
+  Note.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         title = json['title'],
-        color = json['color'],
+        content = json['content'],
+        categoryId = json['categoryId'],
         userId = json['userId'],
-        notesCount = int.parse(json['notesCount']),
         createdAt = DateTime.parse(json['createdAt']),
         updatedAt = DateTime.parse(json['updatedAt']);
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
-        'color': color,
+        'content': content,
+        'categoryId': categoryId,
         'userId': userId,
-        'notesCount': notesCount,
         'createdAt': createdAt.toIso8601String(),
-        'updateAt': updatedAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
       };
 
   @override
-  String toString() {
-    return jsonEncode(this.toJson());
-  }
+  String toString() => jsonEncode(this.toJson());
 }

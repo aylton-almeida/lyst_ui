@@ -3,6 +3,7 @@ import 'package:lystui/providers/auth.provider.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
 import 'package:lystui/providers/loading.provider.dart';
+import 'package:lystui/providers/note.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
 import 'package:lystui/screens/signin/signin.screen.dart';
 import 'package:lystui/screens/splash/splash.screen.dart';
@@ -45,6 +46,7 @@ class Routes {
     ChangeNotifierProvider(create: (context) => CategoryProvider()),
     ChangeNotifierProvider(create: (context) => FabProvider()),
     ChangeNotifierProvider(create: (context) => LoadingProvider()),
+    ChangeNotifierProvider(create: (context) => NoteProvider()),
   ];
 
   Routes() {
