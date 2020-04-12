@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:lystui/utils/dateFormatter.utils.dart';
+
 class User {
   int id;
   String email;
@@ -13,15 +15,15 @@ class User {
       : id = json['id'],
         email = json['email'],
         password = json['password'],
-        createdAt = DateTime.parse(json['createdAt']),
-        updatedAt = DateTime.parse(json['updatedAt']);
+        createdAt = DateFormatter.formatJsonDateString(json['createdAt']),
+        updatedAt = DateFormatter.formatJsonDateString(json['updatedAt']);
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'email': email,
         'password': password,
-        'createdAt': createdAt.toIso8601String(),
-        'updatedAt': updatedAt.toIso8601String(),
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
       };
 
   @override

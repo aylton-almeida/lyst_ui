@@ -29,7 +29,7 @@ class _NotesScreenState extends State<NotesScreen> {
   void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      refreshNotes();
+      refreshNotes(show: false);
       final provider = Provider.of<FabProvider>(context, listen: false);
       provider.addFabOptions(
           TabItem.categories,
@@ -41,6 +41,7 @@ class _NotesScreenState extends State<NotesScreen> {
     });
   }
 
+  //TODO: implement
   void _onFabPress() {}
 
   void _onBackPressed() {
@@ -49,10 +50,14 @@ class _NotesScreenState extends State<NotesScreen> {
     Navigator.pop(context);
   }
 
+  //TODO: implement
   void _onSearchPress() {}
 
-  Future<void> refreshNotes() async {
-    refreshKey.currentState?.show(atTop: false);
+  //TODO: implement
+  void _onCardTap(Note note) {}
+
+  Future<void> refreshNotes({bool show = true}) async {
+    if (show) refreshKey.currentState?.show(atTop: false);
     final categoryProvider =
         Provider.of<CategoryProvider>(context, listen: false);
 
@@ -73,7 +78,7 @@ class _NotesScreenState extends State<NotesScreen> {
     }
   }
 
-  Widget _buildCategories(List<Note> notes) {
+  Widget _buildCategories(List<Note> notes, Category category) {
     return RefreshIndicator(
       backgroundColor: Theme.of(context).primaryColor,
       color: Colors.white,
@@ -81,16 +86,44 @@ class _NotesScreenState extends State<NotesScreen> {
       onRefresh: refreshNotes,
       child: GridView.count(
         crossAxisCount: 2,
-        padding: EdgeInsets.symmetric(horizontal: 4, vertical: 16),
-        children: notes
-            .map((note) => Hero(
-                  tag: '${note.title}',
-                  child: Card(
-                    elevation: 5,
-                    child: Text('${note.title}'),
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
+        childAspectRatio: 1.5,
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+        children: notes.map((note) => _buildCard(note, category)).toList(),
+      ),
+    );
+  }
+
+  Widget _buildCard(Note note, Category category) {
+    return Hero(
+      tag: note.title,
+      child: Card(
+        color: Color(category.color).withOpacity(0.6),
+        elevation: 5,
+        child: InkWell(
+          onTap: () => _onCardTap(note),
+          child: Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Flexible(
+                  child: Text(
+                    note.title,
+                    style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
-                ))
-            .toList(),
+                ),
+                Flexible(
+                  child: Text(
+                    note.content,
+                    style: TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -111,7 +144,8 @@ class _NotesScreenState extends State<NotesScreen> {
               IconButton(icon: Icon(Icons.search), onPressed: _onSearchPress)
             ],
           ),
-          body: _buildCategories(noteProvider.notes),
+          body: _buildCategories(
+              noteProvider.notes, categoryProvider.currentCategory),
         ),
       ),
     );

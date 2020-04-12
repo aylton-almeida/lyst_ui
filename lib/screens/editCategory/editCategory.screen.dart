@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:lystui/models/category.model.dart';
 import 'package:lystui/models/fabOptions.model.dart';
 import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/category.provider.dart';
@@ -68,14 +67,18 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
 
   @override
   void didChangeDependencies() {
-    final Category categoryArgs = ModalRoute.of(context).settings.arguments;
-    if (categoryArgs != null) {
-      _controllerName.text = categoryArgs.title;
-      setState(() {
-        _selectedColor = categoryColors
-            .firstWhere((color) => color.value == categoryArgs.color);
-        _categoryId = categoryArgs.id;
-      });
+    final bool isEditMode = ModalRoute.of(context).settings.arguments ?? false;
+    final currentCategory =
+        Provider.of<CategoryProvider>(context, listen: false).currentCategory;
+    if (isEditMode) {
+      _controllerName.text = currentCategory.title;
+      setState(
+        () {
+          _selectedColor = categoryColors
+              .firstWhere((color) => color.value == currentCategory.color);
+          _categoryId = currentCategory.id;
+        },
+      );
     }
     super.didChangeDependencies();
   }
@@ -128,13 +131,10 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
   void _onFabPress() async {
     final categoryProvider =
         Provider.of<CategoryProvider>(context, listen: false);
-//    final loadingProvider =
-//        Provider.of<LoadingProvider>(context, listen: false);
 
     if (_formKey.currentState.validate()) {
       String msg;
       try {
-//        loadingProvider.showLoader(); //TODO: Add loader if needed
         if (_categoryId == null) {
           await categoryProvider.doCreateCategory(
               _controllerName.text, _selectedColor.value);
@@ -158,9 +158,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
               context: context,
               text: 'An error happened, please try again later',
               color: Colors.red);
-      } finally {
-//        loadingProvider.hideLoader(); //TODO: Add loader if needed
-      }
+      } finally {}
     } else
       Alerts.showSnackBar(
         context: context,
@@ -171,7 +169,9 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Category categoryArgs = ModalRoute.of(context).settings.arguments;
+    final bool isEditMode = ModalRoute.of(context).settings.arguments ?? false;
+    final currentCategory =
+        Provider.of<CategoryProvider>(context).currentCategory;
 
     return PrivateRoute(
       child: KeyboardDismissContainer(
@@ -247,7 +247,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
                                 ))
                             .toList(),
                       ),
-                      if (categoryArgs != null)
+                      if (isEditMode)
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
@@ -266,7 +266,8 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
                             SizedBox(
                               width: 250,
                               child: OutlineButton(
-                                onPressed: () => _onClearPress(categoryArgs.id),
+                                onPressed: () =>
+                                    _onClearPress(currentCategory.id),
                                 textColor: Colors.white,
                                 highlightedBorderColor: Colors.red,
                                 splashColor: Colors.redAccent,
@@ -280,7 +281,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
                               width: 250,
                               child: OutlineButton(
                                 onPressed: () =>
-                                    _onDeletePress(categoryArgs.id),
+                                    _onDeletePress(currentCategory.id),
                                 textColor: Colors.white,
                                 highlightedBorderColor: Colors.red,
                                 splashColor: Colors.redAccent,

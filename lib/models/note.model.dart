@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:lystui/utils/dateFormatter.utils.dart';
+
 class Note {
   int id;
   String title;
   String content;
   int categoryId;
   int userId;
+  int categoryColor;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -25,8 +28,9 @@ class Note {
         content = json['content'],
         categoryId = json['categoryId'],
         userId = json['userId'],
-        createdAt = DateTime.parse(json['createdAt']),
-        updatedAt = DateTime.parse(json['updatedAt']);
+        categoryColor = json['category']['color'],
+        createdAt = DateFormatter.formatJsonDateString(json['createdAt']),
+        updatedAt = DateFormatter.formatJsonDateString(json['updatedAt']);
 
   Map<String, dynamic> toJson() => {
         'id': id,
