@@ -76,9 +76,11 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
           context: context,
           text: 'You can only edit non default categories',
           color: Colors.yellow.shade700);
-    else
-      Navigator.of(context)
-          .pushNamed(EditCategoryScreen.routeName, arguments: category);
+    else {
+      final provider = Provider.of<CategoryProvider>(context, listen: false);
+      provider.setCurrentCategory(category);
+      Navigator.of(context).pushNamed(EditCategoryScreen.routeName, arguments: true);
+    }
   }
 
   Widget _buildCategories(List<Category> categories) {

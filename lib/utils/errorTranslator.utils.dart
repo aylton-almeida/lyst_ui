@@ -4,30 +4,41 @@ abstract class ErrorTranslator {
   static String authError(error) {
     switch (error.code) {
       case "ERROR_USER_NOT_FOUND":
-        return "Usuário não encontrado.";
+        return "User not found.";
       case "ERROR_WRONG_PASSWORD":
-        return "Senha incorreta.";
+        return "Wrong password.";
       case "ERROR_TOO_MANY_REQUESTS":
-        return "Muitas tentativas incorretas, tente novamente mais tarde.";
+        return "Too many atempts, please try again later.";
       case "ERROR_EMAIL_ALREADY_IN_USE":
-        return "Este email já está em uso.";
+        return "This email is already in use.";
       case "EMAIL_NOT_VERIFIED":
-        return "Email não verificado, um novo email de verificação foi enviado.";
+        return "Email not vertified, a new verification email was sent.";
       case "USER_NOT_CONNECTED":
-        return "Usuário não conectado.";
+        return "User not connected.";
       default:
-        return "Ocorreu um erro, tente novamente mais tarde.";
+        return "An error happened, please try again later.";
     }
   }
 
   static String categoryError(error) {
     switch (error.code) {
       case "CATEGORY_NOT_FOUND":
-        return "Categoria não encontrada";
+        return "Category not found.";
       case "USER_NOT_CONNECTED":
-        return "Usuário não conectado.";
+        return "User not connected.";
       default:
-        return "Ocorreu um erro, tente novamente mais tarde.";
+        return "An error happened, please try again later.";
+    }
+  }
+
+  static String noteError(error) {
+    switch (error.code) {
+      case "NOTE_NOT_FOUND":
+        return "Note not found.";
+      case "USER_NOT_CONNECTED":
+        return "User not connected.";
+      default:
+        return "An error happened, please try again later.";
     }
   }
 }
