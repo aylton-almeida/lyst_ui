@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:lystui/models/category.model.dart';
+import 'package:lystui/models/fabOptions.model.dart';
 import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/auth.provider.dart';
 import 'package:lystui/providers/category.provider.dart';
+import 'package:lystui/screens/auth/auth.screen.dart';
+import 'package:lystui/providers/fab.provider.dart';
+import 'package:lystui/screens/app/app.screen.dart';
 import 'package:lystui/screens/manageCategories/manageCategories.screen.dart';
-import 'package:lystui/screens/signin/signin.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/app.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
@@ -28,6 +32,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     super.initState();
     refreshCategories();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      final provider = Provider.of<FabProvider>(context, listen: false);
+      if (provider.fabOptions[TabItem.settings].length == 1)
+        provider.addFabOptions(TabItem.settings, FabOptions(isVisible: false));
+    });
   }
 
   @override
@@ -61,7 +70,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     await authProvider.doSignOutUser();
     Application.globalNavigation.currentState
-        .pushNamedAndRemoveUntil(SignInScreen.routeName, (route) => false);
+        .pushNamedAndRemoveUntil(AuthScreen.routeName, (route) => false);
   }
 
   Widget _buildCategories(List<Category> categories) {
