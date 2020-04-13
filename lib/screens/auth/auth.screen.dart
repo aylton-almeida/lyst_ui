@@ -29,9 +29,10 @@ class _AuthScreenState extends State<AuthScreen> {
               children: <Widget>[
                 Image.asset('lib/assets/logo.png', width: 250),
                 const SizedBox(height: 20),
-                Container(
+                AnimatedContainer(
+                    duration: Duration(milliseconds: 500),
                     width: 350,
-                    height: 500,
+                    height: 450,
                     padding: EdgeInsets.all(24),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
