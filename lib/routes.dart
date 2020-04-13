@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lystui/providers/allNotes.provider.dart';
 import 'package:lystui/providers/auth.provider.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
@@ -47,6 +48,7 @@ class Routes {
     ChangeNotifierProvider(create: (context) => FabProvider()),
     ChangeNotifierProvider(create: (context) => LoadingProvider()),
     ChangeNotifierProvider(create: (context) => NoteProvider()),
+    ChangeNotifierProvider(create: (context) => AllNotesProvider()),
   ];
 
   Routes() {

@@ -5,6 +5,7 @@ import 'package:lystui/models/fabOptions.model.dart';
 import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
+import 'package:lystui/screens/allNotes/allNotes.screen.dart';
 import 'package:lystui/screens/app/app.screen.dart';
 import 'package:lystui/screens/notes/notes.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
@@ -36,10 +37,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             FabOptions(
               icon: Icons.view_list,
               isVisible: true,
-              onPress: () => print('manage'), //TODO: Implement
+              onPress: _onFabPress,
             ));
     });
   }
+
+  void _onFabPress() => Navigator.of(context).pushNamed(AllNotes.routeName);
 
   @override
   void dispose() {
@@ -48,7 +51,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   void _onCategoryPress(Category category) {
-    Provider.of<CategoryProvider>(context, listen: false).setCurrentCategory(category);
+    Provider.of<CategoryProvider>(context, listen: false)
+        .setCurrentCategory(category);
     Navigator.pushNamed(context, NotesScreen.routeName);
   }
 

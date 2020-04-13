@@ -18,6 +18,7 @@ class Note {
     this.content,
     this.categoryId,
     this.userId,
+    this.categoryColor,
     this.createdAt,
     this.updatedAt,
   });
@@ -28,7 +29,7 @@ class Note {
         content = json['content'],
         categoryId = json['categoryId'],
         userId = json['userId'],
-        categoryColor = json['category']['color'],
+        categoryColor = json['Category.color'],
         createdAt = DateFormatter.formatJsonDateString(json['createdAt']),
         updatedAt = DateFormatter.formatJsonDateString(json['updatedAt']);
 

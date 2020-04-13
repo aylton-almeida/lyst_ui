@@ -36,4 +36,29 @@ class NoteService {
         throw new ServiceException(code: 'INTERNAL_SERVER_ERROR');
     }
   }
+
+  Future<List<Note>> getAllNotes() async {
+    final authToken = await _storage.read(key: 'authToken');
+
+    if (authToken == null) return null;
+
+    String url = '${DotEnv().env['BACKEND_URL']}/note';
+    Map<String, String> headers = {"Authorization": 'Bearer $authToken'};
+
+    final response = await get(url, headers: headers);
+
+    switch (response.statusCode) {
+      case 200:
+        List body = jsonDecode(response.body);
+        final notes = <Note>[];
+        for (Map<String, dynamic> note in body) notes.add(Note.fromJson(note));
+        return notes;
+      case 401:
+        print(response.body);
+        throw new ServiceException(code: 'USER_NOT_CONNECTED');
+      default:
+        print(response.body);
+        throw new ServiceException(code: 'INTERNAL_SERVER_ERROR');
+    }
+  }
 }

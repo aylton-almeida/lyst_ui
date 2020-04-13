@@ -3,25 +3,23 @@ import 'package:flutter/scheduler.dart';
 import 'package:lystui/models/fabOptions.model.dart';
 import 'package:lystui/models/note.model.dart';
 import 'package:lystui/models/serviceException.model.dart';
-import 'package:lystui/providers/category.provider.dart';
+import 'package:lystui/providers/allNotes.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
-import 'package:lystui/providers/note.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
 import 'package:lystui/widgets/privateRoute.dart';
 import 'package:provider/provider.dart';
-import 'package:lystui/utils/string.extension.dart';
 
-class NotesScreen extends StatefulWidget {
-  static final routeName = '/notes';
+class AllNotes extends StatefulWidget {
+  static final routeName = '/allNotes';
 
   @override
-  _NotesScreenState createState() => _NotesScreenState();
+  _AllNotesState createState() => _AllNotesState();
 }
 
-class _NotesScreenState extends State<NotesScreen> {
+class _AllNotesState extends State<AllNotes> {
   final refreshKey = GlobalKey<RefreshIndicatorState>();
 
   @override
@@ -57,12 +55,9 @@ class _NotesScreenState extends State<NotesScreen> {
 
   Future<void> refreshNotes({bool show = true}) async {
     if (show) refreshKey.currentState?.show(atTop: true);
-    final categoryProvider =
-        Provider.of<CategoryProvider>(context, listen: false);
 
     try {
-      await Provider.of<NoteProvider>(context, listen: false)
-          .doGetCategoryNotes(categoryProvider.currentCategory.id);
+      await Provider.of<AllNotesProvider>(context, listen: false).doGetAllNotes();
     } catch (e) {
       if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
         Alerts.showSnackBar(
@@ -77,7 +72,7 @@ class _NotesScreenState extends State<NotesScreen> {
     }
   }
 
-  Widget _buildCategories(List<Note> notes) {
+  Widget _buildNotes(List<Note> notes) {
     return RefreshIndicator(
       backgroundColor: Theme.of(context).primaryColor,
       color: Colors.white,
@@ -129,8 +124,7 @@ class _NotesScreenState extends State<NotesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final categoryProvider = Provider.of<CategoryProvider>(context);
-    final noteProvider = Provider.of<NoteProvider>(context);
+    final noteProvider = Provider.of<AllNotesProvider>(context);
 
     return PrivateRoute(
       child: BackgroundImage(
@@ -138,12 +132,12 @@ class _NotesScreenState extends State<NotesScreen> {
           appBar: AppBar(
             leading: IconButton(
                 icon: Icon(Icons.arrow_back), onPressed: _onBackPressed),
-            title: Text(categoryProvider.currentCategory.title.capitalize()),
+            title: Text('All Notes'),
             actions: <Widget>[
               IconButton(icon: Icon(Icons.search), onPressed: _onSearchPress)
             ],
           ),
-          body: _buildCategories(noteProvider.notes),
+          body: _buildNotes(noteProvider.allNotes),
         ),
       ),
     );
