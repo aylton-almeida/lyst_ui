@@ -1,5 +1,3 @@
-//import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:lystui/providers/allNotes.provider.dart';
 import 'package:lystui/providers/auth.provider.dart';
@@ -14,7 +12,6 @@ import 'package:lystui/utils/app.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:lystui/screens/connect/connect.screen.dart';
-import 'package:lystui/screens/about/about.screen.dart';
 
 class Routes {
   //Declare main app routes
@@ -23,7 +20,6 @@ class Routes {
     AppScreen.routeName: (context) => AppScreen(),
     AuthScreen.routeName: (context) => AuthScreen(),
     ConnectScreen.routeName: (context) => ConnectScreen(),
-    AboutScreen.routeName: (context) => AboutScreen(),
   };
 
   final appTheme = ThemeData(
@@ -53,8 +49,6 @@ class Routes {
     ChangeNotifierProvider(create: (context) => LoadingProvider()),
     ChangeNotifierProvider(create: (context) => NoteProvider()),
     ChangeNotifierProvider(create: (context) => AllNotesProvider()),
- //   ChangeNotifierProvider(create: (context) => AboutProvider()),
-
   ];
 
   Routes() {
@@ -65,7 +59,7 @@ class Routes {
         debugShowCheckedModeBanner: false,
         title: "Lyst",
         routes: routes,
-        initialRoute: AboutScreen.routeName,
+        initialRoute: SplashScreen.routeName,
         theme: appTheme,
       ),
     ));
