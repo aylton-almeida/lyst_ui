@@ -11,7 +11,6 @@ import 'package:lystui/screens/splash/splash.screen.dart';
 import 'package:lystui/utils/app.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:lystui/screens/connect/connect.screen.dart';
 
 class Routes {
   //Declare main app routes
@@ -19,7 +18,6 @@ class Routes {
     SplashScreen.routeName: (context) => SplashScreen(),
     AppScreen.routeName: (context) => AppScreen(),
     AuthScreen.routeName: (context) => AuthScreen(),
-    ConnectScreen.routeName: (context) => ConnectScreen(),
   };
 
   final appTheme = ThemeData(
@@ -28,6 +26,7 @@ class Routes {
     primaryColorDark: Color(0xFF940A88),
     hintColor: Color(0xFFba0dab),
     accentColor: Color(0xFFba0dab),
+    fontFamily: "Lato",
     scaffoldBackgroundColor: Colors.transparent,
     appBarTheme: AppBarTheme(
       color: Color(0xFF848484).withOpacity(0.1),

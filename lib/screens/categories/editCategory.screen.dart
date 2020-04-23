@@ -101,6 +101,17 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
   }
 
   void _onDeletePress(int id) async {
+    Alerts.showAlertDialog(
+        context: context,
+        title: 'Delete category',
+        content: 'Are you shure you want to delete the category',
+        actions: [
+          AlertAction(action: () => print('ok'), content: 'CANCEL'),
+          AlertAction(action: () => _deleteCategory(id), content: 'CONFIRM')
+        ]);
+  }
+
+  void _deleteCategory(int id) async {
     final categoryProvider =
         Provider.of<CategoryProvider>(context, listen: false);
 
@@ -111,14 +122,16 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
       print(e);
       if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
         Alerts.showSnackBar(
-            context: context,
-            text: ErrorTranslator.categoryError(e),
-            color: Colors.red);
+          context: context,
+          text: ErrorTranslator.categoryError(e),
+          color: Colors.red,
+        );
       else
         Alerts.showSnackBar(
-            context: context,
-            text: 'An error happened, please try again later',
-            color: Colors.red);
+          context: context,
+          text: 'An error happened, please try again later',
+          color: Colors.red,
+        );
     }
   }
 

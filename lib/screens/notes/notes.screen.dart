@@ -7,6 +7,7 @@ import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
 import 'package:lystui/providers/note.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
+import 'package:lystui/screens/notes/noteInfo.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
@@ -53,7 +54,8 @@ class _NotesScreenState extends State<NotesScreen> {
   void _onSearchPress() {}
 
   //TODO: implement
-  void _onCardTap(Note note) {}
+  void _onCardTap(Note note) =>
+      Navigator.of(context).pushNamed(NoteInfo.routeName, arguments: note);
 
   Future<void> refreshNotes({bool show = true}) async {
     if (show) refreshKey.currentState?.show(atTop: true);
@@ -96,7 +98,7 @@ class _NotesScreenState extends State<NotesScreen> {
 
   Widget _buildCard(Note note) {
     return Hero(
-      tag: note.title,
+      tag: '${note.id}/${note.title}',
       child: Card(
         color: Color(note.categoryColor).withOpacity(0.6),
         elevation: 5,

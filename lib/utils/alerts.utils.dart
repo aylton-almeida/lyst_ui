@@ -18,7 +18,11 @@ abstract class Alerts {
               content: Text(content),
               actions: actions
                   .map((item) => FlatButton(
-                      onPressed: item.action, child: Text(item.content)))
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        item.action();
+                      },
+                      child: Text(item.content)))
                   .toList(),
             );
           });

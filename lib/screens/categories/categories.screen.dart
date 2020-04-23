@@ -5,8 +5,8 @@ import 'package:lystui/models/fabOptions.model.dart';
 import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
-import 'package:lystui/screens/allNotes/allNotes.screen.dart';
 import 'package:lystui/screens/app/app.screen.dart';
+import 'package:lystui/screens/notes/allNotes.screen.dart';
 import 'package:lystui/screens/notes/notes.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
@@ -128,7 +128,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         child: Scaffold(
           appBar: AppBar(
             title: Image.asset(
-              'lib/assets/logo.png',
+              'assets/images/logo.png',
               width: 100,
             ),
             centerTitle: true,

@@ -175,7 +175,7 @@ class _SignInTabState extends State<SignInTab> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Image.asset(
-                            'lib/assets/icon_google.png',
+                            'assets/images/icon_google.png',
                             width: 25,
                           ),
                           const SizedBox(width: 20),
