@@ -39,8 +39,12 @@ class _NotesScreenState extends State<NotesScreen> {
   //TODO: implement
   void _onSearchPress() {}
 
-  void _onCardTap(Note note) =>
-      Navigator.of(context).pushNamed(EditNote.routeName, arguments: note);
+  void _onCardTap(Note note) {
+    Provider.of<NotesProvider>(context, listen: false).setCurrentNote(note);
+    Navigator.of(context).pushNamed(EditNote.routeName,
+        arguments: EditNoteScreenArguments(
+            isEditMode: true, categoryColor: Color(note.categoryColor)));
+  }
 
   Future<void> refreshNotes({bool show = true}) async {
     if (show) refreshKey.currentState?.show(atTop: true);
@@ -81,7 +85,7 @@ class _NotesScreenState extends State<NotesScreen> {
         crossAxisCount: 2,
         crossAxisSpacing: 8,
         mainAxisSpacing: 8,
-        childAspectRatio: 1.5,
+        childAspectRatio: 1,
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
         children: notes.map((note) => _buildCard(note)).toList(),
       ),
@@ -107,6 +111,7 @@ class _NotesScreenState extends State<NotesScreen> {
                     style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
+                const SizedBox(height: 5),
                 Flexible(
                   child: Text(
                     note.content,

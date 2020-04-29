@@ -24,33 +24,35 @@ class PersonalizedTextField extends StatefulWidget {
   final Color cursorColor;
   final bool showError;
   final bool showBorder;
+  final int maxLines;
 
-  PersonalizedTextField(
-      {Key key,
-      this.errorColor,
-      this.borderColor,
-      this.enabledColor,
-      this.disabledColor,
-      this.hintText,
-      this.labelText,
-      this.validator,
-      @required this.controller,
-      this.autocorrect,
-      this.keyboardType,
-      this.suffixIcon,
-      this.obscureText,
-      this.textCapitalization,
-      this.onChanged,
-      this.textInputAction,
-      @required this.focusNode,
-      this.onEditingComplete,
-      this.enabled,
-      this.fontSize,
-      this.focusedColor,
-      this.cursorColor,
-      bool showBorder,
-      bool showError})
-      : this.showError = showError ?? true,
+  PersonalizedTextField({
+    Key key,
+    this.errorColor,
+    this.borderColor,
+    this.enabledColor,
+    this.disabledColor,
+    this.hintText,
+    this.labelText,
+    this.validator,
+    @required this.controller,
+    this.autocorrect,
+    this.keyboardType,
+    this.suffixIcon,
+    this.obscureText,
+    this.textCapitalization,
+    this.onChanged,
+    this.textInputAction,
+    @required this.focusNode,
+    this.onEditingComplete,
+    this.enabled,
+    this.fontSize,
+    this.focusedColor,
+    this.cursorColor,
+    @required this.maxLines,
+    bool showBorder,
+    bool showError,
+  })  : this.showError = showError ?? true,
         this.showBorder = showBorder ?? true,
         super(key: key);
 
@@ -90,7 +92,7 @@ class _PersonalizedTextFieldState extends State<PersonalizedTextField> {
         controller: widget.controller,
         autocorrect: widget.autocorrect ?? true,
         validator: widget.validator,
-        maxLines: null,
+        maxLines: widget.maxLines,
         decoration: InputDecoration(
           border: widget.showBorder ? null : InputBorder.none,
           enabledBorder: widget.showBorder

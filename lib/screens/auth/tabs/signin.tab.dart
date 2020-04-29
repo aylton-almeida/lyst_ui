@@ -97,6 +97,7 @@ class _SignInTabState extends State<SignInTab> {
                     focusNode: _emailFocusNode,
                     cursorColor: Theme.of(context).primaryColor,
                     showError: true,
+                    maxLines: 1,
                   ),
                   const SizedBox(height: 20),
                   PersonalizedTextField(
@@ -120,6 +121,7 @@ class _SignInTabState extends State<SignInTab> {
                       ),
                       onPressed: _onObscurePassPress,
                     ),
+                    maxLines: 1,
                   ),
                   const SizedBox(height: 20),
                   AnimatedContainer(

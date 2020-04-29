@@ -26,7 +26,7 @@ class NotesProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> doUpdateCategory(int id, String title, String content) async {
+  Future<void> doUpdateNote(int id, String title, String content) async {
     await _service.updateNote(id, title, content);
     final note = this.notes.firstWhere((note) => note.id == id);
     this.notes.remove(note);
@@ -36,7 +36,7 @@ class NotesProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> doDeleteCategory(int id) async {
+  Future<void> doDeleteNote(int id) async {
     await _service.deleteNote(id);
     this.notes.removeWhere((note) => note.id == id);
     notifyListeners();

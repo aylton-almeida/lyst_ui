@@ -208,6 +208,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
                   hintText: 'Category title...',
                   cursorColor: Theme.of(context).primaryColor,
                   showError: false,
+                  maxLines: 1,
                 ),
               ),
             ),
