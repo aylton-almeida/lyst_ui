@@ -23,6 +23,7 @@ class PersonalizedTextField extends StatefulWidget {
   final Color disabledColor;
   final Color cursorColor;
   final bool showError;
+  final bool showBorder;
 
   PersonalizedTextField(
       {Key key,
@@ -41,14 +42,16 @@ class PersonalizedTextField extends StatefulWidget {
       this.textCapitalization,
       this.onChanged,
       this.textInputAction,
-      this.focusNode,
+      @required this.focusNode,
       this.onEditingComplete,
       this.enabled,
       this.fontSize,
       this.focusedColor,
       this.cursorColor,
+      bool showBorder,
       bool showError})
       : this.showError = showError ?? true,
+        this.showBorder = showBorder ?? true,
         super(key: key);
 
   _PersonalizedTextFieldState createState() => _PersonalizedTextFieldState();
@@ -56,6 +59,13 @@ class PersonalizedTextField extends StatefulWidget {
 
 class _PersonalizedTextFieldState extends State<PersonalizedTextField> {
   FocusNode focusNode = FocusNode();
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   @override
   void initState() {
@@ -80,13 +90,17 @@ class _PersonalizedTextFieldState extends State<PersonalizedTextField> {
         controller: widget.controller,
         autocorrect: widget.autocorrect ?? true,
         validator: widget.validator,
+        maxLines: null,
         decoration: InputDecoration(
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white,
-              style: BorderStyle.solid,
-            ),
-          ),
+          border: widget.showBorder ? null : InputBorder.none,
+          enabledBorder: widget.showBorder
+              ? UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                    style: BorderStyle.solid,
+                  ),
+                )
+              : InputBorder.none,
           errorStyle: widget.showError ? null : TextStyle(fontSize: 0),
           hintText: widget.hintText,
           hintStyle: TextStyle(

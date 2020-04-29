@@ -6,7 +6,6 @@ import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
-import 'package:lystui/screens/notes/allNotes.screen.dart';
 import 'package:lystui/screens/notes/notes.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
@@ -25,35 +24,14 @@ class CategoriesScreen extends StatefulWidget {
 class _CategoriesScreenState extends State<CategoriesScreen> {
   final refreshKey = GlobalKey<RefreshIndicatorState>();
 
-  @override
-  void initState() {
-    super.initState();
-    refreshCategories();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      final provider = Provider.of<FabProvider>(context, listen: false);
-      if (provider.fabOptions[TabItem.categories].length == 1)
-        provider.addFabOptions(
-            TabItem.categories,
-            FabOptions(
-              icon: Icons.view_list,
-              isVisible: true,
-              onPress: _onFabPress,
-            ));
-    });
-  }
-
-  void _onFabPress() => Navigator.of(context).pushNamed(AllNotes.routeName);
-
-  @override
-  void dispose() {
-    refreshKey.currentState?.dispose();
-    super.dispose();
-  }
+  void _onFabPress() => Navigator.of(context).pushNamed(NotesScreen.routeName,
+      arguments: NotesScreenArguments(isAllNotesMode: true));
 
   void _onCategoryPress(Category category) {
     Provider.of<CategoryProvider>(context, listen: false)
         .setCurrentCategory(category);
-    Navigator.pushNamed(context, NotesScreen.routeName);
+    Navigator.pushNamed(context, NotesScreen.routeName,
+        arguments: NotesScreenArguments(isAllNotesMode: false));
   }
 
   Future<void> refreshCategories() async {
@@ -117,6 +95,29 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       ),
       onTap: () => _onCategoryPress(category),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    refreshCategories();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      final provider = Provider.of<FabProvider>(context, listen: false);
+      if (provider.fabOptions[TabItem.categories].length == 1)
+        provider.addFabOptions(
+            TabItem.categories,
+            FabOptions(
+              icon: Icons.view_list,
+              isVisible: true,
+              onPress: _onFabPress,
+            ));
+    });
+  }
+
+  @override
+  void dispose() {
+    refreshKey.currentState?.dispose();
+    super.dispose();
   }
 
   @override

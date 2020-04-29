@@ -3,8 +3,7 @@ import 'package:lystui/screens/app/app.screen.dart';
 import 'package:lystui/screens/categories/categories.screen.dart';
 import 'package:lystui/screens/categories/editCategory.screen.dart';
 import 'package:lystui/screens/categories/manageCategories.screen.dart';
-import 'package:lystui/screens/notes/allNotes.screen.dart';
-import 'package:lystui/screens/notes/noteInfo.screen.dart';
+import 'package:lystui/screens/notes/editNote.screen.dart';
 import 'package:lystui/screens/notes/notes.screen.dart';
 import 'package:lystui/screens/settings/settings.screen.dart';
 
@@ -36,8 +35,7 @@ class _TabNavigatorState extends State<TabNavigator> {
       return {
         CategoriesScreen.routeName: (context) => CategoriesScreen(),
         NotesScreen.routeName: (context) => NotesScreen(),
-        AllNotes.routeName: (context) => AllNotes(),
-        NoteInfo.routeName: (context) => NoteInfo(),
+        EditNote.routeName: (context) => EditNote(),
       };
     else
       return {

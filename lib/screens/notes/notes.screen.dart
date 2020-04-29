@@ -5,9 +5,9 @@ import 'package:lystui/models/note.model.dart';
 import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
-import 'package:lystui/providers/note.provider.dart';
+import 'package:lystui/providers/notes.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
-import 'package:lystui/screens/notes/noteInfo.screen.dart';
+import 'package:lystui/screens/notes/editNote.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
@@ -25,21 +25,7 @@ class NotesScreen extends StatefulWidget {
 class _NotesScreenState extends State<NotesScreen> {
   final refreshKey = GlobalKey<RefreshIndicatorState>();
 
-  @override
-  void initState() {
-    super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      refreshNotes(show: false);
-      final provider = Provider.of<FabProvider>(context, listen: false);
-      provider.addFabOptions(
-          TabItem.categories,
-          FabOptions(
-            icon: Icons.add,
-            isVisible: true,
-            onPress: _onFabPress,
-          ));
-    });
-  }
+  bool _isAllNotesMode = true;
 
   //TODO: implement
   void _onFabPress() {}
@@ -53,19 +39,25 @@ class _NotesScreenState extends State<NotesScreen> {
   //TODO: implement
   void _onSearchPress() {}
 
-  //TODO: implement
   void _onCardTap(Note note) =>
-      Navigator.of(context).pushNamed(NoteInfo.routeName, arguments: note);
+      Navigator.of(context).pushNamed(EditNote.routeName, arguments: note);
 
   Future<void> refreshNotes({bool show = true}) async {
     if (show) refreshKey.currentState?.show(atTop: true);
-    final categoryProvider =
-        Provider.of<CategoryProvider>(context, listen: false);
 
     try {
-      await Provider.of<NoteProvider>(context, listen: false)
-          .doGetCategoryNotes(categoryProvider.currentCategory.id);
+      final notesProvider = Provider.of<NotesProvider>(context, listen: false);
+
+      if (_isAllNotesMode)
+        await notesProvider.doGetAllNotes();
+      else {
+        final categoryProvider =
+            Provider.of<CategoryProvider>(context, listen: false);
+        await notesProvider
+            .doGetCategoryNotes(categoryProvider.currentCategory.id);
+      }
     } catch (e) {
+      print(e);
       if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
         Alerts.showSnackBar(
             context: context,
@@ -130,9 +122,29 @@ class _NotesScreenState extends State<NotesScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      NotesScreenArguments args = ModalRoute.of(context).settings.arguments;
+      setState(() {
+        return this._isAllNotesMode = args.isAllNotesMode;
+      });
+      refreshNotes(show: false);
+      final provider = Provider.of<FabProvider>(context, listen: false);
+      provider.addFabOptions(
+          TabItem.categories,
+          FabOptions(
+            icon: Icons.add,
+            isVisible: true,
+            onPress: _onFabPress,
+          ));
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final categoryProvider = Provider.of<CategoryProvider>(context);
-    final noteProvider = Provider.of<NoteProvider>(context);
+    final noteProvider = Provider.of<NotesProvider>(context);
 
     return PrivateRoute(
       child: BackgroundImage(
@@ -140,7 +152,9 @@ class _NotesScreenState extends State<NotesScreen> {
           appBar: AppBar(
             leading: IconButton(
                 icon: Icon(Icons.arrow_back), onPressed: _onBackPressed),
-            title: Text(categoryProvider.currentCategory.title.capitalize()),
+            title: _isAllNotesMode
+                ? Text('All Notes')
+                : Text(categoryProvider.currentCategory.title.capitalize()),
             actions: <Widget>[
               IconButton(icon: Icon(Icons.search), onPressed: _onSearchPress)
             ],
@@ -150,4 +164,10 @@ class _NotesScreenState extends State<NotesScreen> {
       ),
     );
   }
+}
+
+class NotesScreenArguments {
+  bool isAllNotesMode;
+
+  NotesScreenArguments({this.isAllNotesMode});
 }

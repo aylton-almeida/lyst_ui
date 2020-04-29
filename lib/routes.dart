@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lystui/providers/allNotes.provider.dart';
 import 'package:lystui/providers/auth.provider.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
 import 'package:lystui/providers/loading.provider.dart';
-import 'package:lystui/providers/note.provider.dart';
+import 'package:lystui/providers/notes.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
 import 'package:lystui/screens/auth/auth.screen.dart';
 import 'package:lystui/screens/splash/splash.screen.dart';
@@ -28,6 +27,8 @@ class Routes {
     accentColor: Color(0xFFba0dab),
     fontFamily: "Lato",
     scaffoldBackgroundColor: Colors.transparent,
+    textSelectionColor: Color(0xFFba0dab),
+    textSelectionHandleColor: Color(0xFFba0dab),
     appBarTheme: AppBarTheme(
       color: Color(0xFF848484).withOpacity(0.1),
     ),
@@ -46,8 +47,7 @@ class Routes {
     ChangeNotifierProvider(create: (context) => CategoryProvider()),
     ChangeNotifierProvider(create: (context) => FabProvider()),
     ChangeNotifierProvider(create: (context) => LoadingProvider()),
-    ChangeNotifierProvider(create: (context) => NoteProvider()),
-    ChangeNotifierProvider(create: (context) => AllNotesProvider()),
+    ChangeNotifierProvider(create: (context) => NotesProvider()),
   ];
 
   Routes() {
