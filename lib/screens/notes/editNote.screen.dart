@@ -4,7 +4,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:lystui/models/fabOptions.model.dart';
 import 'package:lystui/models/note.model.dart';
 import 'package:lystui/models/serviceException.model.dart';
-import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
 import 'package:lystui/providers/notes.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
