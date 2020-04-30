@@ -10,10 +10,9 @@ class BackgroundImage extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("lib/assets/background.png"),
-          fit: BoxFit.fitWidth,
-          alignment: Alignment.topCenter
-        ),
+            image: AssetImage("assets/images/background.png"),
+            fit: BoxFit.fitWidth,
+            alignment: Alignment.topCenter),
       ),
       child: child,
     );

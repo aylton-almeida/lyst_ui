@@ -5,8 +5,9 @@ import 'package:lystui/models/note.model.dart';
 import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
-import 'package:lystui/providers/note.provider.dart';
+import 'package:lystui/providers/notes.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
+import 'package:lystui/screens/notes/editNote.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
@@ -24,24 +25,25 @@ class NotesScreen extends StatefulWidget {
 class _NotesScreenState extends State<NotesScreen> {
   final refreshKey = GlobalKey<RefreshIndicatorState>();
 
-  @override
-  void initState() {
-    super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      refreshNotes(show: false);
-      final provider = Provider.of<FabProvider>(context, listen: false);
-      provider.addFabOptions(
-          TabItem.categories,
-          FabOptions(
-            icon: Icons.add,
-            isVisible: true,
-            onPress: _onFabPress,
-          ));
-    });
-  }
+  bool _isAllNotesMode = true;
 
   //TODO: implement
-  void _onFabPress() {}
+  void _onFabPress() {
+    final categoryProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
+    final currentCategory = _isAllNotesMode
+        ? categoryProvider.categories
+            .firstWhere((c) => c.title == 'Not Categorized')
+        : categoryProvider.currentCategory;
+    Navigator.of(context).pushNamed(
+      EditNote.routeName,
+      arguments: EditNoteScreenArguments(
+        isEditMode: false,
+        categoryColor: Color(currentCategory.color),
+        categoryId: currentCategory.id,
+      ),
+    );
+  }
 
   void _onBackPressed() {
     final fabProvider = Provider.of<FabProvider>(context, listen: false);
@@ -52,18 +54,40 @@ class _NotesScreenState extends State<NotesScreen> {
   //TODO: implement
   void _onSearchPress() {}
 
-  //TODO: implement
-  void _onCardTap(Note note) {}
+  void _onCardTap(Note note) {
+    Provider.of<NotesProvider>(context, listen: false).setCurrentNote(note);
+    final categoryProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
+    Navigator.of(context).pushNamed(
+      EditNote.routeName,
+      arguments: EditNoteScreenArguments(
+        isEditMode: true,
+        categoryColor: Color(note.categoryColor),
+        categoryId: _isAllNotesMode
+            ? categoryProvider.categories
+                .firstWhere((c) => c.title == 'Not Categorized')
+                .id
+            : categoryProvider.currentCategory.id,
+      ),
+    );
+  }
 
   Future<void> refreshNotes({bool show = true}) async {
     if (show) refreshKey.currentState?.show(atTop: true);
-    final categoryProvider =
-        Provider.of<CategoryProvider>(context, listen: false);
 
     try {
-      await Provider.of<NoteProvider>(context, listen: false)
-          .doGetCategoryNotes(categoryProvider.currentCategory.id);
+      final notesProvider = Provider.of<NotesProvider>(context, listen: false);
+
+      if (_isAllNotesMode)
+        await notesProvider.doGetAllNotes();
+      else {
+        final categoryProvider =
+            Provider.of<CategoryProvider>(context, listen: false);
+        await notesProvider
+            .doGetCategoryNotes(categoryProvider.currentCategory.id);
+      }
     } catch (e) {
+      print(e);
       if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
         Alerts.showSnackBar(
             context: context,
@@ -87,7 +111,8 @@ class _NotesScreenState extends State<NotesScreen> {
         crossAxisCount: 2,
         crossAxisSpacing: 8,
         mainAxisSpacing: 8,
-        childAspectRatio: 1.5,
+        childAspectRatio: 1,
+        semanticChildCount: notes.length,
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
         children: notes.map((note) => _buildCard(note)).toList(),
       ),
@@ -96,9 +121,10 @@ class _NotesScreenState extends State<NotesScreen> {
 
   Widget _buildCard(Note note) {
     return Hero(
-      tag: note.title,
+      tag: '${note.id}/${note.title}',
       child: Card(
-        color: Color(note.categoryColor).withOpacity(0.6),
+        color: Color(note.categoryColor ?? Colors.transparent.value)
+            .withOpacity(0.6),
         elevation: 5,
         child: InkWell(
           onTap: () => _onCardTap(note),
@@ -107,12 +133,20 @@ class _NotesScreenState extends State<NotesScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Flexible(
-                  child: Text(
-                    note.title,
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  ),
-                ),
+                note.title.isEmpty && note.content.isEmpty
+                    ? Flexible(
+                        child: Text(
+                          'Empty note',
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                      )
+                    : Flexible(
+                        child: Text(
+                          note.title,
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                      ),
+                const SizedBox(height: 5),
                 Flexible(
                   child: Text(
                     note.content,
@@ -128,9 +162,29 @@ class _NotesScreenState extends State<NotesScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      NotesScreenArguments args = ModalRoute.of(context).settings.arguments;
+      setState(() {
+        return this._isAllNotesMode = args.isAllNotesMode;
+      });
+      refreshNotes(show: false);
+      final provider = Provider.of<FabProvider>(context, listen: false);
+      provider.addFabOptions(
+          TabItem.categories,
+          FabOptions(
+            icon: Icons.add,
+            isVisible: true,
+            onPress: _onFabPress,
+          ));
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final categoryProvider = Provider.of<CategoryProvider>(context);
-    final noteProvider = Provider.of<NoteProvider>(context);
+    final noteProvider = Provider.of<NotesProvider>(context);
 
     return PrivateRoute(
       child: BackgroundImage(
@@ -138,7 +192,9 @@ class _NotesScreenState extends State<NotesScreen> {
           appBar: AppBar(
             leading: IconButton(
                 icon: Icon(Icons.arrow_back), onPressed: _onBackPressed),
-            title: Text(categoryProvider.currentCategory.title.capitalize()),
+            title: _isAllNotesMode
+                ? Text('All Notes')
+                : Text(categoryProvider.currentCategory.title.capitalize()),
             actions: <Widget>[
               IconButton(icon: Icon(Icons.search), onPressed: _onSearchPress)
             ],
@@ -148,4 +204,10 @@ class _NotesScreenState extends State<NotesScreen> {
       ),
     );
   }
+}
+
+class NotesScreenArguments {
+  bool isAllNotesMode;
+
+  NotesScreenArguments({this.isAllNotesMode});
 }

@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Center(
         child: Shimmer.fromColors(
           child: Image.asset(
-            'lib/assets/logo.png',
+            'assets/images/logo.png',
             width: 200,
           ),
           baseColor: Color(0xFFE8E3E3),

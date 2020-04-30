@@ -6,7 +6,7 @@ import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
-import 'package:lystui/screens/editCategory/editCategory.screen.dart';
+import 'package:lystui/screens/categories/editCategory.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
@@ -79,7 +79,8 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
     else {
       final provider = Provider.of<CategoryProvider>(context, listen: false);
       provider.setCurrentCategory(category);
-      Navigator.of(context).pushNamed(EditCategoryScreen.routeName, arguments: true);
+      Navigator.of(context)
+          .pushNamed(EditCategoryScreen.routeName, arguments: true);
     }
   }
 

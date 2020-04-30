@@ -22,8 +22,8 @@ class User {
         'id': id,
         'email': email,
         'password': password,
-        'createdAt': createdAt,
-        'updatedAt': updatedAt,
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String(),
       };
 
   @override

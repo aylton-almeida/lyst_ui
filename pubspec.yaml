@@ -20,11 +20,31 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.7.4
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/icon.png"
 
 flutter:
   uses-material-design: true
 
   assets:
-    - lib/assets/
+    - assets/images/
     - .env
     - .envDev
+
+  fonts:
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Lato-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Lato-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Lato-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Lato-Thin.ttf
+          weight: 100
