@@ -62,7 +62,7 @@ class _EditNoteState extends State<EditNote> {
         else
           Alerts.showSnackBar(
               context: context,
-              text: 'An error happened, please try again later',
+              text: 'An error occurred, please try again later',
               color: Colors.red);
       }
     }
@@ -91,7 +91,7 @@ class _EditNoteState extends State<EditNote> {
       else
         Alerts.showSnackBar(
             context: context,
-            text: 'An error happened, please try again later',
+            text: 'An error occurred, please try again later',
             color: Colors.red);
     }
   }

@@ -104,7 +104,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
     Alerts.showAlertDialog(
         context: context,
         title: 'Delete category',
-        content: 'Are you shure you want to delete the category',
+        content: 'Are you sure you want to delete the category',
         actions: [
           AlertAction(action: () => print('ok'), content: 'CANCEL'),
           AlertAction(action: () => _deleteCategory(id), content: 'CONFIRM')
@@ -129,7 +129,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
       else
         Alerts.showSnackBar(
           context: context,
-          text: 'An error happened, please try again later',
+          text: 'An error occurred, please try again later',
           color: Colors.red,
         );
     }
