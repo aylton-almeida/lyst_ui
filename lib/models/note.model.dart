@@ -39,8 +39,8 @@ class Note {
         'content': content,
         'categoryId': categoryId,
         'userId': userId,
-        'createdAt': createdAt.toIso8601String(),
-        'updatedAt': updatedAt.toIso8601String(),
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
       };
 
   @override

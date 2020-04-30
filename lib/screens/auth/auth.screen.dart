@@ -27,7 +27,7 @@ class _AuthScreenState extends State<AuthScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.asset('lib/assets/logo.png', width: 250),
+                Image.asset('assets/images/logo.png', width: 250),
                 const SizedBox(height: 20),
                 AnimatedContainer(
                     duration: Duration(milliseconds: 500),

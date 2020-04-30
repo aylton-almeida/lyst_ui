@@ -98,7 +98,8 @@ class _AppScreenState extends State<AppScreen>
                               height: 60,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('lib/assets/lyst_l.png'),
+                                    image:
+                                        AssetImage('assets/images/lyst_l.png'),
                                     fit: BoxFit.fitHeight),
                               ),
                             ),

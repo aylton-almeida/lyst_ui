@@ -97,6 +97,7 @@ class _SignInTabState extends State<SignInTab> {
                     focusNode: _emailFocusNode,
                     cursorColor: Theme.of(context).primaryColor,
                     showError: true,
+                    maxLines: 1,
                   ),
                   const SizedBox(height: 20),
                   PersonalizedTextField(
@@ -120,6 +121,7 @@ class _SignInTabState extends State<SignInTab> {
                       ),
                       onPressed: _onObscurePassPress,
                     ),
+                    maxLines: 1,
                   ),
                   const SizedBox(height: 20),
                   AnimatedContainer(
@@ -175,7 +177,7 @@ class _SignInTabState extends State<SignInTab> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Image.asset(
-                            'lib/assets/icon_google.png',
+                            'assets/images/icon_google.png',
                             width: 25,
                           ),
                           const SizedBox(width: 20),

@@ -9,7 +9,7 @@ import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/screens/auth/auth.screen.dart';
 import 'package:lystui/providers/fab.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
-import 'package:lystui/screens/manageCategories/manageCategories.screen.dart';
+import 'package:lystui/screens/categories/manageCategories.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/app.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
@@ -119,7 +119,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Scaffold(
           appBar: AppBar(
             title: Image.asset(
-              'lib/assets/logo.png',
+              'assets/images/logo.png',
               width: 100,
             ),
             centerTitle: true,
