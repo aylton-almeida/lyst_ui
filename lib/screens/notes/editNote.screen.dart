@@ -1,10 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lystui/models/fabOptions.model.dart';
 import 'package:lystui/models/note.model.dart';
 import 'package:lystui/models/serviceException.model.dart';
+import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
 import 'package:lystui/providers/notes.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
@@ -34,16 +34,39 @@ class _EditNoteState extends State<EditNote> {
 
   bool _isEditMode = false;
 
-  void _onNoteEdited() {
-    //TODO: Implement
-    setState(() {});
-    if (_debounce?.isActive ?? false) _debounce.cancel();
-    _debounce = Timer(const Duration(seconds: 1), () {
-      setState(() {});
-    });
-  }
+  bool _wasEdited = false;
 
-  void _onBackPressed() {
+  void _onClosePressed({bool wasDeleted = false}) {
+    if (!wasDeleted && _wasEdited) {
+      try {
+        final noteProvider = Provider.of<NotesProvider>(context, listen: false);
+        if (_isEditMode) {
+          noteProvider.doUpdateNote(
+              _titleController.text, _contentController.text);
+        } else {
+          EditNoteScreenArguments args =
+              ModalRoute.of(context).settings.arguments;
+          noteProvider.doCreateNote(
+            _titleController.text,
+            _contentController.text,
+            args.categoryId,
+          );
+        }
+      } catch (e) {
+        print(e);
+        if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
+          Alerts.showSnackBar(
+              context: context,
+              text: ErrorTranslator.noteError(e),
+              color: Colors.red);
+        else
+          Alerts.showSnackBar(
+              context: context,
+              text: 'An error happened, please try again later',
+              color: Colors.red);
+      }
+    }
+
     final fabProvider = Provider.of<FabProvider>(context, listen: false);
     fabProvider.removeFabOptions(TabItem.categories);
     Navigator.of(context).pop();
@@ -57,7 +80,7 @@ class _EditNoteState extends State<EditNote> {
           context: context,
           text: 'Note deleted with success',
           color: Colors.green);
-      _onBackPressed();
+      _onClosePressed(wasDeleted: true);
     } catch (e) {
       print(e);
       if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
@@ -71,6 +94,13 @@ class _EditNoteState extends State<EditNote> {
             text: 'An error happened, please try again later',
             color: Colors.red);
     }
+  }
+
+  void _onNoteChanged() {
+    if (!_wasEdited)
+      setState(() {
+        _wasEdited = true;
+      });
   }
 
   @override
@@ -98,7 +128,8 @@ class _EditNoteState extends State<EditNote> {
       _isEditMode = args.isEditMode;
     });
     if (args.isEditMode) {
-      Note note = Provider.of<NotesProvider>(context).currentNote;
+      Note note =
+          Provider.of<NotesProvider>(context, listen: false).currentNote;
       _titleController.text = note.title;
       _contentController.text = note.content;
     }
@@ -130,49 +161,26 @@ class _EditNoteState extends State<EditNote> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              IconButton(
-                                icon: Icon(
-                                  Icons.close,
-                                  color: Colors.white,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.close,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: _onClosePressed,
                                 ),
-                                onPressed: _onBackPressed,
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  _isEditMode
-                                      ? IconButton(
-                                          icon: Icon(Icons.delete),
-                                          onPressed: () =>
-                                              _onDeletePressed(note.id),
-                                          color: Colors.white,
-                                        )
-                                      : null,
-                                  Container(
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 18),
-                                    child: _debounce?.isActive ?? false
-                                        ? SizedBox(
-                                            height: 16,
-                                            width: 16,
-                                            child: CircularProgressIndicator(
-                                              backgroundColor: Colors.white,
-                                              strokeWidth: 2,
-                                            ),
-                                          )
-                                        : Icon(
-                                            Icons.cloud_done,
-                                            color: Colors.white,
-                                            size: 28,
-                                          ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
+                                Visibility(
+                                  visible: _isEditMode,
+                                  child: IconButton(
+                                    icon: Icon(Icons.delete),
+                                    onPressed: () => _onDeletePressed(note.id),
+                                    color: Colors.white,
+                                  ),
+                                )
+                              ]),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -193,8 +201,8 @@ class _EditNoteState extends State<EditNote> {
                                     showBorder: false,
                                     showError: false,
                                     fontSize: 24,
-                                    onChanged: (_) => _onNoteEdited(),
                                     maxLines: 1,
+                                    onChanged: (_) => _onNoteChanged(),
                                   ),
                                 ),
                               ),
@@ -216,7 +224,7 @@ class _EditNoteState extends State<EditNote> {
                               showError: false,
                               fontSize: 20,
                               maxLines: null,
-                              onChanged: (_) => _onNoteEdited(),
+                              onChanged: (_) => _onNoteChanged(),
                             ),
                           ),
                         ],
@@ -236,6 +244,8 @@ class _EditNoteState extends State<EditNote> {
 class EditNoteScreenArguments {
   final bool isEditMode;
   final Color categoryColor;
+  final int categoryId;
 
-  EditNoteScreenArguments({this.isEditMode, this.categoryColor});
+  EditNoteScreenArguments(
+      {this.isEditMode, this.categoryColor, this.categoryId});
 }

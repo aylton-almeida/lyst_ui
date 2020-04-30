@@ -26,9 +26,9 @@ class NotesProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> doUpdateNote(int id, String title, String content) async {
-    await _service.updateNote(id, title, content);
-    final note = this.notes.firstWhere((note) => note.id == id);
+  Future<void> doUpdateNote(String title, String content) async {
+    await _service.updateNote(currentNote.id, title, content);
+    final note = this.notes.firstWhere((note) => note.id == currentNote.id);
     this.notes.remove(note);
     note.title = title;
     note.content = content;

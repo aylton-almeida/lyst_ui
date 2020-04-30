@@ -80,7 +80,8 @@ class NoteService {
     switch (response.statusCode) {
       case 200:
         Map body = jsonDecode(response.body);
-        return Note.fromJson(body);
+        final note = Note.fromJson(body);
+        return note;
       case 401:
         print(response.body);
         throw new ServiceException(code: 'USER_NOT_CONNECTED');
