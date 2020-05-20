@@ -50,7 +50,7 @@ class NotesProvider with ChangeNotifier {
 
   updateFilteredNotes(String filter) {
     if (filter.isEmpty || filter == null) {
-      _updatedFilteredNotes(this.notes);
+      _updateFilteredNotes(this.notes);
     } else {
       List<Note> filtered = [];
       filtered.addAll(notes.where((note) =>
