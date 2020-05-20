@@ -11,6 +11,7 @@ import 'package:lystui/screens/notes/editNote.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
+import 'package:lystui/widgets/personalizedTextField.dart';
 import 'package:lystui/widgets/privateRoute.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
@@ -24,8 +25,10 @@ class NotesScreen extends StatefulWidget {
 
 class _NotesScreenState extends State<NotesScreen> {
   final refreshKey = GlobalKey<RefreshIndicatorState>();
+  final TextEditingController _filterController = TextEditingController();
 
   bool _isAllNotesMode = true;
+  bool _isSearching = false;
 
   //TODO: implement
   void _onFabPress() {
@@ -51,8 +54,11 @@ class _NotesScreenState extends State<NotesScreen> {
     Navigator.pop(context);
   }
 
-  //TODO: implement
-  void _onSearchPress() {}
+  void _onSearchPress() {
+    setState(() {
+      _isSearching = !_isSearching;
+    });
+  }
 
   void _onCardTap(Note note) {
     Provider.of<NotesProvider>(context, listen: false).setCurrentNote(note);
@@ -181,9 +187,41 @@ class _NotesScreenState extends State<NotesScreen> {
     });
   }
 
+  Widget _getAppBarTitle() {
+    final categoryProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
+
+    if (_isAllNotesMode) {
+      return _isSearching
+          ? PersonalizedTextField(
+              textInputAction: TextInputAction.done,
+              onEditingComplete: () {},
+              controller: _filterController,
+              textCapitalization: TextCapitalization.none,
+              hintText: 'Search for...',
+              cursorColor: Theme.of(context).primaryColor,
+              maxLines: 1,
+              focusNode: FocusNode(),
+            )
+          : Text('All Notes');
+    } else {
+      return _isSearching
+          ? PersonalizedTextField(
+              textInputAction: TextInputAction.done,
+              onEditingComplete: () {},
+              controller: _filterController,
+              textCapitalization: TextCapitalization.none,
+              hintText: 'Search for...',
+              cursorColor: Theme.of(context).primaryColor,
+              maxLines: 1,
+              focusNode: FocusNode(),
+            )
+          : Text(categoryProvider.currentCategory.title.capitalize());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final categoryProvider = Provider.of<CategoryProvider>(context);
     final noteProvider = Provider.of<NotesProvider>(context);
 
     return PrivateRoute(
@@ -192,11 +230,13 @@ class _NotesScreenState extends State<NotesScreen> {
           appBar: AppBar(
             leading: IconButton(
                 icon: Icon(Icons.arrow_back), onPressed: _onBackPressed),
-            title: _isAllNotesMode
-                ? Text('All Notes')
-                : Text(categoryProvider.currentCategory.title.capitalize()),
+            title: _getAppBarTitle(),
             actions: <Widget>[
-              IconButton(icon: Icon(Icons.search), onPressed: _onSearchPress)
+              _isSearching
+                  ? IconButton(
+                      icon: Icon(Icons.close), onPressed: _onSearchPress)
+                  : IconButton(
+                      icon: Icon(Icons.search), onPressed: _onSearchPress)
             ],
           ),
           body: _buildCategories(noteProvider.notes),
