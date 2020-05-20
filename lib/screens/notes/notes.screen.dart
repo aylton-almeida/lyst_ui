@@ -57,7 +57,9 @@ class _NotesScreenState extends State<NotesScreen> {
   void _onSearchPress() {
     setState(() {
       _isSearching = !_isSearching;
+      _filterController.clear();
     });
+    _updateFilteredNotes();
   }
 
   void _onCardTap(Note note) {
@@ -184,7 +186,20 @@ class _NotesScreenState extends State<NotesScreen> {
             isVisible: true,
             onPress: _onFabPress,
           ));
+      _filterController.clear();
+      _updateFilteredNotes();
     });
+  }
+
+  @override
+  void dispose() {
+    _filterController.dispose();
+    super.dispose();
+  }
+
+  _updateFilteredNotes() {
+    Provider.of<NotesProvider>(context, listen: false)
+        .updateFilteredNotes(_filterController.text);
   }
 
   Widget _getAppBarTitle() {
@@ -195,26 +210,26 @@ class _NotesScreenState extends State<NotesScreen> {
       return _isSearching
           ? PersonalizedTextField(
               textInputAction: TextInputAction.done,
-              onEditingComplete: () {},
               controller: _filterController,
               textCapitalization: TextCapitalization.none,
               hintText: 'Search for...',
               cursorColor: Theme.of(context).primaryColor,
               maxLines: 1,
               focusNode: FocusNode(),
+              onEditingComplete: _updateFilteredNotes,
             )
           : Text('All Notes');
     } else {
       return _isSearching
           ? PersonalizedTextField(
               textInputAction: TextInputAction.done,
-              onEditingComplete: () {},
               controller: _filterController,
               textCapitalization: TextCapitalization.none,
               hintText: 'Search for...',
               cursorColor: Theme.of(context).primaryColor,
               maxLines: 1,
               focusNode: FocusNode(),
+              onEditingComplete: _updateFilteredNotes,
             )
           : Text(categoryProvider.currentCategory.title.capitalize());
     }
@@ -239,7 +254,7 @@ class _NotesScreenState extends State<NotesScreen> {
                       icon: Icon(Icons.search), onPressed: _onSearchPress)
             ],
           ),
-          body: _buildCategories(noteProvider.notes),
+          body: _buildCategories(noteProvider.filteredNotes),
         ),
       ),
     );
