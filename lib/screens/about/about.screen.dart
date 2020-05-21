@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lystui/models/category.model.dart';
-import 'package:lystui/providers/category.provider.dart';
-import 'package:lystui/providers/fab.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
-import 'package:lystui/screens/categories/editCategory.screen.dart';
-import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
-import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
 
 class AboutScreen extends StatefulWidget {
@@ -42,7 +36,7 @@ class _AboutScreenState extends State<AboutScreen> {
               //Image.asset('lib/assets/PP.png', width: 300, height: 250,),
               const SizedBox(height: 20),
               Text(
-                'Esse projeto foi desenvolvido por aluno do curso de Engenharia de Software pela             PUC-Minas. Conheça a equipe: ',
+                'Esse projeto foi desenvolvido por alunos do curso de Engenharia de Software pela             PUC-Minas. Conheça a equipe: ',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 18.0),
               ),
@@ -65,21 +59,21 @@ class _AboutScreenState extends State<AboutScreen> {
       //      child:  Image.asset('lib/assets/aylton.png'),
         ),),
       ListTile(
-      title: Text('Lucas Lima',style: TextStyle( fontSize: 20)),
-      subtitle: Text('Desenvolvedor',style: TextStyle(fontSize: 13)),
-        leading: SizedBox(height: 20,
-      width: 100.0, // fixed width and height
-      //child:  Image.asset('lib/assets/lucas.png'),
-      ),),
-      ListTile(
       title: Text('Lucca Romaniello',style: TextStyle( fontSize: 20)),
       subtitle: Text('Desenvolvedor',style: TextStyle(fontSize: 13)),
         leading: SizedBox(height: 20,
       width: 100.0, // fixed width and height
-    //  child:  Image.asset('lib/assets/lucca.png'),
+      //child:  Image.asset('lib/assets/lucca.png'),
+      ),),
+      ListTile(
+      title: Text('Nayane Ornelas',style: TextStyle( fontSize: 20)),
+      subtitle: Text('Desenvolvedora',style: TextStyle(fontSize: 13)),
+        leading: SizedBox(height: 20,
+      width: 100.0, // fixed width and height
+    //  child:  Image.asset('lib/assets/nayane.png'),
         ), ),
-      ],
-            ),
+              ],
+              ),
       ),
       ),
       );
