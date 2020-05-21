@@ -10,7 +10,6 @@ import 'package:lystui/screens/notes/notes.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
-import 'package:lystui/widgets/privateRoute.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
 
@@ -123,17 +122,15 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     return BackgroundImage(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Image.asset(
-              'assets/images/logo.png',
-              width: 100,
-            ),
-            centerTitle: true,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Image.asset(
+            'assets/images/logo.png',
+            width: 100,
           ),
-
+          centerTitle: true,
         ),
-      );
-
+      ),
+    );
   }
 }

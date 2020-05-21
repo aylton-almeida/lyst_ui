@@ -10,7 +10,6 @@ import 'package:lystui/screens/categories/editCategory.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
-import 'package:lystui/widgets/privateRoute.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
 
@@ -126,21 +125,20 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
   Widget build(BuildContext context) {
     final categoriesProvider = Provider.of<CategoryProvider>(context);
 
-    return  BackgroundImage(
-        child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: _onBackPressed,
-            ),
-            title: Text('Manage Categories'),
+    return BackgroundImage(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: _onBackPressed,
           ),
-          body: Hero(
-            tag: 'categoriesList',
-            child: _buildCategories(categoriesProvider.categories),
-          ),
+          title: Text('Manage Categories'),
         ),
-      );
-
+        body: Hero(
+          tag: 'categoriesList',
+          child: _buildCategories(categoriesProvider.categories),
+        ),
+      ),
+    );
   }
 }

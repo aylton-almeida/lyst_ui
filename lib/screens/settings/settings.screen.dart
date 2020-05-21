@@ -14,7 +14,6 @@ import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/app.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
-import 'package:lystui/widgets/privateRoute.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
 
@@ -115,103 +114,100 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final categoriesProvider = Provider.of<CategoryProvider>(context);
 
     return BackgroundImage(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Image.asset(
-              'assets/images/logo.png',
-              width: 100,
-            ),
-            centerTitle: true,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Image.asset(
+            'assets/images/logo.png',
+            width: 100,
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Categories',
-                      style: TextStyle(
-                          color: Colors.white.withOpacity(0.8), fontSize: 18),
-                    ),
+          centerTitle: true,
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Categories',
+                    style: TextStyle(
+                        color: Colors.white.withOpacity(0.8), fontSize: 18),
                   ),
                 ),
-                SizedBox(
-                  height: 320,
-                  child: Hero(
-                    tag: 'categoriesList',
-                    child: _buildCategories(categoriesProvider.categories),
+              ),
+              SizedBox(
+                height: 320,
+                child: Hero(
+                  tag: 'categoriesList',
+                  child: _buildCategories(categoriesProvider.categories),
+                ),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: 250,
+                child: RaisedButton(
+                  child: Text(
+                    'MANAGE CATEGORIES',
                   ),
+                  onPressed: _onManagePress,
                 ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: 250,
-                  child: RaisedButton(
-                    child: Text(
-                      'MANAGE CATEGORIES',
-                    ),
-                    onPressed: _onManagePress,
-                  ),
-                ),
-                Divider(
-                  height: 20,
-                  indent: 30,
-                  endIndent: 30,
-                  color: Theme.of(context).primaryColor,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Column(
-                    children: <Widget>[
-                      InkWell(
-                        splashColor: Theme.of(context).primaryColor,
-                        highlightColor: Theme.of(context).primaryColorLight,
-                        onTap: _onAboutUsTap,
-                        child: Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.info_outline,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              'About us',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                          ],
-                        ),
+              ),
+              Divider(
+                height: 20,
+                indent: 30,
+                endIndent: 30,
+                color: Theme.of(context).primaryColor,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  children: <Widget>[
+                    InkWell(
+                      splashColor: Theme.of(context).primaryColor,
+                      highlightColor: Theme.of(context).primaryColorLight,
+                      onTap: _onAboutUsTap,
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.info_outline,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            'About us',
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 20),
-                      InkWell(
-                        splashColor: Colors.red,
-                        highlightColor: Colors.redAccent,
-                        onTap: _onLogoutTap,
-                        child: Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.exit_to_app,
-                              color: Colors.red,
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              'Logout',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                          ],
-                        ),
+                    ),
+                    const SizedBox(height: 20),
+                    InkWell(
+                      splashColor: Colors.red,
+                      highlightColor: Colors.redAccent,
+                      onTap: _onLogoutTap,
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.exit_to_app,
+                            color: Colors.red,
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            'Logout',
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
-      );
-
+      ),
+    );
   }
 }

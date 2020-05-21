@@ -11,7 +11,6 @@ import 'package:lystui/screens/notes/editNote.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
-import 'package:lystui/widgets/privateRoute.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
 
@@ -187,20 +186,20 @@ class _NotesScreenState extends State<NotesScreen> {
     final noteProvider = Provider.of<NotesProvider>(context);
 
     return BackgroundImage(
-        child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-                icon: Icon(Icons.arrow_back), onPressed: _onBackPressed),
-            title: _isAllNotesMode
-                ? Text('All Notes')
-                : Text(categoryProvider.currentCategory.title.capitalize()),
-            actions: <Widget>[
-              IconButton(icon: Icon(Icons.search), onPressed: _onSearchPress)
-            ],
-          ),
-          body: _buildCategories(noteProvider.notes),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back), onPressed: _onBackPressed),
+          title: _isAllNotesMode
+              ? Text('All Notes')
+              : Text(categoryProvider.currentCategory.title.capitalize()),
+          actions: <Widget>[
+            IconButton(icon: Icon(Icons.search), onPressed: _onSearchPress)
+          ],
         ),
-      );
+        body: _buildCategories(noteProvider.notes),
+      ),
+    );
   }
 }
 
