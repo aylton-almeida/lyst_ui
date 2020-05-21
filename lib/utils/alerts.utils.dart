@@ -8,21 +8,30 @@ abstract class Alerts {
     @required BuildContext context,
     @required String title,
     @required String content,
+    Color backgroundColor,
     List<AlertAction> actions,
   }) =>
       showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text(title),
-              content: Text(content),
+              backgroundColor: backgroundColor,
+              title: Text(
+                title,
+                style: TextStyle(color: Colors.white),
+              ),
+              content: Text(content, style: TextStyle(color: Colors.white)),
               actions: actions
                   .map((item) => FlatButton(
+                      splashColor: item.color,
                       onPressed: () {
                         Navigator.of(context).pop();
                         item.action();
                       },
-                      child: Text(item.content)))
+                      child: Text(
+                        item.content,
+                        style: TextStyle(color: item.color),
+                      )))
                   .toList(),
             );
           });
@@ -51,6 +60,7 @@ abstract class Alerts {
 class AlertAction {
   String content;
   Function action;
+  Color color;
 
-  AlertAction({this.content, this.action});
+  AlertAction({this.content, this.action, this.color});
 }

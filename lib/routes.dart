@@ -7,7 +7,6 @@ import 'package:lystui/providers/notes.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
 import 'package:lystui/screens/auth/auth.screen.dart';
 import 'package:lystui/screens/splash/splash.screen.dart';
-import 'package:lystui/utils/app.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -54,7 +53,6 @@ class Routes {
     runApp(MultiProvider(
       providers: providers,
       child: MaterialApp(
-        navigatorKey: Application.globalNavigation,
         debugShowCheckedModeBanner: false,
         title: "Lyst",
         routes: routes,

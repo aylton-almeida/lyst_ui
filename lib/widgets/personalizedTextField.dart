@@ -120,7 +120,7 @@ class _PersonalizedTextFieldState extends State<PersonalizedTextField> {
         textCapitalization:
             widget.textCapitalization ?? TextCapitalization.sentences,
         onChanged: widget.onChanged,
-        cursorColor: widget.cursorColor,
+        cursorColor: widget.cursorColor ?? Theme.of(context).primaryColor,
       ),
     );
   }

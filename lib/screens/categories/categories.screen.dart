@@ -10,7 +10,6 @@ import 'package:lystui/screens/notes/notes.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
-import 'package:lystui/widgets/privateRoute.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
 
@@ -24,8 +23,10 @@ class CategoriesScreen extends StatefulWidget {
 class _CategoriesScreenState extends State<CategoriesScreen> {
   final refreshKey = GlobalKey<RefreshIndicatorState>();
 
-  void _onFabPress() => Navigator.of(context).pushNamed(NotesScreen.routeName,
-      arguments: NotesScreenArguments(isAllNotesMode: true));
+  void _onFabPress() {
+    Navigator.pushNamed(context, NotesScreen.routeName,
+        arguments: NotesScreenArguments(isAllNotesMode: true));
+  }
 
   void _onCategoryPress(Category category) {
     Provider.of<CategoryProvider>(context, listen: false)
@@ -124,18 +125,16 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Widget build(BuildContext context) {
     final categoriesProvider = Provider.of<CategoryProvider>(context);
 
-    return PrivateRoute(
-      child: BackgroundImage(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Image.asset(
-              'assets/images/logo.png',
-              width: 100,
-            ),
-            centerTitle: true,
+    return BackgroundImage(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Image.asset(
+            'assets/images/logo.png',
+            width: 100,
           ),
-          body: _buildCategories(categoriesProvider.categories),
+          centerTitle: true,
         ),
+        body: _buildCategories(categoriesProvider.categories),
       ),
     );
   }

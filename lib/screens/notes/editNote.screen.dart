@@ -29,8 +29,6 @@ class _EditNoteState extends State<EditNote> {
   final _titleController = TextEditingController();
   final _titleFocusNode = FocusNode();
 
-  Timer _debounce;
-
   bool _isEditMode = false;
 
   bool _wasEdited = false;
@@ -115,7 +113,6 @@ class _EditNoteState extends State<EditNote> {
   void dispose() {
     _contentController.dispose();
     _titleController.dispose();
-    _debounce?.cancel();
     super.dispose();
   }
 
