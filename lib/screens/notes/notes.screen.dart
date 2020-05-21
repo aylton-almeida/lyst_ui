@@ -186,8 +186,7 @@ class _NotesScreenState extends State<NotesScreen> {
     final categoryProvider = Provider.of<CategoryProvider>(context);
     final noteProvider = Provider.of<NotesProvider>(context);
 
-    return PrivateRoute(
-      child: BackgroundImage(
+    return BackgroundImage(
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
@@ -201,8 +200,7 @@ class _NotesScreenState extends State<NotesScreen> {
           ),
           body: _buildCategories(noteProvider.notes),
         ),
-      ),
-    );
+      );
   }
 }
 

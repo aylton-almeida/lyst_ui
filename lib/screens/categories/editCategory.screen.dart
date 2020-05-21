@@ -186,8 +186,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
     final currentCategory =
         Provider.of<CategoryProvider>(context).currentCategory;
 
-    return PrivateRoute(
-      child: KeyboardDismissContainer(
+    return KeyboardDismissContainer(
         child: BackgroundImage(
           child: Scaffold(
             appBar: AppBar(
@@ -319,7 +318,6 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
             ),
           ),
         ),
-      ),
     );
   }
 }

@@ -114,8 +114,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     final categoriesProvider = Provider.of<CategoryProvider>(context);
 
-    return PrivateRoute(
-      child: BackgroundImage(
+    return BackgroundImage(
         child: Scaffold(
           appBar: AppBar(
             title: Image.asset(
@@ -212,7 +211,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
         ),
-      ),
-    );
+      );
+
   }
 }

@@ -122,10 +122,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final categoriesProvider = Provider.of<CategoryProvider>(context);
-
-    return PrivateRoute(
-      child: BackgroundImage(
+    return BackgroundImage(
         child: Scaffold(
           appBar: AppBar(
             title: Image.asset(
@@ -134,9 +131,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             ),
             centerTitle: true,
           ),
-          body: _buildCategories(categoriesProvider.categories),
+
         ),
-      ),
-    );
+      );
+
   }
 }

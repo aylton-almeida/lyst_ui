@@ -126,8 +126,7 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
   Widget build(BuildContext context) {
     final categoriesProvider = Provider.of<CategoryProvider>(context);
 
-    return PrivateRoute(
-      child: BackgroundImage(
+    return  BackgroundImage(
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
@@ -141,7 +140,7 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
             child: _buildCategories(categoriesProvider.categories),
           ),
         ),
-      ),
-    );
+      );
+
   }
 }
