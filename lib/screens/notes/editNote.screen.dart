@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lystui/models/fabOptions.model.dart';
@@ -14,6 +13,7 @@ import 'package:lystui/widgets/backgroundImage.dart';
 import 'package:lystui/widgets/keyboardDismissContainer.dart';
 import 'package:lystui/widgets/personalizedTextField.dart';
 import 'package:provider/provider.dart';
+import 'package:lystui/screens/notes/notes.screen.i18n.dart';
 
 class EditNote extends StatefulWidget {
   static final String routeName = '/editnote';
@@ -59,7 +59,7 @@ class _EditNoteState extends State<EditNote> {
         else
           Alerts.showSnackBar(
               context: context,
-              text: 'An error occurred, please try again later',
+              text: 'An error occurred, please try again later'.i18n,
               color: Colors.red);
       }
     }
@@ -75,7 +75,7 @@ class _EditNoteState extends State<EditNote> {
       noteProvider.doDeleteNote(noteId);
       Alerts.showSnackBar(
           context: context,
-          text: 'Note deleted with success',
+          text: 'Note deleted with success'.i18n,
           color: Colors.green);
       _onClosePressed(wasDeleted: true);
     } catch (e) {
@@ -88,7 +88,7 @@ class _EditNoteState extends State<EditNote> {
       else
         Alerts.showSnackBar(
             context: context,
-            text: 'An error occurred, please try again later',
+            text: 'An error occurred, please try again later'.i18n,
             color: Colors.red);
     }
   }
@@ -188,7 +188,7 @@ class _EditNoteState extends State<EditNote> {
                                   child: PersonalizedTextField(
                                     controller: _titleController,
                                     focusNode: _titleFocusNode,
-                                    hintText: 'Note Title',
+                                    hintText: 'Note Title'.i18n,
                                     autocorrect: true,
                                     cursorColor: Theme.of(context).primaryColor,
                                     textCapitalization:
@@ -210,7 +210,7 @@ class _EditNoteState extends State<EditNote> {
                             child: PersonalizedTextField(
                               controller: _contentController,
                               focusNode: _contentFocusNode,
-                              hintText: 'Content',
+                              hintText: 'Content'.i18n,
                               autocorrect: true,
                               cursorColor: Theme.of(context).primaryColor,
                               textInputAction: TextInputAction.newline,

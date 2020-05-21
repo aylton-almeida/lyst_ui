@@ -13,6 +13,7 @@ import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
+import 'package:lystui/screens/notes/notes.screen.i18n.dart';
 
 class NotesScreen extends StatefulWidget {
   static final routeName = '/notes';
@@ -90,12 +91,12 @@ class _NotesScreenState extends State<NotesScreen> {
       if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
         Alerts.showSnackBar(
             context: context,
-            text: ErrorTranslator.noteError(e),
+            text: ErrorTranslator.noteError(e).i18n,
             color: Colors.red);
       else
         Alerts.showSnackBar(
             context: context,
-            text: 'An error happened, please try again later',
+            text: 'An error happened, please try again later'.i18n,
             color: Colors.red);
     }
   }
@@ -135,7 +136,7 @@ class _NotesScreenState extends State<NotesScreen> {
                 note.title.isEmpty && note.content.isEmpty
                     ? Flexible(
                         child: Text(
-                          'Empty note',
+                          'Empty note'.i18n,
                           style: TextStyle(color: Colors.white, fontSize: 18),
                         ),
                       )
@@ -191,7 +192,7 @@ class _NotesScreenState extends State<NotesScreen> {
           leading: IconButton(
               icon: Icon(Icons.arrow_back), onPressed: _onBackPressed),
           title: _isAllNotesMode
-              ? Text('All Notes')
+              ? Text('All Notes'.i18n)
               : Text(categoryProvider.currentCategory.title.capitalize()),
           actions: <Widget>[
             IconButton(icon: Icon(Icons.search), onPressed: _onSearchPress)

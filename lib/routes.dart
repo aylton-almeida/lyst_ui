@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:lystui/providers/auth.provider.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
@@ -53,6 +54,15 @@ class Routes {
     runApp(MultiProvider(
       providers: providers,
       child: MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', "US"),
+          const Locale('pt', "BR"),
+        ],
         debugShowCheckedModeBanner: false,
         title: "Lyst",
         routes: routes,

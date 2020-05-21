@@ -15,6 +15,9 @@ import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
+import 'package:lystui/screens/settings/settings.screen.i18n.dart';
+
+//TODO: include languge change button
 
 class SettingsScreen extends StatefulWidget {
   static final String routeName = '/';
@@ -130,7 +133,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Categories',
+                    'Categories'.i18n,
                     style: TextStyle(
                         color: Colors.white.withOpacity(0.8), fontSize: 18),
                   ),
@@ -148,7 +151,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 width: 250,
                 child: RaisedButton(
                   child: Text(
-                    'MANAGE CATEGORIES',
+                    'manage categories'.i18n.toUpperCase(),
                   ),
                   onPressed: _onManagePress,
                 ),
@@ -175,7 +178,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           const SizedBox(width: 10),
                           Text(
-                            'About us',
+                            'About us'.i18n,
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
                         ],
@@ -194,7 +197,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                           const SizedBox(width: 10),
                           Text(
-                            'Logout',
+                            'Logout'.i18n,
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
                         ],
