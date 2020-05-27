@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lystui/models/note.model.dart';
 import 'package:lystui/services/note.service.dart';
-import 'package:lystui/utils/string.extension.dart';
 
 class NotesProvider with ChangeNotifier {
   final _service = NoteService();

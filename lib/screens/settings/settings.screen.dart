@@ -10,6 +10,7 @@ import 'package:lystui/screens/auth/auth.screen.dart';
 import 'package:lystui/providers/fab.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
 import 'package:lystui/screens/categories/manageCategories.screen.dart';
+import 'package:lystui/screens/settings/about.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
@@ -17,8 +18,6 @@ import 'package:lystui/widgets/language_select_button.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
 import 'package:lystui/screens/settings/settings.screen.i18n.dart';
-
-//TODO: include languge change button
 
 class SettingsScreen extends StatefulWidget {
   static final String routeName = '/';
@@ -66,7 +65,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       Navigator.of(context).pushNamed(ManageCategoriesScreen.routeName);
 
   //TODO: Implement
-  void _onAboutUsTap() {}
+  void _onAboutUsTap() {
+    Navigator.of(context).pushNamed(AboutScreen.routeName);
+  }
 
   Future<void> _onLogoutTap() async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);

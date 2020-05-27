@@ -64,10 +64,6 @@ class _SignInTabState extends State<SignInTab> {
     }
   }
 
-  void _onForgotPasswordTap() {
-    //TODO: implement
-  }
-
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
@@ -139,14 +135,6 @@ class _SignInTabState extends State<SignInTab> {
                       onPressed: _onConnectPress,
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  InkWell(
-                    child: Text(
-                      'Forgot your password?'.i18n,
-                      style: TextStyle(color: Colors.white.withOpacity(0.8)),
-                    ),
-                    onTap: _onForgotPasswordTap,
-                  )
                 ],
               ),
             ),

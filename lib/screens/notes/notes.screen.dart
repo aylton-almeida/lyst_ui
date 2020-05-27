@@ -30,7 +30,6 @@ class _NotesScreenState extends State<NotesScreen> {
   bool _isAllNotesMode = true;
   bool _isSearching = false;
 
-  //TODO: implement
   void _onFabPress() {
     final categoryProvider =
         Provider.of<CategoryProvider>(context, listen: false);
@@ -202,38 +201,26 @@ class _NotesScreenState extends State<NotesScreen> {
         .updateFilteredNotes(_filterController.text);
   }
 
-//TODO: internacionalizar
   Widget _getAppBarTitle() {
     final categoryProvider =
         Provider.of<CategoryProvider>(context, listen: false);
 
-    if (_isAllNotesMode) {
-      return _isSearching
-          ? PersonalizedTextField(
-              textInputAction: TextInputAction.done,
-              controller: _filterController,
-              textCapitalization: TextCapitalization.none,
-              hintText: 'Search for...',
-              cursorColor: Theme.of(context).primaryColor,
-              maxLines: 1,
-              focusNode: FocusNode(),
-              onEditingComplete: _updateFilteredNotes,
-            )
-          : Text('All Notes');
-    } else {
-      return _isSearching
-          ? PersonalizedTextField(
-              textInputAction: TextInputAction.done,
-              controller: _filterController,
-              textCapitalization: TextCapitalization.none,
-              hintText: 'Search for...',
-              cursorColor: Theme.of(context).primaryColor,
-              maxLines: 1,
-              focusNode: FocusNode(),
-              onEditingComplete: _updateFilteredNotes,
-            )
-          : Text(categoryProvider.currentCategory.title.capitalize());
-    }
+    return _isSearching
+        ? PersonalizedTextField(
+            textInputAction: TextInputAction.done,
+            controller: _filterController,
+            textCapitalization: TextCapitalization.none,
+            hintText: 'Search for...'.i18n,
+            cursorColor: Theme.of(context).primaryColor,
+            maxLines: 1,
+            focusNode: FocusNode(),
+            onEditingComplete: _updateFilteredNotes,
+          )
+        : _isAllNotesMode
+            ? Text('All Notes'.i18n)
+            : Text(categoryProvider.currentCategory.title == 'Not Categorized'
+                ? categoryProvider.currentCategory.title.i18n
+                : categoryProvider.currentCategory.title.capitalize());
   }
 
   @override

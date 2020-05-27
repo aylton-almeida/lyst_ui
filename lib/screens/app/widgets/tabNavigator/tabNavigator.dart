@@ -5,6 +5,7 @@ import 'package:lystui/screens/categories/editCategory.screen.dart';
 import 'package:lystui/screens/categories/manageCategories.screen.dart';
 import 'package:lystui/screens/notes/editNote.screen.dart';
 import 'package:lystui/screens/notes/notes.screen.dart';
+import 'package:lystui/screens/settings/about.screen.dart';
 import 'package:lystui/screens/settings/settings.screen.dart';
 
 class TabNavigator extends StatefulWidget {
@@ -42,6 +43,7 @@ class _TabNavigatorState extends State<TabNavigator> {
         SettingsScreen.routeName: (context) => SettingsScreen(),
         ManageCategoriesScreen.routeName: (context) => ManageCategoriesScreen(),
         EditCategoryScreen.routeName: (context) => EditCategoryScreen(),
+        AboutScreen.routeName: (context) => AboutScreen(),
       };
   }
 

@@ -113,7 +113,9 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
         ),
       ),
       title: Text(
-        category.title.capitalize(),
+        category.title == 'Not Categorized'
+            ? category.title.i18n
+            : category.title.capitalize(),
         style: TextStyle(
           color: Colors.white,
           fontSize: 20,

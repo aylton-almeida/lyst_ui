@@ -19,7 +19,6 @@ class _AuthScreenState extends State<AuthScreen> {
     Tab(text: 'sign up'.i18n.toUpperCase()),
   ];
 
-  //TODO: verificar funcionalidade
   @override
   Widget build(BuildContext context) {
     return SafeArea(

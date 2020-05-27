@@ -5,6 +5,7 @@ import 'package:lystui/providers/loading.provider.dart';
 import 'package:lystui/screens/app/widgets/tabNavigator/tabNavigator.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'app.i18n.dart';
 
 enum TabItem { categories, settings }
 
@@ -21,11 +22,11 @@ class _AppScreenState extends State<AppScreen>
 
   Map<TabItem, Destination> destinations = {
     TabItem.categories: Destination(
-      title: "Home",
+      title: "Home".i18n,
       icon: Icons.home,
     ),
     TabItem.settings: Destination(
-      title: "Settings",
+      title: "Settings".i18n,
       icon: Icons.settings,
     ),
   };

@@ -25,5 +25,7 @@ extension Localization on String {
         "pt_br": "Notas deletas com sucesso"
       } +
       {"en_us": "Note Title", "pt_br": "Titulo da nota"} +
-      {"en_us": "Content", "pt_br": "Conteúdo"};
+      {"en_us": "Content", "pt_br": "Conteúdo"} +
+      {"en_us": "Search for...", "pt_br": "Procurar por..."} +
+      {"en_us": "Not Categorized", "pt_br": "Não Categorizado"};
 }
