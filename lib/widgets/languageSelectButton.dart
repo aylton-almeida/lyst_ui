@@ -18,7 +18,7 @@ class LanguageSelectionButton extends StatelessWidget {
         height: 2,
         color: Colors.white,
       ),
-      dropdownColor: Color(0xFF000002),
+      dropdownColor: Color(0xFF28262c),
       onChanged: (newValue) => I18n.of(context).locale = newValue.length > 2
           ? Locale(newValue.substring(0, 2), newValue.substring(3))
           : Locale(newValue),

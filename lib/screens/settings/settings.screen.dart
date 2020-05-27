@@ -14,7 +14,7 @@ import 'package:lystui/screens/settings/about.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
-import 'package:lystui/widgets/language_select_button.dart';
+import 'package:lystui/widgets/languageSelectButton.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
 import 'package:lystui/screens/settings/settings.screen.i18n.dart';
@@ -64,10 +64,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void _onManagePress() =>
       Navigator.of(context).pushNamed(ManageCategoriesScreen.routeName);
 
-  //TODO: Implement
-  void _onAboutUsTap() {
-    Navigator.of(context).pushNamed(AboutScreen.routeName);
-  }
+  void _onAboutUsTap() =>
+      Navigator.of(context).pushNamed(AboutScreen.routeName);
 
   Future<void> _onLogoutTap() async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);

@@ -96,11 +96,39 @@ class CategoryService {
     if (authToken == null) return null;
 
     String url = '${DotEnv().env['BACKEND_URL']}/category/$id';
-    Map<String, String> headers = {
-      "Authorization": 'Bearer $authToken'
-    };
+    Map<String, String> headers = {"Authorization": 'Bearer $authToken'};
 
     final response = await delete(url, headers: headers);
+
+    switch (response.statusCode) {
+      case 200:
+        break;
+      case 401:
+        print(response.body);
+        throw new ServiceException(code: 'USER_NOT_CONNECTED');
+      case 404:
+        print(response.body);
+        throw new ServiceException(code: 'CATEGORY_NOT_FOUND');
+      default:
+        print(response.body);
+        throw new ServiceException(code: 'INTERNAL_SERVER_ERROR');
+    }
+  }
+
+  Future<void> clearCategory(int id) async {
+    final authToken = await _storage.read(key: 'authToken');
+
+    if (authToken == null) return null;
+
+    String url = '${DotEnv().env['BACKEND_URL']}/clearcategory';
+    Map<String, String> headers = {
+      "Authorization": 'Bearer $authToken',
+      "Content-type": "application/json"
+    };
+    String body = jsonEncode({'categoryId': id});
+    print(body);
+
+    final response = await post(url, headers: headers, body: body);
 
     switch (response.statusCode) {
       case 200:

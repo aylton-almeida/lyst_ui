@@ -97,7 +97,23 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
   }
 
   void _onClearPress(int id) {
-    //TODO: implement
+    Alerts.showAlertDialog(
+        context: context,
+        backgroundColor: Color(0xFF28262c),
+        title: 'Clear category'.i18n,
+        content:
+            'Are you sure you want to clear the category? all notes inside it will be deleted'
+                .i18n,
+        actions: [
+          AlertAction(
+              action: () => {},
+              content: 'cancel'.i18n.toUpperCase(),
+              color: Colors.red),
+          AlertAction(
+              action: () => _manageCategory(id, false),
+              content: 'confirm'.i18n.toUpperCase(),
+              color: Colors.green)
+        ]);
   }
 
   void _onDeletePress(int id) async {
@@ -109,20 +125,25 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
             'Are you sure you want to delete the category? all notes inside it will be deleted as well'
                 .i18n,
         actions: [
-          AlertAction(action: () => {}, content: 'CANCEL', color: Colors.red),
           AlertAction(
-              action: () => _deleteCategory(id),
+              action: () => {},
+              content: 'cancel'.i18n.toUpperCase(),
+              color: Colors.red),
+          AlertAction(
+              action: () => _manageCategory(id, true),
               content: 'confirm'.i18n.toUpperCase(),
               color: Colors.green)
         ]);
   }
 
-  void _deleteCategory(int id) async {
+  void _manageCategory(int id, bool isDelete) async {
     final categoryProvider =
         Provider.of<CategoryProvider>(context, listen: false);
 
     try {
-      await categoryProvider.doDeleteCategory(id);
+      isDelete
+          ? await categoryProvider.doDeleteCategory(id)
+          : await categoryProvider.doClearCategory(id);
       _onBackPressed();
     } catch (e) {
       print(e);

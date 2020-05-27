@@ -10,13 +10,23 @@ extension Localization on String {
       } +
       {
         "en_us": "Delete Note",
-        "pt_br": "Deketar Nota",
+        "pt_br": "Deletar Nota",
+      } +
+      {
+        "en_us": "cancel",
+        "pt_br": "cancelar",
       } +
       {
         "en_us":
             "Are you sure you want to delete the category? All notes inside it will be deleted as well",
         "pt_br":
             "Você tem certeza que quer deletar essa categoria? Todas suas notas serão apagadas também",
+      } +
+      {
+        "en_us":
+            "Are you sure you want to clear the category? All notes inside it will be deleted",
+        "pt_br":
+            "Você tem certeza que quer limpar essa categoria? Todas suas notas serão apagadas",
       } +
       {"en_us": "confirm", "pt_br": "confirmar"} +
       {
@@ -48,5 +58,6 @@ extension Localization on String {
       {
         "en_us": "Not Categorized",
         "pt_br": "Não Categorizado",
-      };
+      } +
+      {"en_us": "Clear category", "pt_br": "Limpar categoria"};
 }

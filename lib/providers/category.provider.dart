@@ -38,4 +38,9 @@ class CategoryProvider with ChangeNotifier {
   }
 
   void setCurrentCategory(Category category) => this.currentCategory = category;
+
+  Future<void> doClearCategory(int id) async {
+    await _service.clearCategory(id);
+    notifyListeners();
+  }
 }
