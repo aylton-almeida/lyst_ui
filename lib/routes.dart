@@ -6,6 +6,7 @@ import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
 import 'package:lystui/providers/loading.provider.dart';
 import 'package:lystui/providers/notes.provider.dart';
+import 'package:lystui/screens/about/about.screen.dart';
 import 'package:lystui/screens/app/app.screen.dart';
 import 'package:lystui/screens/auth/auth.screen.dart';
 import 'package:lystui/screens/splash/splash.screen.dart';
@@ -18,6 +19,7 @@ class Routes {
     SplashScreen.routeName: (context) => SplashScreen(),
     AppScreen.routeName: (context) => AppScreen(),
     AuthScreen.routeName: (context) => AuthScreen(),
+    AboutScreen.routeName: (context) => AboutScreen(),
   };
 
   final appTheme = ThemeData(
@@ -53,6 +55,7 @@ class Routes {
 
   Routes() {
     runApp(MultiProvider(
+
       providers: providers,
       child: MaterialApp(
         localizationsDelegates: [
@@ -67,7 +70,7 @@ class Routes {
         debugShowCheckedModeBanner: false,
         title: "Lyst",
         routes: routes,
-        initialRoute: SplashScreen.routeName,
+        initialRoute: AboutScreen.routeName,
         theme: appTheme,
         builder: (context, child) => I18n(child: child),
       ),
