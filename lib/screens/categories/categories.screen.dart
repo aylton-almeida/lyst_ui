@@ -12,6 +12,7 @@ import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
+import 'package:lystui/screens/categories/categories.i18n.dart';
 
 class CategoriesScreen extends StatefulWidget {
   static final routeName = '/';
@@ -51,7 +52,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       else
         Alerts.showSnackBar(
             context: context,
-            text: 'An error happened, please try again later',
+            text: 'An error ocurred, please try again later'.i18n,
             color: Colors.red);
     }
   }
@@ -84,7 +85,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         ),
       ),
       title: Text(
-        category.title.capitalize(),
+        category.title == 'Not Categorized'
+            ? category.title.i18n
+            : category.title.capitalize(),
         style: TextStyle(
           color: Colors.white,
           fontSize: 20,

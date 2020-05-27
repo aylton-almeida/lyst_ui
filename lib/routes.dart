@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:i18n_extension/i18n_widget.dart';
 import 'package:lystui/providers/auth.provider.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
@@ -68,6 +69,7 @@ class Routes {
         routes: routes,
         initialRoute: SplashScreen.routeName,
         theme: appTheme,
+        builder: (context, child) => I18n(child: child),
       ),
     ));
   }

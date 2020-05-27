@@ -12,6 +12,7 @@ import 'package:lystui/widgets/backgroundImage.dart';
 import 'package:lystui/widgets/keyboardDismissContainer.dart';
 import 'package:lystui/widgets/personalizedTextField.dart';
 import 'package:provider/provider.dart';
+import 'package:lystui/screens/categories/categories.i18n.dart';
 
 const categoryColors = <Color>[
   Color(0xFFF44336),
@@ -103,14 +104,15 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
     Alerts.showAlertDialog(
         context: context,
         backgroundColor: Color(0xFF28262c),
-        title: 'Delete category',
+        title: 'Delete category'.i18n,
         content:
-            'Are you sure you want to delete the category, all notes inside it will be deleted as well',
+            'Are you sure you want to delete the category? all notes inside it will be deleted as well'
+                .i18n,
         actions: [
           AlertAction(action: () => {}, content: 'CANCEL', color: Colors.red),
           AlertAction(
               action: () => _deleteCategory(id),
-              content: 'CONFIRM',
+              content: 'confirm'.i18n.toUpperCase(),
               color: Colors.green)
         ]);
   }
@@ -133,7 +135,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
       else
         Alerts.showSnackBar(
           context: context,
-          text: 'An error occurred, please try again later',
+          text: 'An error occurred, please try again later'.i18n,
           color: Colors.red,
         );
     }
@@ -155,11 +157,11 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
         if (_categoryId == null) {
           await categoryProvider.doCreateCategory(
               _controllerName.text, _selectedColor.value);
-          msg = 'Category created with success!';
+          msg = 'Category created with success!'.i18n;
         } else {
           await categoryProvider.doUpdateCategory(
               _categoryId, _controllerName.text, _selectedColor.value);
-          msg = 'Category updated with success!';
+          msg = 'Category updated with success!'.i18n;
         }
         Alerts.showSnackBar(context: context, text: msg, color: Colors.green);
         _onBackPressed();
@@ -173,13 +175,13 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
         else
           Alerts.showSnackBar(
               context: context,
-              text: 'An error happened, please try again later',
+              text: 'An error ocurred, please try again later'.i18n,
               color: Colors.red);
       } finally {}
     } else
       Alerts.showSnackBar(
         context: context,
-        text: 'Type a title for the category',
+        text: 'Type a title for the category'.i18n,
         color: Colors.red,
       );
   }
@@ -208,7 +210,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
                 validator: Validators.require,
                 textCapitalization: TextCapitalization.words,
                 focusNode: _nameFocusNode,
-                hintText: 'Category title...',
+                hintText: 'Category title...'.i18n,
                 cursorColor: Theme.of(context).primaryColor,
                 showError: false,
                 maxLines: 1,
@@ -229,7 +231,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Colors',
+                        'Colors'.i18n,
                         style: TextStyle(
                           color: Colors.white.withOpacity(0.8),
                           fontSize: 18,
@@ -271,7 +273,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Danger Zone',
+                              'Danger Zone'.i18n,
                               style: TextStyle(
                                 color: Colors.white.withOpacity(0.8),
                                 fontSize: 18,
@@ -287,7 +289,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
                               textColor: Colors.white,
                               highlightedBorderColor: Colors.red,
                               splashColor: Colors.redAccent,
-                              child: Text('CLEAR CATEGORY'),
+                              child: Text('clear category'.i18n.toUpperCase()),
                               borderSide:
                                   BorderSide(color: Colors.redAccent, width: 2),
                             ),
@@ -301,7 +303,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
                               textColor: Colors.white,
                               highlightedBorderColor: Colors.red,
                               splashColor: Colors.redAccent,
-                              child: Text('DELETE CATEGORY'),
+                              child: Text('delete category'.i18n.toUpperCase()),
                               borderSide:
                                   BorderSide(color: Colors.redAccent, width: 2),
                             ),

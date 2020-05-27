@@ -7,6 +7,7 @@ import 'package:lystui/utils/keyboard.utils.dart';
 import 'package:lystui/utils/validators.utils.dart';
 import 'package:lystui/widgets/personalizedTextField.dart';
 import 'package:provider/provider.dart';
+import '../auth.i18n.dart';
 
 class SignInTab extends StatefulWidget {
   @override
@@ -63,10 +64,6 @@ class _SignInTabState extends State<SignInTab> {
     }
   }
 
-  void _onConnectGooglePress() {
-    //TODO: Implement
-  }
-
   void _onForgotPasswordTap() {
     //TODO: implement
   }
@@ -92,7 +89,7 @@ class _SignInTabState extends State<SignInTab> {
                     autocorrect: true,
                     validator: Validators.validateEmail,
                     textCapitalization: TextCapitalization.none,
-                    hintText: 'Type your email...',
+                    hintText: 'Type your email...'.i18n,
                     labelText: 'Email',
                     focusNode: _emailFocusNode,
                     cursorColor: Theme.of(context).primaryColor,
@@ -108,8 +105,8 @@ class _SignInTabState extends State<SignInTab> {
                     autocorrect: true,
                     validator: Validators.validatePassword,
                     textCapitalization: TextCapitalization.none,
-                    hintText: 'Type your password...',
-                    labelText: 'Password',
+                    hintText: 'Type your password...'.i18n,
+                    labelText: 'Password'.i18n,
                     focusNode: _passwordFocusNode,
                     cursorColor: Theme.of(context).primaryColor,
                     showError: true,
@@ -138,65 +135,14 @@ class _SignInTabState extends State<SignInTab> {
                               scale: 1 / 2,
                               child: CircularProgressIndicator(
                                   backgroundColor: Colors.white))
-                          : Text('CONNECT'),
+                          : Text('connect'.i18n.toUpperCase()),
                       onPressed: _onConnectPress,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Divider(
-                        color: Colors.white,
-                        indent: 10,
-                        endIndent: 10,
-                      )),
-                      Text(
-                        'OR',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      Expanded(
-                          child: Divider(
-                        color: Colors.white,
-                        indent: 10,
-                        endIndent: 10,
-                      )),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    height: 40,
-                    width: 320,
-                    child: OutlineButton(
-                      textColor: Colors.white,
-                      borderSide: BorderSide(color: Colors.white60, width: 2),
-                      highlightedBorderColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(25.0)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Image.asset(
-                            'assets/images/icon_google.png',
-                            width: 25,
-                          ),
-                          const SizedBox(width: 20),
-                          Text(
-                            "SIGN IN WITH GOOGLE",
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontFamily: 'Roboto',
-                            ),
-                          ),
-                        ],
-                      ),
-                      onPressed: _onConnectGooglePress,
                     ),
                   ),
                   const SizedBox(height: 20),
                   InkWell(
                     child: Text(
-                      'Forgot your password?',
+                      'Forgot your password?'.i18n,
                       style: TextStyle(color: Colors.white.withOpacity(0.8)),
                     ),
                     onTap: _onForgotPasswordTap,

@@ -13,6 +13,7 @@ import 'package:lystui/screens/categories/manageCategories.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
+import 'package:lystui/widgets/language_select_button.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
 import 'package:lystui/screens/settings/settings.screen.i18n.dart';
@@ -102,7 +103,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       title: Text(
-        category.title.capitalize(),
+        category.title == 'Not Categorized'
+            ? category.title.i18n
+            : category.title.capitalize(),
         style: TextStyle(
           color: Colors.white,
           fontSize: 20,
@@ -165,6 +168,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     InkWell(
                       splashColor: Theme.of(context).primaryColor,
@@ -203,6 +207,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ],
                       ),
                     ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.language,
+                          color: Colors.blue,
+                        ),
+                        const SizedBox(width: 10),
+                        LanguageSelectionButton()
+                      ],
+                    )
                   ],
                 ),
               ),

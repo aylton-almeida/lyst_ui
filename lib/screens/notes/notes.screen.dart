@@ -13,7 +13,7 @@ import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
-import 'package:lystui/screens/notes/notes.screen.i18n.dart';
+import 'package:lystui/screens/notes/notes.i18n.dart';
 
 class NotesScreen extends StatefulWidget {
   static final routeName = '/notes';
@@ -91,12 +91,12 @@ class _NotesScreenState extends State<NotesScreen> {
       if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
         Alerts.showSnackBar(
             context: context,
-            text: ErrorTranslator.noteError(e).i18n,
+            text: ErrorTranslator.noteError(e),
             color: Colors.red);
       else
         Alerts.showSnackBar(
             context: context,
-            text: 'An error happened, please try again later'.i18n,
+            text: 'An error occurred, please try again later'.i18n,
             color: Colors.red);
     }
   }

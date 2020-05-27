@@ -19,5 +19,9 @@ extension Localization on String {
       {
         "en_us": "Logout",
         "pt_br": "Sair",
+      } +
+      {
+        "en_us": "Not Categorized",
+        "pt_br": "Não Categorizado",
       };
 }

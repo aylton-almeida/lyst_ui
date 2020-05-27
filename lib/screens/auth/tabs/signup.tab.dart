@@ -7,6 +7,7 @@ import 'package:lystui/utils/keyboard.utils.dart';
 import 'package:lystui/utils/validators.utils.dart';
 import 'package:lystui/widgets/personalizedTextField.dart';
 import 'package:provider/provider.dart';
+import '../auth.i18n.dart';
 
 class SignUpTab extends StatefulWidget {
   @override
@@ -107,7 +108,7 @@ class _SignUpTabState extends State<SignUpTab> {
                   autocorrect: true,
                   validator: Validators.validateEmail,
                   textCapitalization: TextCapitalization.none,
-                  hintText: 'Type your email...',
+                  hintText: 'Type your email...'.i18n,
                   labelText: 'Email',
                   focusNode: _emailFocusNode,
                   cursorColor: Theme.of(context).primaryColor,
@@ -125,8 +126,8 @@ class _SignUpTabState extends State<SignUpTab> {
                   autocorrect: true,
                   validator: Validators.validatePassword,
                   textCapitalization: TextCapitalization.none,
-                  hintText: 'Type your password...',
-                  labelText: 'Password',
+                  hintText: 'Type your password...'.i18n,
+                  labelText: 'Password'.i18n,
                   focusNode: _passwordFocusNode,
                   cursorColor: Theme.of(context).primaryColor,
                   showError: true,
@@ -151,8 +152,8 @@ class _SignUpTabState extends State<SignUpTab> {
                   validator: (value) => Validators.validateConfPassword(
                       value, _passwordController.text),
                   textCapitalization: TextCapitalization.none,
-                  hintText: 'Confirm your password...',
-                  labelText: 'Confirm password',
+                  hintText: 'Confirm your password...'.i18n,
+                  labelText: 'Confirm password'.i18n,
                   focusNode: _confPassFocusNode,
                   cursorColor: Theme.of(context).primaryColor,
                   showError: true,
@@ -175,7 +176,7 @@ class _SignUpTabState extends State<SignUpTab> {
                             scale: 1 / 2,
                             child: CircularProgressIndicator(
                                 backgroundColor: Colors.white))
-                        : Text('SIGN UP'),
+                        : Text('sign up'.i18n.toUpperCase()),
                     onPressed: _onSignUpPress,
                   ),
                 ),

@@ -13,7 +13,7 @@ import 'package:lystui/widgets/backgroundImage.dart';
 import 'package:lystui/widgets/keyboardDismissContainer.dart';
 import 'package:lystui/widgets/personalizedTextField.dart';
 import 'package:provider/provider.dart';
-import 'package:lystui/screens/notes/notes.screen.i18n.dart';
+import 'package:lystui/screens/notes/notes.i18n.dart';
 
 class EditNote extends StatefulWidget {
   static final String routeName = '/editnote';
@@ -213,8 +213,8 @@ class _EditNoteState extends State<EditNote> {
                               hintText: 'Content'.i18n,
                               autocorrect: true,
                               cursorColor: Theme.of(context).primaryColor,
-                              textInputAction: TextInputAction.newline,
                               textCapitalization: TextCapitalization.words,
+                              keyboardType: TextInputType.multiline,
                               validator: Validators.require,
                               showBorder: false,
                               showError: false,

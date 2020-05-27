@@ -9,7 +9,7 @@ extension Localization on String {
         "pt_br": "Não Categorizado",
       } +
       {
-        "en_us": "An error happened, please try again later",
+        "en_us": "An error occurred, please try again later",
         "pt_br": "Ocorreu um erro, por favor tente novamente mais tarde",
       } +
       {
@@ -25,6 +25,5 @@ extension Localization on String {
         "pt_br": "Notas deletas com sucesso"
       } +
       {"en_us": "Note Title", "pt_br": "Titulo da nota"} +
-      {"en_us": "Content", "pt_br": "Conteúdo"} +
-      {"en_us": "Note not found.", "pt_br": "Nota não encontrada."};
+      {"en_us": "Content", "pt_br": "Conteúdo"};
 }

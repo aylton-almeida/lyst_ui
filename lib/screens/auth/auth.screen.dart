@@ -3,6 +3,7 @@ import 'package:lystui/screens/auth/tabs/signin.tab.dart';
 import 'package:lystui/screens/auth/tabs/signup.tab.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
 import 'package:lystui/widgets/keyboardDismissContainer.dart';
+import 'auth.i18n.dart';
 
 class AuthScreen extends StatefulWidget {
   static final routeName = '/signin';
@@ -14,8 +15,8 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   //Change the tabs here
   final tabs = <Tab>[
-    Tab(text: 'SIGN IN'),
-    Tab(text: 'SIGN UP'),
+    Tab(text: 'sign in'.i18n.toUpperCase()),
+    Tab(text: 'sign up'.i18n.toUpperCase()),
   ];
 
   //TODO: verificar funcionalidade

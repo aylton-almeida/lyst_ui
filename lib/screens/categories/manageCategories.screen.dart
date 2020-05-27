@@ -12,6 +12,7 @@ import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
+import 'package:lystui/screens/categories/categories.i18n.dart';
 
 class ManageCategoriesScreen extends StatefulWidget {
   static final String routeName = '/managecategories';
@@ -73,7 +74,7 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
     if (category.title == 'Not Categorized')
       Alerts.showSnackBar(
           context: context,
-          text: 'You can only edit non default categories',
+          text: 'You can only edit non default categories'.i18n,
           color: Colors.yellow.shade700);
     else {
       final provider = Provider.of<CategoryProvider>(context, listen: false);
@@ -132,7 +133,7 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
             icon: Icon(Icons.arrow_back),
             onPressed: _onBackPressed,
           ),
-          title: Text('Manage Categories'),
+          title: Text('Manage Categories'.i18n),
         ),
         body: Hero(
           tag: 'categoriesList',
