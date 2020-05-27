@@ -34,7 +34,7 @@ class AuthService {
   Future<User> signInUser(String email, String pass) async {
     String url = '${DotEnv().env['BACKEND_URL']}/auth';
     Map<String, String> headers = {"Content-type": "application/json"};
-    String body = jsonEncode(User(email: email, password: pass));
+    String body = jsonEncode({"email": email, "password": pass});
 
     Response response = await post(url, headers: headers, body: body);
 
@@ -60,7 +60,7 @@ class AuthService {
   Future<User> signUpUser(String email, String pass) async {
     String url = '${DotEnv().env['BACKEND_URL']}/user';
     Map<String, String> headers = {"Content-type": "application/json"};
-    String body = jsonEncode(User(email: email, password: pass));
+    String body = jsonEncode({'email': email, 'password': pass});
 
     Response response = await post(url, headers: headers, body: body);
 

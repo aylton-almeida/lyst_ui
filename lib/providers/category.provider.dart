@@ -3,8 +3,9 @@ import 'package:lystui/models/category.model.dart';
 import 'package:lystui/services/category.service.dart';
 
 class CategoryProvider with ChangeNotifier {
-  CategoryService _service = CategoryService();
+  final _service = CategoryService();
   List<Category> categories = [];
+  Category currentCategory;
 
   Future<void> doUpdateCategories() async {
     this.categories = await _service.getCategories();
@@ -33,6 +34,13 @@ class CategoryProvider with ChangeNotifier {
   Future<void> doDeleteCategory(int id) async {
     await _service.deleteCategory(id);
     this.categories.removeWhere((category) => category.id == id);
+    notifyListeners();
+  }
+
+  void setCurrentCategory(Category category) => this.currentCategory = category;
+
+  Future<void> doClearCategory(int id) async {
+    await _service.clearCategory(id);
     notifyListeners();
   }
 }

@@ -6,13 +6,13 @@ import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/category.provider.dart';
 import 'package:lystui/providers/fab.provider.dart';
 import 'package:lystui/screens/app/app.screen.dart';
-import 'package:lystui/screens/editCategory/editCategory.screen.dart';
+import 'package:lystui/screens/categories/editCategory.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
-import 'package:lystui/widgets/privateRoute.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
+import 'package:lystui/screens/categories/categories.i18n.dart';
 
 class ManageCategoriesScreen extends StatefulWidget {
   static final String routeName = '/managecategories';
@@ -74,11 +74,14 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
     if (category.title == 'Not Categorized')
       Alerts.showSnackBar(
           context: context,
-          text: 'You can only edit non default categories',
+          text: 'You can only edit non default categories'.i18n,
           color: Colors.yellow.shade700);
-    else
+    else {
+      final provider = Provider.of<CategoryProvider>(context, listen: false);
+      provider.setCurrentCategory(category);
       Navigator.of(context)
-          .pushNamed(EditCategoryScreen.routeName, arguments: category);
+          .pushNamed(EditCategoryScreen.routeName, arguments: true);
+    }
   }
 
   Widget _buildCategories(List<Category> categories) {
@@ -110,7 +113,9 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
         ),
       ),
       title: Text(
-        category.title.capitalize(),
+        category.title == 'Not Categorized'
+            ? category.title.i18n
+            : category.title.capitalize(),
         style: TextStyle(
           color: Colors.white,
           fontSize: 20,
@@ -123,20 +128,18 @@ class _ManageCategoriesScreenState extends State<ManageCategoriesScreen> {
   Widget build(BuildContext context) {
     final categoriesProvider = Provider.of<CategoryProvider>(context);
 
-    return PrivateRoute(
-      child: BackgroundImage(
-        child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: _onBackPressed,
-            ),
-            title: Text('Manage Categories'),
+    return BackgroundImage(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: _onBackPressed,
           ),
-          body: Hero(
-            tag: 'categoriesList',
-            child: _buildCategories(categoriesProvider.categories),
-          ),
+          title: Text('Manage Categories'.i18n),
+        ),
+        body: Hero(
+          tag: 'categoriesList',
+          child: _buildCategories(categoriesProvider.categories),
         ),
       ),
     );

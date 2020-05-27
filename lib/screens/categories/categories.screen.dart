@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:lystui/models/category.model.dart';
+import 'package:lystui/models/fabOptions.model.dart';
 import 'package:lystui/models/serviceException.model.dart';
 import 'package:lystui/providers/category.provider.dart';
+import 'package:lystui/providers/fab.provider.dart';
+import 'package:lystui/screens/app/app.screen.dart';
+import 'package:lystui/screens/notes/notes.screen.dart';
 import 'package:lystui/utils/alerts.utils.dart';
 import 'package:lystui/utils/errorTranslator.utils.dart';
 import 'package:lystui/widgets/backgroundImage.dart';
-import 'package:lystui/widgets/privateRoute.dart';
 import 'package:provider/provider.dart';
 import 'package:lystui/utils/string.extension.dart';
+import 'package:lystui/screens/categories/categories.i18n.dart';
 
 class CategoriesScreen extends StatefulWidget {
   static final routeName = '/';
@@ -19,16 +24,16 @@ class CategoriesScreen extends StatefulWidget {
 class _CategoriesScreenState extends State<CategoriesScreen> {
   final refreshKey = GlobalKey<RefreshIndicatorState>();
 
-  @override
-  void initState() {
-    super.initState();
-    refreshCategories();
+  void _onFabPress() {
+    Navigator.pushNamed(context, NotesScreen.routeName,
+        arguments: NotesScreenArguments(isAllNotesMode: true));
   }
 
-  @override
-  void dispose() {
-    refreshKey.currentState?.dispose();
-    super.dispose();
+  void _onCategoryPress(Category category) {
+    Provider.of<CategoryProvider>(context, listen: false)
+        .setCurrentCategory(category);
+    Navigator.pushNamed(context, NotesScreen.routeName,
+        arguments: NotesScreenArguments(isAllNotesMode: false));
   }
 
   Future<void> refreshCategories() async {
@@ -38,6 +43,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       await Provider.of<CategoryProvider>(context, listen: false)
           .doUpdateCategories();
     } catch (e) {
+      print(e);
       if (e is ServiceException && e.code != 'USER_NOT_CONNECTED')
         Alerts.showSnackBar(
             context: context,
@@ -46,7 +52,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       else
         Alerts.showSnackBar(
             context: context,
-            text: 'An error happened, please try again later',
+            text: 'An error ocurred, please try again later'.i18n,
             color: Colors.red);
     }
   }
@@ -69,44 +75,69 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     return ListTile(
       leading: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Hero(
-          tag: 'colorCircle:${category.color}',
-          child: Container(
-            height: 15,
-            width: 15,
-            decoration: BoxDecoration(
-              color: Color(category.color),
-              shape: BoxShape.circle,
-            ),
+        child: Container(
+          height: 15,
+          width: 15,
+          decoration: BoxDecoration(
+            color: Color(category.color),
+            shape: BoxShape.circle,
           ),
         ),
       ),
       title: Text(
-        category.title.capitalize(),
+        category.title == 'Not Categorized'
+            ? category.title.i18n
+            : category.title.capitalize(),
         style: TextStyle(
           color: Colors.white,
           fontSize: 20,
         ),
       ),
+      trailing: Text(
+        '${category.notesCount}',
+        style: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 16),
+      ),
+      onTap: () => _onCategoryPress(category),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    refreshCategories();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      final provider = Provider.of<FabProvider>(context, listen: false);
+      if (provider.fabOptions[TabItem.categories].length == 1)
+        provider.addFabOptions(
+            TabItem.categories,
+            FabOptions(
+              icon: Icons.view_list,
+              isVisible: true,
+              onPress: _onFabPress,
+            ));
+    });
+  }
+
+  @override
+  void dispose() {
+    refreshKey.currentState?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final categoriesProvider = Provider.of<CategoryProvider>(context);
 
-    return PrivateRoute(
-      child: BackgroundImage(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Image.asset(
-              'lib/assets/logo.png',
-              width: 100,
-            ),
-            centerTitle: true,
+    return BackgroundImage(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Image.asset(
+            'assets/images/logo.png',
+            width: 100,
           ),
-          body: _buildCategories(categoriesProvider.categories),
+          centerTitle: true,
         ),
+        body: _buildCategories(categoriesProvider.categories),
       ),
     );
   }

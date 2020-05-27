@@ -23,32 +23,37 @@ class PersonalizedTextField extends StatefulWidget {
   final Color disabledColor;
   final Color cursorColor;
   final bool showError;
+  final bool showBorder;
+  final int maxLines;
 
-  PersonalizedTextField(
-      {Key key,
-      this.errorColor,
-      this.borderColor,
-      this.enabledColor,
-      this.disabledColor,
-      this.hintText,
-      this.labelText,
-      this.validator,
-      @required this.controller,
-      this.autocorrect,
-      this.keyboardType,
-      this.suffixIcon,
-      this.obscureText,
-      this.textCapitalization,
-      this.onChanged,
-      this.textInputAction,
-      this.focusNode,
-      this.onEditingComplete,
-      this.enabled,
-      this.fontSize,
-      this.focusedColor,
-      this.cursorColor,
-      bool showError})
-      : this.showError = showError ?? true,
+  PersonalizedTextField({
+    Key key,
+    this.errorColor,
+    this.borderColor,
+    this.enabledColor,
+    this.disabledColor,
+    this.hintText,
+    this.labelText,
+    this.validator,
+    @required this.controller,
+    this.autocorrect,
+    this.keyboardType,
+    this.suffixIcon,
+    this.obscureText,
+    this.textCapitalization,
+    this.onChanged,
+    this.textInputAction,
+    @required this.focusNode,
+    this.onEditingComplete,
+    this.enabled,
+    this.fontSize,
+    this.focusedColor,
+    this.cursorColor,
+    @required this.maxLines,
+    bool showBorder,
+    bool showError,
+  })  : this.showError = showError ?? true,
+        this.showBorder = showBorder ?? true,
         super(key: key);
 
   _PersonalizedTextFieldState createState() => _PersonalizedTextFieldState();
@@ -56,6 +61,13 @@ class PersonalizedTextField extends StatefulWidget {
 
 class _PersonalizedTextFieldState extends State<PersonalizedTextField> {
   FocusNode focusNode = FocusNode();
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   @override
   void initState() {
@@ -80,13 +92,17 @@ class _PersonalizedTextFieldState extends State<PersonalizedTextField> {
         controller: widget.controller,
         autocorrect: widget.autocorrect ?? true,
         validator: widget.validator,
+        maxLines: widget.maxLines,
         decoration: InputDecoration(
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white,
-              style: BorderStyle.solid,
-            ),
-          ),
+          border: widget.showBorder ? null : InputBorder.none,
+          enabledBorder: widget.showBorder
+              ? UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                    style: BorderStyle.solid,
+                  ),
+                )
+              : InputBorder.none,
           errorStyle: widget.showError ? null : TextStyle(fontSize: 0),
           hintText: widget.hintText,
           hintStyle: TextStyle(
@@ -104,7 +120,7 @@ class _PersonalizedTextFieldState extends State<PersonalizedTextField> {
         textCapitalization:
             widget.textCapitalization ?? TextCapitalization.sentences,
         onChanged: widget.onChanged,
-        cursorColor: widget.cursorColor,
+        cursorColor: widget.cursorColor ?? Theme.of(context).primaryColor,
       ),
     );
   }
