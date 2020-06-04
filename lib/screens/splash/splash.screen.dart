@@ -21,11 +21,14 @@ class _SplashScreenState extends State<SplashScreen> {
     authProvider
         .currentUser()
         .then((user) => user != null
-            ? Navigator.pushReplacementNamed(context, AppScreen.routeName)
-            : Navigator.pushReplacementNamed(context, AuthScreen.routeName))
+            ? Navigator.pushNamedAndRemoveUntil(
+                context, AppScreen.routeName, (_) => false)
+            : Navigator.pushNamedAndRemoveUntil(
+                context, AuthScreen.routeName, (_) => false))
         .catchError((e) {
       print(e);
-      Navigator.pushReplacementNamed(context, AuthScreen.routeName);
+      Navigator.pushNamedAndRemoveUntil(
+          context, AuthScreen.routeName, (_) => false);
     });
   }
 

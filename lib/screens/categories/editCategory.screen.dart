@@ -102,7 +102,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
         backgroundColor: Color(0xFF28262c),
         title: 'Clear category'.i18n,
         content:
-            'Are you sure you want to clear the category? all notes inside it will be deleted'
+            'Are you sure you want to clear the category? All notes inside it will be deleted'
                 .i18n,
         actions: [
           AlertAction(
@@ -122,7 +122,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
         backgroundColor: Color(0xFF28262c),
         title: 'Delete category'.i18n,
         content:
-            'Are you sure you want to delete the category? all notes inside it will be deleted as well'
+            'Are you sure you want to delete the category? All notes inside it will be deleted as well'
                 .i18n,
         actions: [
           AlertAction(

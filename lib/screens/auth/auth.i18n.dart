@@ -17,5 +17,6 @@ extension Localization on String {
       {"en_us": 'Type your password...', "pt_br": 'Digite sua senha...'} +
       {"en_us": 'connect', "pt_br": 'conectar'} +
       {"en_us": 'Forgot your password?', "pt_br": 'Esqueceu sua senha?'} +
-      {"en_us": 'Confirm password...', "pt_br": 'Confirme sua senha...'};
+      {"en_us": 'Confirm your password...', "pt_br": 'Confirme sua senha...'} +
+      {"en_us": 'Confirm password', "pt_br": 'Confirmar senha'};
 }

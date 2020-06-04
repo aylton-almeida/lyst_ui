@@ -45,7 +45,7 @@ extension Localization on String {
       {"en_us": "Category title...", "pt_br": "Titulo da categoria..."} +
       {"en_us": "Danger Zone", "pt_br": "Zona de perigo"} +
       {"en_us": "clear category", "pt_br": "limpar categoria"} +
-      {"en_us": "delete category", "pt_br": "deletar categoria"} +
+      {"en_us": "Delete category", "pt_br": "Deletar categoria"} +
       {
         "en_us": "Be carefull! Deleting a category will delete all its lysts",
         "pt_br": "Cuidado! Apagar uma categoria vai deletar todas suas lysts"
