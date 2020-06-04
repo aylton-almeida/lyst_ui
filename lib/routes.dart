@@ -55,7 +55,6 @@ class Routes {
 
   Routes() {
     runApp(MultiProvider(
-
       providers: providers,
       child: MaterialApp(
         localizationsDelegates: [
@@ -70,7 +69,7 @@ class Routes {
         debugShowCheckedModeBanner: false,
         title: "Lyst",
         routes: routes,
-        initialRoute: AboutScreen.routeName,
+        initialRoute: SplashScreen.routeName,
         theme: appTheme,
         builder: (context, child) => I18n(child: child),
       ),

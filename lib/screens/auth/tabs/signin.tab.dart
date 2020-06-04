@@ -49,7 +49,8 @@ class _SignInTabState extends State<SignInTab> {
       try {
         await authProvider.doSignInUser(
             _emailController.text, _passwordController.text);
-        Navigator.of(context).pushReplacementNamed(AppScreen.routeName);
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(AppScreen.routeName, (_) => false);
       } catch (e) {
         print(e);
         Alerts.showSnackBar(
